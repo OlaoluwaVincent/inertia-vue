@@ -3,8 +3,17 @@
  @import url('https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css');
 
  @import "vuetify/dist/vuetify.min.css";
-
+ @import url(https://fonts.bunny.net/css?family=poppins:100i,200,300,400,500,600,700,800,900);
 
  @tailwind base;
  @tailwind components;
  @tailwind utilities;
+
+ *,
+ ::before,
+ ::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif !important;
+ }

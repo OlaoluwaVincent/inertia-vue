@@ -1,13 +1,8 @@
-<script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import { Link } from '@inertiajs/vue3';
-</script>
-
 <template>
-    <div class="min-h-screen flex flex-col bg-gray-300/50">
+    <VApp>
         <h1>Guest Layouts</h1>
-        <div>
+        <v-layout class="bg-gray-300/50">
             <slot />
-        </div>
-    </div>
+        </v-layout>
+    </VApp>
 </template>
