@@ -1,5 +1,4 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
@@ -19,10 +18,9 @@ const isLoggedIn = computed(() => !!user);
 
 
 <template>
-    <GuestLayout>
 
-        <Head title="Welcome" />
-        <div>Hello, {{ }}</div>
-    </GuestLayout>
+
+    <Head title="Welcome" />
+    <div>Hello, {{ }}</div>
 
 </template>

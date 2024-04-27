@@ -6,11 +6,12 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import GuestLayout from "./Layouts/GuestLayout.vue";
+import vuetify from "./plugins/vuetify";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
+    title: (title) => title || appName,
     resolve: async (name) => {
         const pageComponent = await resolvePageComponent(
             `./Pages/${name}.vue`,
@@ -37,6 +38,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(vuetify)
             .use(ZiggyVue)
             .mount(el);
     },
