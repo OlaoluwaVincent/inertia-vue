@@ -1,25 +1,26 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
 
-function logout() {
-    route('logout')
-}
+
 </script>
 
 <template>
 
     <Head title="Dashboard" />
 
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+    <h2 class="tw-font-semibold tw-text-xl tw-text-gray-800 tw-leading-tight">Dashboard</h2>
 
 
-    <div class="py-12">
+    <div class="tw-py-12">
+        <Link :href="route('profile.edit')" ethod="get" as="button"
+            class="tw-underline tw-text-sm tw-text-gray-600 hover:tw-text-gray-900 tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500 tw-mr-8">
+        Profile</Link>
         <Link :href="route('logout')" method="post" as="button"
-            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            class="tw-underline tw-text-sm tw-text-gray-600 hover:tw-text-gray-900 tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500">
         Log Out</Link>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">You're logged in!</div>
+        <div class="tw-max-w-7xl tw-mx-auto sm:tw-px-6 lg:tw-px-8">
+            <div class="tw-bg-white tw-overflow-hidden tw-shadow-sm sm:tw-rounded-lg">
+                <div class="tw-p-6 tw-text-gray-900">You're logged in!</div>
             </div>
         </div>
     </div>

@@ -24,7 +24,7 @@ const submit = () => {
 
 <template>
 
-    <Head title="Register" />
+    <Head title="Create Account" />
 
     <section
         class="tw-flex md:tw-flex-col lg:tw-flex-row tw-items-center tw-justify-center tw-gap-10 tw-h-full tw-w-full tw-p-10 md:tw-px-[8%]">
