@@ -4,6 +4,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import LoginRegLinks from '@/Components/LoginRegLinks.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -34,14 +35,16 @@ const submit = () => {
     <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
         {{ status }}
     </div>
-    <section class="tw-flex tw-items-center tw-justify-center tw-gap-10 tw-w-full tw-p-10 md:tw-px-[8%]">
-        <div class="tw-w-[80%] tw-relative">
+    <section
+        class="tw-flex md:tw-flex-col lg:tw-flex-row tw-items-center tw-justify-center tw-gap-10 tw-h-full tw-w-full tw-p-10 md:tw-px-[8%]">
+        <div
+            class="tw-hidden md:tw-block md:tw-h-[400px] lg:tw-h-auto tw-w-[80%] tw-relative tw-rounded-3xl tw-overflow-hidden">
             <v-img class="bg-grey-lighten-2" src="/assets/images/loginImg.png" cover></v-img>
         </div>
 
 
         <aside class="tw-w-full tw-flex tw-flex-col tw-gap-3">
-            <h2 class="tw-text-sm md:tw-text-2xl tw-text-center">Welcome to School</h2>
+            <h2 class="tw-text-2xl tw-text-center mb-3 sm:mb-0">Welcome to School</h2>
             <LoginRegLinks />
             <p class="text-center">This is a random introductory text</p>
             <form @submit.prevent="submit">
@@ -63,49 +66,14 @@ const submit = () => {
                         <span class="ms-2 text-sm text-gray-600">Remember me</span>
                     </label>
                 </div>
-                <div class="tw-flex tw-items-center tw-justify-end tw-mt-4">
+                <div class="tw-flex tw-items-center tw-justify-center md:tw-justify-end tw-mt-4">
                     <Link v-if="canResetPassword" :href="route('password.request')"
-                        class="tw-underline tw-text-sm tw-text-gray-600 hover:tw-text-gray-900 tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500">
+                        class="tw-underline tw-text-sm tw-text-gray-600 hover:tw-text-gray-900 tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500 tw-text-nowrap">
                     Forgot your password?
                     </Link>
-                    <VBtn type="submit" class="tw-text-none tw-ms-4 tw-text-white" color="blue-darken-4" rounded="0"
-                        variant="elevated" :disabled="form.processing" slim>
-                        Login
-                    </VBtn>
+                    <PrimaryButton :disabled="form.processing">Login</PrimaryButton>
                 </div>
             </form>
         </aside>
     </section>
 </template>
-
-
-<style scoped>
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    padding: 40px;
-}
-
-
-
-.img-wrapper {
-    display: none;
-}
-
-@media (width >=768px) {
-    .container {
-        padding-inline: 8%
-    }
-}
-
-
-@media (width>768px) {
-    .img-wrapper {
-        display: block;
-        width: 95%;
-        /* max-width: 600px; */
-    }
-}
-</style>

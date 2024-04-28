@@ -21,31 +21,32 @@ const submit = () => {
 </script>
 
 <template>
-    <section>
+    <section class="tw-p-10 tw-flex tw-items-center tw-justify-center tw-flex-col tw-h-full tw-w-full">
 
         <Head title="Forgot Password" />
 
-        <div class="mb-4 text-sm text-gray-600">
+        <div class="tw-mb-4 tw-text-sm tw-text-gray-600 tw-text-wrap md:tw-w-[40%] tw-text-center">
             Forgot your password? No problem. Just let us know your email address and we will email you a password reset
             link that will allow you to choose a new one.
         </div>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="tw-mb-4 tw-font-medium tw-text-sm tw-text-green-600">
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
+
+        <form @submit.prevent="submit" class="mt-4">
             <div>
                 <InputLabel for="email" value="Email" />
 
-                <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
-                    autocomplete="username" />
+                <TextInput id="email" type="email" class="tw-mt-2 tw-block tw-w-full" v-model="form.email" required
+                    autofocus autocomplete="username" />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="tw-mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <div class="tw-flex tw-items-center tw-justify-end tw-mt-4">
+                <PrimaryButton :class="{ 'tw-opacity-25': form.processing }" :disabled="form.processing" :block="true">
                     Email Password Reset Link
                 </PrimaryButton>
             </div>

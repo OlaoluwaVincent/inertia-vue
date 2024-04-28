@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import LoginRegLinks from '@/Components/LoginRegLinks.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
@@ -25,12 +26,14 @@ const submit = () => {
 
     <Head title="Register" />
 
-    <section class="tw-flex tw-items-center tw-justify-center tw-gap-10 tw-w-full tw-p-10 md:tw-px-[8%]">
-        <div class="tw-w-[80%] tw-relative">
-            <v-img class="bg-grey-lighten-2 tw-h-full tw-w-full " src="/assets/images/loginImg.png" cover></v-img>
+    <section
+        class="tw-flex md:tw-flex-col lg:tw-flex-row tw-items-center tw-justify-center tw-gap-10 tw-h-full tw-w-full tw-p-10 md:tw-px-[8%]">
+        <div
+            class="tw-hidden md:tw-block md:tw-h-[400px] lg:tw-h-auto tw-w-[80%] tw-relative tw-rounded-3xl tw-overflow-hidden">
+            <v-img class="bg-grey-lighten-2 tw-h-full tw-w-full " src="/assets/images/regImg.png" cover></v-img>
         </div>
         <aside class="tw-w-full tw-flex tw-flex-col tw-gap-3">
-            <h2 class="tw-text-sm md:tw-text-2xl tw-text-center">We are glad to have you!</h2>
+            <h2 class="tw-text-2xl tw-text-center mb-3 sm:mb-0">Nice to have you!</h2>
             <LoginRegLinks />
             <form @submit.prevent="submit">
                 <div>
@@ -45,7 +48,7 @@ const submit = () => {
                     <InputLabel for="username" value="Username" />
 
                     <TextInput id="username" type="text" class="mt-1 block w-full" v-model="form.username" required
-                        autofocus autocomplete="username" />
+                        autocomplete="username" />
 
                     <InputError class="mt-2" :message="form.errors.username" />
                 </div>
@@ -77,16 +80,14 @@ const submit = () => {
                     <InputError class="mt-2" :message="form.errors.password_confirmation" />
                 </div>
 
-                <div class="tw-flex tw-items-center tw-justify-end tw-mt-4">
+                <div class="tw-flex tw-items-center tw-justify-center md:tw-justify-end tw-mt-4">
                     <Link :href="route('login')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        class="tw-underline tw-text-sm tw-text-gray-600 hover:tw-text-gray-900 tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500 tw-text-nowrap">
                     Already registered?
                     </Link>
 
-                    <VBtn type="submit" class="text-none ms-4 text-white" color="blue-darken-4" rounded="0"
-                        variant="elevated" :disabled="form.processing" slim>
-                        Register
-                    </VBtn>
+                    <PrimaryButton :disabled="form.processing">Register</PrimaryButton>
+
                 </div>
             </form>
         </aside>
