@@ -34,14 +34,14 @@ const submit = () => {
     <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
         {{ status }}
     </div>
-    <section class="container">
-        <div class="img-wrapper">
+    <section class="tw-flex tw-items-center tw-justify-center tw-gap-10 tw-w-full tw-p-10 md:tw-px-[8%]">
+        <div class="tw-w-[80%] tw-relative">
             <v-img class="bg-grey-lighten-2" src="/assets/images/loginImg.png" cover></v-img>
         </div>
 
 
-        <section class="w-full flex flex-shrink-1 flex-col gap-3">
-            <h2 class="text-sm md:text-2xl text-center">Welcome to School</h2>
+        <aside class="tw-w-full tw-flex tw-flex-col tw-gap-3">
+            <h2 class="tw-text-sm md:tw-text-2xl tw-text-center">Welcome to School</h2>
             <LoginRegLinks />
             <p class="text-center">This is a random introductory text</p>
             <form @submit.prevent="submit">
@@ -63,18 +63,18 @@ const submit = () => {
                         <span class="ms-2 text-sm text-gray-600">Remember me</span>
                     </label>
                 </div>
-                <div class="flex items-center justify-end mt-4">
+                <div class="tw-flex tw-items-center tw-justify-end tw-mt-4">
                     <Link v-if="canResetPassword" :href="route('password.request')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        class="tw-underline tw-text-sm tw-text-gray-600 hover:tw-text-gray-900 tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500">
                     Forgot your password?
                     </Link>
-                    <VBtn type="submit" class="text-none ms-4 text-white" color="blue-darken-4" rounded="0"
-                        variant="elevated" :disabled="form.processing" slim density="comfortable">
+                    <VBtn type="submit" class="tw-text-none tw-ms-4 tw-text-white" color="blue-darken-4" rounded="0"
+                        variant="elevated" :disabled="form.processing" slim>
                         Login
                     </VBtn>
                 </div>
             </form>
-        </section>
+        </aside>
     </section>
 </template>
 
@@ -96,7 +96,7 @@ const submit = () => {
 
 @media (width >=768px) {
     .container {
-        padding: 8%
+        padding-inline: 8%
     }
 }
 
@@ -104,7 +104,7 @@ const submit = () => {
 @media (width>768px) {
     .img-wrapper {
         display: block;
-        width: 100%;
+        width: 95%;
         /* max-width: 600px; */
     }
 }

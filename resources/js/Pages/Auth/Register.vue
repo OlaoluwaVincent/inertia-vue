@@ -1,14 +1,14 @@
 <script setup>
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import LoginRegLinks from '@/Components/LoginRegLinks.vue';
 
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
-    name: '',
+    fullname: '',
+    username: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -25,21 +25,29 @@ const submit = () => {
 
     <Head title="Register" />
 
-    <section class="container">
-        <div class="img-wrapper">
-            <v-img class="bg-grey-lighten-2" src="/assets/images/loginImg.png" cover></v-img>
+    <section class="tw-flex tw-items-center tw-justify-center tw-gap-10 tw-w-full tw-p-10 md:tw-px-[8%]">
+        <div class="tw-w-[80%] tw-relative">
+            <v-img class="bg-grey-lighten-2 tw-h-full tw-w-full " src="/assets/images/loginImg.png" cover></v-img>
         </div>
-        <aside class="w-full flex flex-shrink-1 flex-col gap-3">
-            <h2 class="text-sm md:text-2xl text-center">We are glad to have you!</h2>
+        <aside class="tw-w-full tw-flex tw-flex-col tw-gap-3">
+            <h2 class="tw-text-sm md:tw-text-2xl tw-text-center">We are glad to have you!</h2>
             <LoginRegLinks />
             <form @submit.prevent="submit">
                 <div>
-                    <InputLabel for="name" value="Name" />
+                    <InputLabel for="fullname" value="Full Name" />
 
-                    <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus
-                        autocomplete="name" />
+                    <TextInput id="fullname" type="text" class="mt-1 block w-full" v-model="form.fullname" required
+                        autofocus autocomplete="name" />
 
-                    <InputError class="mt-2" :message="form.errors.name" />
+                    <InputError class="mt-2" :message="form.errors.fullname" />
+                </div>
+                <div class="mt-4">
+                    <InputLabel for="username" value="Username" />
+
+                    <TextInput id="username" type="text" class="mt-1 block w-full" v-model="form.username" required
+                        autofocus autocomplete="username" />
+
+                    <InputError class="mt-2" :message="form.errors.username" />
                 </div>
 
                 <div class="mt-4">
@@ -69,15 +77,16 @@ const submit = () => {
                     <InputError class="mt-2" :message="form.errors.password_confirmation" />
                 </div>
 
-                <div class="flex items-center justify-end mt-4">
+                <div class="tw-flex tw-items-center tw-justify-end tw-mt-4">
                     <Link :href="route('login')"
                         class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Already registered?
                     </Link>
 
-                    <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <VBtn type="submit" class="text-none ms-4 text-white" color="blue-darken-4" rounded="0"
+                        variant="elevated" :disabled="form.processing" slim>
                         Register
-                    </PrimaryButton>
+                    </VBtn>
                 </div>
             </form>
         </aside>
@@ -85,36 +94,3 @@ const submit = () => {
 
 
 </template>
-
-
-
-<style scoped>
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    padding: 40px;
-}
-
-
-
-.img-wrapper {
-    display: none;
-}
-
-@media (width >=768px) {
-    .container {
-        padding: 8%
-    }
-}
-
-
-@media (width>768px) {
-    .img-wrapper {
-        display: block;
-        width: 100%;
-        /* max-width: 600px; */
-    }
-}
-</style>

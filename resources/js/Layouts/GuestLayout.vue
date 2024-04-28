@@ -1,8 +1,13 @@
+<script setup>
+import AppHeader from '@/Components/AppHeader.vue';
+
+</script>
+
 <template>
     <VApp>
-        <h1>Guest Layouts</h1>
-        <v-layout class="bg-gray-300/50">
+        <AppHeader />
+        <v-main class="tw-bg-gray-300/50">
             <slot />
-        </v-layout>
+        </v-main>
     </VApp>
 </template>

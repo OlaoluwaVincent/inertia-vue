@@ -12,11 +12,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('loginpage', function(){
-    return Inertia::render('LoginPage');
-});
-
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
