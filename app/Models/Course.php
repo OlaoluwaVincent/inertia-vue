@@ -17,6 +17,7 @@ class Course extends Model
         'duration',
         'category_id',
         'instructor_id',
+        'rating_id'
     ];
 
     public function category()
