@@ -16,7 +16,6 @@ const props = defineProps({
 
 const user = usePage().props.auth.user;
 
-console.log(user)
 
 const form = useForm({
     name: user.fullname,
@@ -53,7 +52,7 @@ const form = useForm({
                 <InputError class="tw-mt-2" :message="form.errors.email" />
             </div>
 
-            <div v-if="user.email_verified_at === null">
+            <div v-if="mustVerifyEmail || user.email_verified_at === null">
                 <p class="tw-text-sm tw-mt-2 tw-text-gray-800">
                     Your email address is unverified.
                     <Link :href="route('verification.send')" method="post" as="button"
