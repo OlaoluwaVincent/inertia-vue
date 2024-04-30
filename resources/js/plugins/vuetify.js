@@ -7,6 +7,9 @@ import * as directives from "vuetify/directives";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 
 const vuetify = createVuetify({
+    theme: {
+        // defaultTheme: "dark",
+    },
     components: {
         ...components,
         ...labsComponents,

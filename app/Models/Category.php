@@ -11,12 +11,12 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        'product_ids'
+        'category_ids'
     ];
 
 
     protected $casts = [
-        'product_ids' => 'array', // Cast the product_ids field to an array
+        'category_ids' => 'array', // Cast the product_ids field to an array
     ];
 
     public function courses()

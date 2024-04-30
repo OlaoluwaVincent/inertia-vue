@@ -6,9 +6,9 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import { Head } from '@inertiajs/vue3';
 
 
-defineOptions({
-    layout: AuthenticatedLayout
-})
+// defineOptions({
+//     layout: AuthenticatedLayout
+// })
 
 defineProps({
     mustVerifyEmail: {

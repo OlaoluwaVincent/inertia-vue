@@ -22,6 +22,10 @@ createInertiaApp({
                 pageComponent.default.layout || GuestLayout;
             return pageComponent;
         } else {
+            // if (pageComponent && pageComponent.default) {
+            //     pageComponent.default.layout = GuestLayout;
+            //     return pageComponent;
+            // } else {
             console.error(
                 `Page component not found or does not have a default export: ${name}`
             );

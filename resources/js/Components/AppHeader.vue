@@ -1,41 +1,32 @@
-<template><v-app-bar class="md:tw-px-10" prominent>
+<template><v-app-bar class="md:tw-px-10 tw-py-2" density='comfortable'>
     <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
     <aside id="LOGO" class="flex-row-center tw-gap-10">
-      <v-toolbar-title>School</v-toolbar-title>
-      <!-- <Link href="#">categories</Link> -->
+      <v-toolbar-title>
+        <Link href="/">School</Link>
+      </v-toolbar-title>
     </aside>
 
     <v-spacer></v-spacer>
     <!-- Show on small screen -->
 
-    <template v-if="$vuetify.display.mdAndUp">
-
-      <div
-        class="tw-border tw-rounded-xl tw-border-primary-100 tw-overflow-hidden flex-row-center gap-4 relative tw-pl-4 tw-ms-[50px] !tw-w-1/2 tw-mx-auto">
-        <label for="search">
-          <v-icon>mdi-magnify</v-icon>
-        </label>
-        <input type="text" id="search" autocomplete="search" class="tw-bg-gray-100 tw-w-full tw-ring-0 tw-outline-none"
-          placeholder="Search Courses">
-      </div>
-    </template>
+    <AppSearchHeader :isAuth="isAuth" />
 
     <v-spacer></v-spacer>
     <!-- Show on small screen -->
-    <template v-if="$vuetify.display.mdAndUp">
-      <v-btn icon="mdi-cart" variant="text" class="mx-5"></v-btn>
+    <aside v-if="!$vuetify.display.xs">
+      <aside class="mx-5 tw-flex">
+        <v-btn v-if="isAuth" icon="mdi-heart-outline" variant="text"></v-btn>
+        <v-btn v-if="isAuth" icon="mdi-bell" variant="text" color="orange-darken-2"></v-btn>
+        <v-btn icon="mdi-cart" variant="text"></v-btn>
+      </aside>
 
-      <div class="flex-row-center tw-gap-5 mr-5">
-        <Link href="/login"> <v-btn variant="outlined" tile color="gray-darken-4" text='Login' to="/login" />
-        </Link>
-        <Link href="/register"> <v-btn variant="flat" border tile color="grey-darken-4" text='Register'
-          to="/register" />
-        </Link>
-      </div>
-    </template>
+    </aside>
+    <AppHeaderAuthBtn v-if="$vuetify.display.mdAndUp" :isAuth="isAuth" />
 
-    <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
+    <v-avatar v-if="isAuth" :image="`https://via.placeholder.com/640x480.png/001155?text=${user?.email}`"
+      class="tw-mx-3"></v-avatar>
+    <AppMenuDots v-if="isAuth" />
   </v-app-bar>
 
   <AppSidebar v-model="drawer" />
@@ -44,8 +35,14 @@
 
 <script setup>
 import AppSidebar from '@/Components/AppSidebar.vue'
-import { Link } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
+import AppMenuDots from '@/Components/AppMenuDots.vue'
+import AppHeaderAuthBtn from '@/Components/AppHeaderAuthBtn.vue'
+import AppSearchHeader from '@/Components/AppSearchHeader.vue'
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed, ref, watch } from 'vue';
+const userData = usePage()
+const isAuth = computed(() => userData.props?.auth?.user?.id ? true : false)
+const user = computed(() => userData.props.auth.user ?? null)
 
 const drawer = ref(false);
 const group = ref(null);
