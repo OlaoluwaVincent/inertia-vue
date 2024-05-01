@@ -2,7 +2,7 @@
     <!-- theme='dark' -->
     <VApp :theme="theme">
         <AppHeader />
-        <v-main class="tw-mt-4 tw-bg-gray-300/50">
+        <v-main class="tw-mt-4">
             <slot />
         </v-main>
     </VApp>
@@ -24,3 +24,22 @@ const updateTheme = (newTheme) => {
     theme.value = newTheme;
 };
 </script>
+
+
+<style>
+.content__padding {
+    padding: 4%;
+}
+
+@media (width>600px) {
+    .content__padding {
+        padding: 20px;
+    }
+}
+
+@media (width>=1024px) {
+    .content__padding {
+        padding: 20px 40px;
+    }
+}
+</style>

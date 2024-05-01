@@ -1,35 +1,34 @@
 <template>
 
     <Head title="Welcome" />
-    <section>
-        <v-switch v-model="isDark" color="primary" hide-details inset></v-switch>
-        <div>Hello</div>
+    <section class="pb-10 tw-space-y-7 md:tw-space-y-10">
+        <HomeBanner />
+        <DataCount
+            :data="{ coursesCount: props.coursesCount, instructorsCount: props.instructorsCount, lessonHrs: props.lessonHrs }" />
+        <PopularCategories :categories="props.categories" />
+        <PopularCourse/>
     </section>
 </template>
 
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
-import { useTheme } from 'vuetify';
+import HomeBanner from '@/Components/home/HomeBanner.vue';
+import DataCount from '@/Components/home/DataCount.vue';
+import PopularCourse from '@/Components/home/PopularCourse.vue';
+import PopularCategories from '@/Components/home/PopularCategories.vue';
+
+
 
 const props = defineProps({
-    canResetPassword: Boolean,
-    status: String,
+    coursesCount: Number,
+    lessonHrs: Number,
+    instructorsCount: Number,
+    categories: Object
 });
 
-const theme = useTheme();
-const isDark = ref(false);
-
-function toggleTheme() {
-    if (isDark.value) {
-        theme.global.name.value = 'dark';
-    } else {
-        theme.global.name.value = 'light';
-    }
+</script>
+<script>
+export default {
+    inheritAttrs: false, // Suppress the warning for extraneous non-props attributes
 }
-
-// Watch for changes in the isDark variable and toggle theme accordingly
-watch(isDark, () => {
-    toggleTheme();
-});
 </script>

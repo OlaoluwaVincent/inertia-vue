@@ -19,6 +19,7 @@
         <v-btn v-if="isAuth" icon="mdi-heart-outline" variant="text"></v-btn>
         <v-btn v-if="isAuth" icon="mdi-bell" variant="text" color="orange-darken-2"></v-btn>
         <v-btn icon="mdi-cart" variant="text"></v-btn>
+        <v-switch v-model="isDark" color="primary" hide-details inset></v-switch>
       </aside>
 
     </aside>
@@ -40,6 +41,7 @@ import AppHeaderAuthBtn from '@/Components/AppHeaderAuthBtn.vue'
 import AppSearchHeader from '@/Components/AppSearchHeader.vue'
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed, ref, watch } from 'vue';
+import { useTheme } from 'vuetify';
 const userData = usePage()
 const isAuth = computed(() => userData.props?.auth?.user?.id ? true : false)
 const user = computed(() => userData.props.auth.user ?? null)
@@ -50,6 +52,22 @@ const group = ref(null);
 
 watch(group, () => {
   drawer.value = false;
+});
+
+const theme = useTheme();
+const isDark = ref(false);
+
+function toggleTheme() {
+  if (isDark.value) {
+    theme.global.name.value = 'dark';
+  } else {
+    theme.global.name.value = 'light';
+  }
+}
+
+// Watch for changes in the isDark variable and toggle theme accordingly
+watch(isDark, () => {
+  toggleTheme();
 });
 </script>
 

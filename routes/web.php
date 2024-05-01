@@ -1,18 +1,22 @@
 <?php
 
+use App\DatabaseModelsCount;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome');
+    return Inertia::render('Welcome', [
+        'coursesCount' => DatabaseModelsCount::coursesCount()['coursesNum'],
+        'lessonHrs' => DatabaseModelsCount::coursesCount()['lessonHrs'],
+        'instructorsCount' => DatabaseModelsCount::instructorsCount(),
+        'categories' => DatabaseModelsCount::categoriesSubCount(),
+    ]);
 });
 
 
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -23,3 +27,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/api.php';

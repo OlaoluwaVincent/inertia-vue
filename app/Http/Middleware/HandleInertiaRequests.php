@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\DatabaseModelsCount;
+use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
