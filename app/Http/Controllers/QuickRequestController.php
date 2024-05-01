@@ -18,12 +18,14 @@ class QuickRequestController extends Controller
         foreach ($courses as $item) {
             // Create a new object with required keys
             $newItem = [
+                'id' => $item['id'],
                 'title' => $item['title'],
                 'description' => $item['description'],
                 'image' => $item['image'],
                 'price' => $item['price'],
                 'duration' => $item['duration'],
                 'instructor' => [
+                    'id' => $item['instructor']['id'],
                     'name' => $item['instructor']['name']
                 ]
             ];

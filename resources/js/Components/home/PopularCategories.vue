@@ -4,7 +4,7 @@
         <h1>Popular Categories</h1>
         <v-sheet class="sheet__wrapper tw-py-5" color='transparent'>
 
-            <v-sheet :elevation="4" rounded class="sheet__flex-col tw-p-3 tw-w-auto tw-gap-7"
+            <v-sheet :elevation="4" rounded class="sheet__flex-col tw-p-3 tw-py-5 md:tw-py-10 tw-w-auto tw-gap-7"
                 v-for="(category, key) in data" :key="key">
                 <div class="tw-bg-blue-400/20 tw-rounded-full tw-block tw-p-3 tw-bg-blend-screen">
                     <v-icon :icon="`mdi-${category.icon_name}`" variant="tonal" color="blue" class="btn__icon ">
@@ -51,7 +51,7 @@ const data = computed(() => {
 
 .sheet__flex-col {
     display: flex;
-    /* justify-content: space-around; */
+    justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
     width: 100%;

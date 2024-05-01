@@ -21,6 +21,8 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "pinia": "^2.1.7",
+        "pinia-plugin-persistedstate": "^3.2.1",
         "vuetify": "^3.5.17"
     }
 }

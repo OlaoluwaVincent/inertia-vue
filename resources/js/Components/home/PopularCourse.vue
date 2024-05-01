@@ -4,8 +4,14 @@
   <h1>Popular Categories</h1>
   <v-sheet class="sheet__wrapper !tw-py-5" color='transparent' v-if="data && data.length > 0">
 
-   <v-card v-for="(item, key) in data" :key="key" class="v__card-popular tw-mx-auto tw-w-full" color="blue-lighten-3">
-    <v-img :src="item.image" cover class="tw-h-[140px]"></v-img>
+   <v-card v-for="(item, key) in data" :key="key" class="v__card-popular tw-mx-auto tw-w-full tw-relative">
+
+
+    <v-img :src="item.image" cover class="img__height tw-relative">
+     <v-btn @click="() => handleCartClick(item)" class="tw-absolute tw-top-3 tw-left-3 tw-z-10 tw-w-full"
+      color="warning" icon="mdi-cart" variant="flat">
+     </v-btn>
+    </v-img>
 
     <v-card-item class="!tw-pb-0">
      <v-card-title class="tw-text-ellipsis tw-overflow-x-hidden !tw-text-sm md:!tw-text-base">{{ item.title
@@ -19,12 +25,12 @@
 
     <v-card-text class="">
      <div class="tw-flex tw-items-center tw-mx-0 tw-gap-4">
-      <v-rating :model-value="4.5" color="amber" density="comfortable" size="small" half-increments readonly></v-rating>
+      <v-rating :model-value="4.5" color="amber" density="compact" size="small" half-increments readonly></v-rating>
       <div class="tw-text-grey-400 tw-hidden md:tw-block">4.5 (413)</div>
      </div>
 
      <div>{{ item.duration }} Total Hours</div>
-     <div>{{ item.price }}</div>
+     <p class="tw-font-semibold tw-text-lg ">${{ item.price }}</p>
     </v-card-text>
    </v-card>
 
@@ -48,6 +54,14 @@ onMounted(() => {
  })
 })
 
+
+
+import { useCartStore } from "@/store/cart";
+const store = useCartStore();
+
+function handleCartClick(value) {
+ store.addToCart(value)
+}
 </script>
 
 <style scoped>
@@ -60,11 +74,19 @@ onMounted(() => {
  justify-items: center;
 }
 
+.img__height {
+ height: 180px;
+}
+
 @media (width>430px) {
  .sheet__wrapper {
   grid-template-columns: repeat(2, 1fr);
   padding: 5%;
   gap: 3%;
+ }
+
+ .img__height {
+  height: 200px;
  }
 }
 
@@ -72,6 +94,10 @@ onMounted(() => {
  .sheet__wrapper {
   grid-template-columns: repeat(3, 1fr);
   padding: 0;
+ }
+
+ .img__height {
+  height: 200px;
  }
 
  .v__card-popular:last-child {

@@ -7,6 +7,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import GuestLayout from "./Layouts/GuestLayout.vue";
 import vuetify from "./plugins/vuetify";
+import pinia from "@/plugins/pinia";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -44,6 +45,7 @@ createInertiaApp({
             .use(plugin)
             .use(vuetify)
             .use(ZiggyVue)
+            .use(pinia)
             .mount(el);
     },
     progress: {
