@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Instructor;
 use Illuminate\Http\Request;
 
 class QuickRequestController extends Controller
@@ -34,6 +35,35 @@ class QuickRequestController extends Controller
             $result[] = $newItem;
         }
         $result = array_slice($result, 0, 4);
+        return $result;
+    }
+
+    public function showInstructors()
+    {
+        $result = [];
+        $instructors = Instructor::with('courses')->get();
+
+        foreach ($instructors as $instructor) {
+            $intructor_courses = [];
+
+            foreach ($instructor->courses as $course) {
+                $intructor_courses[] = [
+                    'id' => $course->id,
+                    'title' => $course->title,
+                ];
+            }
+
+            $data = [
+                'id' => $instructor->id,
+                'name' => $instructor->name,
+                'bio' => $instructor->bio,
+                'profile' => $instructor->profile,
+                'instructor_courses' => $intructor_courses,
+            ];
+
+            $result[] = $data; // Append data to the result array
+        }
+
         return $result;
     }
 }

@@ -6,7 +6,8 @@
         <DataCount
             :data="{ coursesCount: props.coursesCount, instructorsCount: props.instructorsCount, lessonHrs: props.lessonHrs }" />
         <PopularCategories :categories="props.categories" />
-        <PopularCourse/>
+        <PopularCourse />
+        <PopularInstructor />
     </section>
 </template>
 
@@ -16,6 +17,7 @@ import HomeBanner from '@/Components/home/HomeBanner.vue';
 import DataCount from '@/Components/home/DataCount.vue';
 import PopularCourse from '@/Components/home/PopularCourse.vue';
 import PopularCategories from '@/Components/home/PopularCategories.vue';
+import PopularInstructor from '@/Components/home/PopularInstructor.vue';
 
 
 
