@@ -23,7 +23,7 @@
      </v-card-subtitle>
     </v-card-item>
 
-    <v-card-text class="">
+    <v-card-text>
      <div class="tw-flex tw-items-center tw-mx-0 tw-gap-4">
       <v-rating :model-value="4.5" color="amber" density="compact" size="small" half-increments readonly></v-rating>
       <div class="tw-text-grey-400 tw-hidden md:tw-block">4.5 (413)</div>
@@ -46,9 +46,9 @@ import axios from 'axios';
 const data = ref([])
 
 onMounted(() => {
- axios.get('/api/popular').then(response => {
+ axios.get('/api/courses').then(response => {
   const items = response.data
-  data.value = items;
+  data.value = items.splice(0, 4);
  }).catch(error => {
   console.error('Error fetching items:', error)
  })
