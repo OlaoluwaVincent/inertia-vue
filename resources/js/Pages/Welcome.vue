@@ -8,6 +8,7 @@
         <PopularCategories :categories="props.categories" />
         <PopularCourse />
         <PopularInstructor />
+        <UsersCompliment />
     </section>
 </template>
 
@@ -18,6 +19,7 @@ import DataCount from '@/Components/home/DataCount.vue';
 import PopularCourse from '@/Components/home/PopularCourse.vue';
 import PopularCategories from '@/Components/home/PopularCategories.vue';
 import PopularInstructor from '@/Components/home/PopularInstructor.vue';
+import UsersCompliment from '@/Components/home/UsersCompliment.vue';
 
 
 

@@ -1,7 +1,7 @@
 <template>
     <section class="content__padding">
 
-        <h1>Popular Categories</h1>
+        <SectionTitle title="Popular Categories" />
         <v-sheet class="sheet__wrapper tw-py-5" color='transparent'>
 
             <v-sheet :elevation="4" rounded class="sheet__flex-col tw-p-3 tw-py-5 md:tw-py-10 tw-w-auto tw-gap-7"
@@ -23,6 +23,7 @@
 
 <script setup>
 import { computed } from "vue";
+import SectionTitle from './SectionTitle.vue'
 const props = defineProps({ categories: Object });
 
 const data = computed(() => {

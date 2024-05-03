@@ -1,7 +1,8 @@
 <template>
  <section class="content__padding">
 
-  <h1>Popular Categories</h1>
+  <SectionTitle title="Popular Categories" />
+
   <v-sheet class="sheet__wrapper !tw-py-5" color='transparent' v-if="data && data.length > 0">
 
    <v-card v-for="(item, key) in data" :key="key" class="v__card-popular tw-mx-auto tw-w-full tw-relative">
@@ -42,6 +43,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
+import SectionTitle from './SectionTitle.vue'
 
 const data = ref([])
 
