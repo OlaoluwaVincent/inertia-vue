@@ -14,7 +14,7 @@ class CategoryController extends Controller
 
     public function showCategories()
     {
-        $categories = Category::with('courses_id')->get();
+        $categories = Category::all();
         return $categories;
     }
 }

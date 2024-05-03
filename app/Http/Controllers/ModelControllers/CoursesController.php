@@ -34,6 +34,6 @@ class CoursesController extends Controller
             // Push the modified object into the result array
             $result[] = $newItem;
         }
-        return $result;
+        return array_slice($result, 0, 5);
     }
 }

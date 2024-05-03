@@ -15,10 +15,15 @@ Route::get('/', function () {
     ]);
 });
 
-
-
-
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/courses', function () {
+    return Inertia::render('Courses/AllCourses');
+})->name('course.show');
+
+Route::get('/courses/{id}', function () {
+    return Inertia::render('Courses/SingleCourse');
+})->name('course.single');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

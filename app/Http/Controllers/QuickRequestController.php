@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Instructor;
+use App\Models\Compliment;
 use Illuminate\Http\Request;
 
 class QuickRequestController extends Controller
