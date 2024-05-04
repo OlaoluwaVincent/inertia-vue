@@ -5,11 +5,13 @@
         <v-main class="tw-mt-4">
             <slot />
         </v-main>
+        <Footer />
     </VApp>
 </template>
 
 <script setup>
 import AppHeader from '@/Components/AppHeader.vue';
+import Footer from '@/Components/Footer.vue';
 import { watch } from 'vue';
 import { useTheme } from 'vuetify';
 

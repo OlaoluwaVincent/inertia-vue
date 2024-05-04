@@ -36,4 +36,15 @@ class CoursesController extends Controller
         }
         return array_slice($result, 0, 5);
     }
+
+
+    public static function coursesCount()
+    {
+        return [
+            "coursesNum" => Course::count(),
+            "lessonHrs" => Course::all()->reduce(function ($carry, $course) {
+                return $carry + $course->duration;
+            }, 0)
+        ];
+    }
 }

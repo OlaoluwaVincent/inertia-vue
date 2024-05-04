@@ -24,10 +24,10 @@
 <script setup>
 import { computed } from "vue";
 import SectionTitle from './SectionTitle.vue'
-const props = defineProps({ categories: Object });
+const props = defineProps({ categories: String });
 
 const data = computed(() => {
-    const categories = props.categories[0];
+    const categories = JSON.parse(props.categories);
 
     const result = Object.keys(categories).map(categoryId => {
         const category = categories[categoryId];
@@ -40,7 +40,7 @@ const data = computed(() => {
                         category.name.toLowerCase().includes('language') ? 'translate' : ''
 
         };
-    }).sort((a, b) => b.category_id - a.category_id).splice(0, 4)
+    })
     return result;
 });
 </script>

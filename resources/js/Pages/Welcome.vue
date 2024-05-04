@@ -27,7 +27,7 @@ const props = defineProps({
     coursesCount: Number,
     lessonHrs: Number,
     instructorsCount: Number,
-    categories: Object
+    categories: String,
 });
 
 </script>

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\ModelControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
 use App\Models\Instructor;
 
 class InstructorsController extends Controller
@@ -12,32 +11,33 @@ class InstructorsController extends Controller
     /**
      * This returns all the instructors and their related courses
      */
-    public function showInstructors()
+    public function showPopularInstructors()
     {
-        $result = [];
+        $results = [];
         $instructors = Instructor::with('courses')->get();
 
-        foreach ($instructors as $instructor) {
-            $intructor_courses = [];
+        // Sort the instructors by the highest number of courses
+        $sortedInstructors = $instructors->sortByDesc(function ($instructor) {
+            return count($instructor->courses);
+        });
 
-            foreach ($instructor->courses as $course) {
-                $intructor_courses[] = [
-                    'id' => $course->id,
-                    'title' => $course->title,
-                ];
-            }
-
+        foreach ($sortedInstructors as $instructor) {
             $data = [
                 'id' => $instructor->id,
                 'name' => $instructor->name,
                 'bio' => $instructor->bio,
                 'profile' => $instructor->profile_picture,
-                'instructor_courses' => $intructor_courses,
+                'instructor_courses' => count($instructor->courses),
             ];
 
-            $result[] = $data; // Append data to the result array
+            $results[] = $data;
         }
+        return array_slice($results, 0, 5);
+    }
 
-        return $result;
+
+    public static function instructorsCount()
+    {
+        return Instructor::count();
     }
 }

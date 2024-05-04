@@ -1,17 +1,19 @@
 <?php
 
-use App\DatabaseModelsCount;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ModelControllers\CategoryController;
+use App\Http\Controllers\ModelControllers\CoursesController;
+use App\Http\Controllers\ModelControllers\InstructorsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'coursesCount' => DatabaseModelsCount::coursesCount()['coursesNum'],
-        'lessonHrs' => DatabaseModelsCount::coursesCount()['lessonHrs'],
-        'instructorsCount' => DatabaseModelsCount::instructorsCount(),
-        'categories' => DatabaseModelsCount::categoriesSubCount(),
+        'coursesCount' => CoursesController::coursesCount()['coursesNum'],
+        'lessonHrs' => CoursesController::coursesCount()['lessonHrs'],
+        'instructorsCount' => InstructorsController::instructorsCount(),
+        'categories' => CategoryController::showPopularCategories(),
     ]);
 });
 

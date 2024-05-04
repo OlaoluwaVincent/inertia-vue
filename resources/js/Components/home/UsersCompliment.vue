@@ -1,5 +1,5 @@
 <template>
-  <section class="content__padding" :class="bg ? 'tw-bg-gray-700' : 'tw-bg-blue-50'">
+  <section class="content__padding" :class="bg ? 'tw-bg-inherit' : 'tw-bg-blue-50'">
     <div class="tw-flex tw-justify-between">
       <SectionTitle title="What Our Customers Say About Us" class="tw-max-w-[220px]" />
       <aside>
@@ -10,14 +10,14 @@
       </aside>
     </div>
     <v-sheet id="parent" class="sheet__wrapper !tw-py-5" color="transparent" v-if="data && data.length > 0">
-      <div v-for="(compliment, key) in data" :key="key" class="tw-p-6 inner__sheet"
+      <div v-for="(compliment, key) in data" :key="key" class="tw-p-6 inner__sheet tw-shadow-md"
         :class="bg ? 'tw-bg-gray-900 tw-text-white' : 'tw-bg-white'">
         <v-icon icon="mdi-format-quote-open" color="blue-darken-2" class="iconSize"></v-icon>
         <p class="tw-text-sm tw-text-justify">{{ compliment.comment.slice(0, 100) }}...</p>
         <UserBox :user="compliment.user" class="tw-mt-5" />
       </div>
     </v-sheet>
-  </section>
+  </section>4
 </template>
 
 <script setup>
@@ -44,26 +44,29 @@ const updateTheme = (newTheme) => {
   }
 };
 
-
-onMounted(async () => {
+async function getCompliments() {
   try {
-    const response = await axios.get('/api/compliments');
+    const response = await axios.get("/api/compliments");
     data.value = response.data;
   } catch (error) {
-    console.error('Error fetching items:', error);
+    console.error("Error fetching items:", error);
   }
+}
+
+
+onMounted(async () => {
+  await getCompliments();
 });
 
 function scrollRight() {
   const parent = document.getElementById('parent');
   parent.scrollLeft += 200;
 }
+
 function scrollLeft() {
   const parent = document.getElementById('parent');
   parent.scrollLeft -= 200;
 }
-
-
 </script>
 
 <style scoped>

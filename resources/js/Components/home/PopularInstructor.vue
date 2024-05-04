@@ -3,7 +3,7 @@
     <SectionTitle title="Popular Instructors" />
     <v-sheet class=" sheet__wrapper !tw-py-5" color='transparent' v-if="data && data.length > 0">
 
-      <v-card class="v__card-popular tw-mx-auto tw-w-full tw-relative !tw-p-3" v-for="(instructor, key) in sortedData"
+      <v-card class="v__card-popular tw-mx-auto tw-w-full tw-relative !tw-p-3" v-for="(instructor, key) in data"
         :key="key">
         <v-img :src="instructor.profile" cover></v-img>
 
@@ -21,7 +21,7 @@
         <v-divider thickness="3" class="divider__line" color="warning"></v-divider>
         <div class="tw-flex tw-items-center tw-justify-between tw-py-2">
           <v-rating model-value="3" color="amber" density="compact" size="small" half-increments readonly></v-rating>
-          <v-card-subtitle>400+</v-card-subtitle>
+          <v-card-subtitle>{{ instructor.instructor_courses }}+</v-card-subtitle>
         </div>
 
       </v-card>
@@ -36,26 +36,24 @@
 
 <script setup>
 import axios from 'axios';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import SectionTitle from './SectionTitle.vue'
 
 const data = ref([]);
 
-onMounted(async () => {
+async function getPopularInstructors() {
   try {
-    const response = await axios.get('/api/instructors');
-    data.value = response.data.splice(0, 5);
+    const response = await axios.get('/api/popular/instructors');
+    data.value = response.data
   } catch (error) {
     console.error('Error fetching items:', error);
   }
-});
+}
 
-const sortedData = computed(() => {
-  return data.value
-    .slice()
-    .sort((a, b) => b.instructor_courses.length - a.instructor_courses.length)
-});
+onMounted(async () => {
+  await getPopularInstructors();
 
+});
 </script>
 
 

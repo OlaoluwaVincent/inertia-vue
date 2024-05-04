@@ -47,13 +47,17 @@ import SectionTitle from './SectionTitle.vue'
 
 const data = ref([])
 
-onMounted(() => {
- axios.get('/api/courses').then(response => {
+function getPopularCourses() {
+ axios.get('/api/popular/courses').then(response => {
   const items = response.data
   data.value = items.splice(0, 4);
  }).catch(error => {
   console.error('Error fetching items:', error)
  })
+}
+
+onMounted(() => {
+ getPopularCourses()
 })
 
 
