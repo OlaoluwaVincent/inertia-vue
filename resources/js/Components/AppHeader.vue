@@ -5,6 +5,10 @@
       <v-toolbar-title>
         <Link href="/">School</Link>
       </v-toolbar-title>
+
+      <aside class="filter" v-if="categories && categories.length">
+        <CoursesFilter :categories="categories" />
+      </aside>
     </aside>
 
     <v-spacer></v-spacer>
@@ -19,7 +23,7 @@
         <v-btn v-if="isAuth" icon="mdi-heart-outline" variant="text"></v-btn>
         <v-btn v-if="isAuth" icon="mdi-bell" variant="text" color="orange-darken-2"></v-btn>
         <v-btn icon="mdi-cart" variant="text"></v-btn>
-        <v-switch v-model="isDark" color="primary" hide-details inset></v-switch>
+        <v-switch v-model="themeStore.isDark" color="primary" hide-details inset></v-switch>
       </aside>
 
     </aside>
@@ -39,35 +43,43 @@ import AppSidebar from '@/Components/AppSidebar.vue'
 import AppMenuDots from '@/Components/AppMenuDots.vue'
 import AppHeaderAuthBtn from '@/Components/AppHeaderAuthBtn.vue'
 import AppSearchHeader from '@/Components/AppSearchHeader.vue'
+import CoursesFilter from '@/Components/CoursesFilter.vue'
 import { Link, usePage } from '@inertiajs/vue3';
-import { computed, ref, watch } from 'vue';
-import { useTheme } from 'vuetify';
+import { computed, onMounted, ref, watch } from 'vue';
+import { useThemeStore } from '@/store/theme';
+
+const themeStore = useThemeStore()
+
 const userData = usePage()
 const isAuth = computed(() => userData.props?.auth?.user?.id ? true : false)
 const user = computed(() => userData.props.auth.user ?? null)
+
+const categories = ref([])
+function getPopularCategories() {
+  axios.get('/api/categories').then(response => {
+    const items = response.data
+    categories.value = items;
+  }).catch(error => {
+    console.error('Error fetching items:', error)
+  })
+}
+
+onMounted(() => {
+  getPopularCategories()
+})
 
 const drawer = ref(false);
 const group = ref(null);
 
 
+const props = defineProps({
+  courses: Object,
+  categories: Array,
+})
+
+
 watch(group, () => {
   drawer.value = false;
-});
-
-const theme = useTheme();
-const isDark = ref(false);
-
-function toggleTheme() {
-  if (isDark.value) {
-    theme.global.name.value = 'dark';
-  } else {
-    theme.global.name.value = 'light';
-  }
-}
-
-// Watch for changes in the isDark variable and toggle theme accordingly
-watch(isDark, () => {
-  toggleTheme();
 });
 </script>
 

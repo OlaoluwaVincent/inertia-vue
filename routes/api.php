@@ -11,4 +11,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/api/popular/courses', [CoursesController::class, 'showCourses']);
 Route::get('/api/popular/instructors', [InstructorsController::class, 'showPopularInstructors']);
 Route::get('/api/popular/categories', [CategoryController::class, 'showPopularCategories']);
+Route::get('/api/categories', [CategoryController::class, 'show']);
 Route::get('/api/compliments', [ComplimentsController::class, 'showCompliments']);

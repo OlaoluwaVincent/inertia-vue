@@ -1,6 +1,6 @@
 <template>
     <!-- theme='dark' -->
-    <VApp :theme="theme">
+    <VApp :theme="themeStore.isDark ? 'dark' : 'light'">
         <AppHeader />
         <v-main class="tw-mt-4">
             <slot />
@@ -12,19 +12,9 @@
 <script setup>
 import AppHeader from '@/Components/AppHeader.vue';
 import Footer from '@/Components/Footer.vue';
-import { watch } from 'vue';
-import { useTheme } from 'vuetify';
+import { useThemeStore } from '@/store/theme';
+const themeStore = useThemeStore()
 
-const theme = useTheme().global.name;
-
-// Watch for changes in the global theme and update the local theme variable
-watch(theme, (newVal) => {
-    updateTheme(newVal);
-});
-
-const updateTheme = (newTheme) => {
-    theme.value = newTheme;
-};
 </script>
 
 

@@ -9,9 +9,9 @@
         <input type="text" id="search" autocomplete="search"
           class="tw-bg-gray-100 tw-w-full tw-ring-0 tw-outline-none tw-block tw-pl-10" placeholder="Search Courses">
       </div>
-      <Link v-if="!props.isAuth" href="register?type=teacher" class="tw-text-nowrap tw-text-sm tw-underline">
+      <!-- <Link v-if="!props.isAuth" href="register?type=teacher" class="tw-text-nowrap tw-text-sm tw-underline">
       Teach on School
-      </Link>
+      </Link> -->
     </aside>
   </template>
 </template>

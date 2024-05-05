@@ -25,4 +25,10 @@ class CategoryController extends Controller
 
         return $firstFiveJson;
     }
+
+    public static function show()
+    {
+        $categories = Category::all();
+        return $categories;
+    }
 }
