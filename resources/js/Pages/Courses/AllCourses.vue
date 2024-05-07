@@ -1,6 +1,6 @@
 <template>
     <section class="wrapper">
-        <Filter />
+        <!-- <Filter /> -->
         <div class="tw-pt-5">
             <section class="courses">
                 <CourseCard :data="props.courses.data" />

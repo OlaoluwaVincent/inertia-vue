@@ -17,7 +17,7 @@
         <UserBox :user="compliment.user" class="tw-mt-5" />
       </div>
     </v-sheet>
-  </section>4
+  </section>
 </template>
 
 <script setup>

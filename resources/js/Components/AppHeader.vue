@@ -6,8 +6,8 @@
         <Link href="/">School</Link>
       </v-toolbar-title>
 
-      <aside class="filter" v-if="categories && categories.length">
-        <CoursesFilter :categories="categories" />
+      <aside class="filter">
+        <CoursesFilter />
       </aside>
     </aside>
 
@@ -45,7 +45,7 @@ import AppHeaderAuthBtn from '@/Components/AppHeaderAuthBtn.vue'
 import AppSearchHeader from '@/Components/AppSearchHeader.vue'
 import CoursesFilter from '@/Components/CoursesFilter.vue'
 import { Link, usePage } from '@inertiajs/vue3';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useThemeStore } from '@/store/theme';
 
 const themeStore = useThemeStore()
@@ -53,20 +53,6 @@ const themeStore = useThemeStore()
 const userData = usePage()
 const isAuth = computed(() => userData.props?.auth?.user?.id ? true : false)
 const user = computed(() => userData.props.auth.user ?? null)
-
-const categories = ref([])
-function getPopularCategories() {
-  axios.get('/api/categories').then(response => {
-    const items = response.data
-    categories.value = items;
-  }).catch(error => {
-    console.error('Error fetching items:', error)
-  })
-}
-
-onMounted(() => {
-  getPopularCategories()
-})
 
 const drawer = ref(false);
 const group = ref(null);

@@ -1,11 +1,11 @@
 <template>
-    <v-btn color="primary" variant="text">
+    <v-btn v-if="categories && categories.length" color="primary" variant="text">
         Categories
 
         <v-menu activator="parent">
             <v-list>
-                <v-list-item v-for="(category, i) in actualCategories" :key="i" :title="category.name"
-                    :value="category.id" @click="handleCategoryClick(category.id)" class="!tw-text-sm md:!tw-text-base">
+                <v-list-item v-for="(category, i) in categories" :key="i" :title="category.name" :value="category.id"
+                    @click="handleCategoryClick(category.id)" class="!tw-text-sm md:!tw-text-base">
                 </v-list-item>
             </v-list>
         </v-menu>
@@ -16,16 +16,20 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { router } from '@inertiajs/vue3';
+import { ref, onMounted } from 'vue';
+const categories = ref(null)
 
-const props = defineProps({
-    categories: Array
-})
+async function getPopularCategories() {
+    try {
+        const res = await axios.get("/api/categories");
+        categories.value = res.data;
+    } catch (error) {
+        return error.stack;
+    }
+}
 
-const actualCategories = computed(() =>
-    props.categories.
-        filter((cat) => cat.category_ids !== null && cat.category_ids.length >= 1)
-        .sort((a, b) => a.id - b.id))
+onMounted(() => getPopularCategories())
 
 // Define your reactive data
 const open = ref([]);
@@ -62,8 +66,7 @@ const handleCategoryClick = (categoryId, price = null) => {
         url.pathname = newPath;
     }
 
-    // Update the browser's location
-    window.location.href = url.toString();
+    router.visit(url.toString())
 }
 
 
