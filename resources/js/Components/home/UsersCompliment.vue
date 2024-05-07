@@ -23,7 +23,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import SectionTitle from './SectionTitle.vue'
-import UserBox from './UserBox.vue'
+import UserBox from '../UserBox.vue'
 import axios from 'axios';
 import { useTheme } from 'vuetify';
 

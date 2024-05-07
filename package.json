@@ -21,8 +21,6 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "@tanstack/vue-query": "^5.35.1",
-        "@tanstack/vue-query-devtools": "^5.35.1",
         "pinia": "^2.1.7",
         "pinia-plugin-persistedstate": "^3.2.1",
         "vuetify": "^3.5.17"

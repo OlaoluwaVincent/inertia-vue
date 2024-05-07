@@ -9,7 +9,6 @@ import GuestLayout from "./Layouts/GuestLayout.vue";
 import vuetify from "./plugins/vuetify";
 import pinia from "@/plugins/pinia";
 
-import { VueQueryPlugin } from "@tanstack/vue-query";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 createInertiaApp({
@@ -47,7 +46,6 @@ createInertiaApp({
             .use(vuetify)
             .use(ZiggyVue)
             .use(pinia)
-            .use(VueQueryPlugin)
             .mount(el);
     },
     progress: {
