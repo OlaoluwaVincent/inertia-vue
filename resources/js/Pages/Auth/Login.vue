@@ -36,7 +36,7 @@ const submit = () => {
         {{ status }}
     </div>
     <section
-        class="tw-flex md:tw-flex-col lg:tw-flex-row tw-items-center tw-justify-center tw-gap-10 tw-h-full tw-w-full tw-p-10 md:tw-px-[8%]">
+        class="tw-flex md:tw-flex-col lg:tw-flex-row tw-items-center tw-justify-center tw-gap-10 tw-h-full tw-w-full tw-p-10 md:tw-px-[8%] tw-mb-10">
         <div
             class="tw-hidden md:tw-block md:tw-h-[400px] lg:tw-h-auto tw-w-[80%] tw-relative tw-rounded-3xl tw-overflow-hidden">
             <v-img class="bg-grey-lighten-2" src="/assets/images/loginImg.png" cover></v-img>

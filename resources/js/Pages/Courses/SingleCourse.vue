@@ -27,6 +27,17 @@
                 </v-btn>
             </template>
         </v-snackbar>
+
+        <section id="lessons" class="md:tw-max-w-[60%] tw-my-5">
+            <h5 class="tw-font-bold tw-mb-4">Lessons in this course</h5>
+
+            <div>
+                <v-expansion-panels v-for="lesson in course.lessons" :key="lesson.id">
+                    <v-expansion-panel :title="lesson.title" :text="lesson.description">
+                    </v-expansion-panel>
+                </v-expansion-panels>
+            </div>
+        </section>
     </section>
 
 </template>
@@ -41,11 +52,14 @@ import { computed, ref } from 'vue';
 const timeout = ref(2000)
 const snackbar = ref(false)
 
-const cartStore = useCartStore()
-const theme = useThemeStore()
+const cartStore = useCartStore();
+const theme = useThemeStore();
+
 const props = defineProps({
     course: Object
 })
+
+console.log(props.course)
 
 const isExistInCart = computed(() => cartStore.checkExisting(props.course.id))
 

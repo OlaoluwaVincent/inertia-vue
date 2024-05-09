@@ -16,14 +16,20 @@ class CategoryController extends Controller
     {
         // Get all categories with the count of associated courses
         $categories = Category::withCount('courses')->get();
+        $notNullCategory = [];
 
-        // Sort the categories by the highest number of courses
-        $sortedCategories = $categories->sortByDesc('courses_count');
-        $categories = json_decode($sortedCategories, true);
-        $firstFiveItems = array_slice($categories, 0, 4);
-        $firstFiveJson = json_encode($firstFiveItems);
+        foreach ($categories as $category) {
+            if ($category->category_ids !== null) {
+                // Append the category data to the $notNullCategory array
+                $notNullCategory[] = [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'category_ids' => $category->category_ids,
+                ];
+            }
+        }
 
-        return $firstFiveJson;
+        return $notNullCategory;
     }
 
     public static function show()

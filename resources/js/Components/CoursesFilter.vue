@@ -22,7 +22,7 @@ const categories = ref(null)
 
 async function getPopularCategories() {
     try {
-        const res = await axios.get("/api/categories");
+        const res = await axios.get("/api/popular/categories");
         categories.value = res.data;
     } catch (error) {
         return error.stack;
@@ -37,12 +37,7 @@ const open = ref([]);
 const handleCategoryClick = (categoryId, price = null) => {
     const currentUrl = window.location.href;
     let url = new URL(currentUrl);
-    let newPath = '';
-
-    // If the current path is not the courses route, set it to /courses
-    if (!url.pathname.includes('/courses')) {
-        newPath = '/courses';
-    }
+    let newPath = '/courses';
 
     // If there's already a query string, append the category parameter with '&' separator
     if (url.search) {
