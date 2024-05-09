@@ -13,6 +13,8 @@ class Instructor extends Model
         'name',
         'bio',
         'profile_picture',
+        'socials',
+        'followers',
     ];
 
     public function courses()

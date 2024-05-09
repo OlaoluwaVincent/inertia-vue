@@ -2,7 +2,7 @@
     <section class="courseBannerCard">
 
         <v-card class="mx-auto !tw-p-5 !tw-rounded-2xl card__wrapper">
-            <v-img height="250" class="!tw-rounded-2xl" :src="course.image" cover></v-img>
+            <v-img height="180" class="!tw-rounded-2xl" :src="course.image" cover></v-img>
 
             <v-card-item>
                 <v-card-title>{{ course.title }}</v-card-title>
@@ -24,14 +24,10 @@
             </div>
             <v-divider class="mx-4 my-1"></v-divider>
             <div class="tw-py-5">
-                <h5>Share</h5>
+                <h5>Follow</h5>
                 <div class="text-center">
                     <v-icon icon="mdi-facebook" @click="socialMediaShare.shareOnFacebook()"
-                        class="!tw-text-2xl !tw-shadow-2xl tw-rounded-full !tw-bg-gray-200 !tw-p-4 !tw-text-blue-700"></v-icon>
-                    <!-- <v-icon icon="mdi-instagram"
-                        class="!tw-text-2xl !tw-shadow-2xl tw-rounded-full !tw-bg-gray-200 !tw-p-6 tw-ms-4"></v-icon>
-                    <v-icon icon="mdi-github"
-                        class="!tw-text-2xl !tw-shadow-2xl tw-rounded-full !tw-bg-gray-200 !tw-p-6 tw-ms-4"></v-icon> -->
+                        class="!tw-text-4xl !tw-shadow-2xl tw-rounded-full !tw-bg-gray-200 !tw-text-blue-700"></v-icon>
                 </div>
             </div>
         </v-card>
