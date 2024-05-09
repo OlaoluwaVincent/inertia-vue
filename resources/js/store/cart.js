@@ -11,6 +11,10 @@ export const useCartStore = defineStore(
             cart.value.push(value);
         }
 
+        function removeFromCart(id) {
+            cart.value = cart.value.filter((item) => item.id !== id);
+        }
+
         function checkExisting(id) {
             if (cart.value !== undefined && cart.value.length > 0) {
                 const index = cart.value.findIndex((item) => item.id === id);
@@ -23,6 +27,8 @@ export const useCartStore = defineStore(
         return {
             cart,
             addToCart,
+            removeFromCart,
+            checkExisting,
         };
     },
     { persist: true }

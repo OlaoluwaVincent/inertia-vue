@@ -1,8 +1,8 @@
 <template>
-    <section class="tw-max-w-[60%]">
+    <section class="md:tw-max-w-[60%]">
 
         <h1 class="md:tw-text-5xl tw-font-extrabold">{{ course.title }}</h1>
-        <p class="tw-mt-8 tw-text-sm md:tw-text-base">{{ course.description }}</p>
+        <p class="tw-mt-4 md:tw-mt-8 tw-text-sm md:tw-text-base">{{ course.description }}</p>
 
         <div class="tw-pt-5 tw-flex tw-gap-20 tw-items-center">
             <span class="tw-flex tw-items-center gap-3 flex-1 tw-border-r tw-pr-20"
@@ -29,7 +29,6 @@ const theme = useThemeStore()
 const props = defineProps({
     course: Object
 })
-console.log(props.course)
 const user = computed(() => props.course.instructor)
 const course = computed(() => props.course)
 </script>

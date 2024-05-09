@@ -7,18 +7,53 @@
   </v-sheet>
  </v-sheet>
 </template>
-
 <script setup>
-import { defineProps } from 'vue';
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({ data: Object });
+const coursesCount = ref(null)
+const lessonHrs = ref(null)
+const instructorsCount = ref(null)
 
 const items = [
- { title: props.data.coursesCount, desc: "Courses by our Mentors" },
- { title: props.data.lessonHrs, desc: "Hours of Lessons" },
- { title: props.data.instructorsCount, desc: "Worthy Instructors" }
+ { title: ref(null), desc: "Courses by our Mentors" },
+ { title: ref(null), desc: "Hours of Lessons" },
+ { title: ref(null), desc: "Worthy Instructors" }
 ];
+
+
+function getCounts() {
+    axios.get('/api/coursescount').then(response => {
+        const data = response.data
+        coursesCount.value = data.coursesNum;
+        lessonHrs.value = data.lessonHrs;
+        updateItems();
+    }).catch(error => {
+        console.error('Error fetching items:', error)
+    })
+}
+function getInstructorsCount() {
+    axios.get('/api/instructorsCount').then(response => {
+        instructorsCount.value = response.data;
+        updateItems();
+    }).catch(error => {
+        console.error('Error fetching items:', error)
+    })
+}
+
+function updateItems() {
+    items[0].title.value = coursesCount.value;
+    items[1].title.value = lessonHrs.value;
+    items[2].title.value = instructorsCount.value;
+}
+
+onMounted(()=>{
+    getCounts();
+    getInstructorsCount();
+})
 </script>
+
 
 
 <style></style>

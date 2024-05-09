@@ -10,7 +10,7 @@ use Inertia\Inertia;
 class CoursesController extends Controller
 {
 
-    /** @Return Returns all the Courses view with the courses data */
+    /**  all the Courses view with the courses data */
     public function index(Request $request)
     {
         // Retrieve query parameters
@@ -48,7 +48,7 @@ class CoursesController extends Controller
 
 
 
-    /** @Return Returns the Course view with the course data {category, course, instructor} */
+    /** the Course view with the course data {category, course, instructor} */
     public function show($id)
     {
         $course = Course::with('category', 'instructor')->find($id);

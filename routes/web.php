@@ -9,15 +9,13 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'coursesCount' => CoursesController::coursesCount()['coursesNum'],
-        'lessonHrs' => CoursesController::coursesCount()['lessonHrs'],
-        'instructorsCount' => InstructorsController::instructorsCount(),
-        'categories' => CategoryController::showPopularCategories(),
-    ]);
+    return Inertia::render('Welcome');
 });
 
+
+
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::group(['prefix' => 'courses'], function () {
     Route::get('/', [CoursesController::class, 'index'])->name('course.show');

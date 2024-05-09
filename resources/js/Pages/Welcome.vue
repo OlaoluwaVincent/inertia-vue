@@ -3,9 +3,8 @@
     <Head title="Welcome" />
     <section class="pb-10 tw-space-y-7 md:tw-space-y-10">
         <HomeBanner />
-        <DataCount
-            :data="{ coursesCount: props.coursesCount, instructorsCount: props.instructorsCount, lessonHrs: props.lessonHrs }" />
-        <PopularCategories :categories="props.categories" />
+        <DataCount />
+        <PopularCategories />
         <PopularCourse />
         <PopularInstructor />
         <UsersCompliment />
@@ -20,19 +19,6 @@ import PopularCourse from '@/Components/home/PopularCourse.vue';
 import PopularCategories from '@/Components/home/PopularCategories.vue';
 import PopularInstructor from '@/Components/home/PopularInstructor.vue';
 import UsersCompliment from '@/Components/home/UsersCompliment.vue';
+import { ref } from 'vue';
 
-
-
-const props = defineProps({
-    coursesCount: Number,
-    lessonHrs: Number,
-    instructorsCount: Number,
-    categories: String,
-});
-
-</script>
-<script>
-export default {
-    inheritAttrs: false, // Suppress the warning for extraneous non-props attributes
-}
 </script>
