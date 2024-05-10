@@ -2,7 +2,7 @@
   <Head title="Cart" />
   <section id="cart" class="tw-mb-52 tw-p-5">
     <aside
-      class="tw-flex tw-flex-col tw-gap-5 tw-flex-1 tw-flex-shrink-0 tw-w-full"
+      class="tw-flex tw-flex-col tw-gap-5 tw-flex-shrink-0 lg:tw-w-[70%] xl:tw-w-[60%]"
     >
       <h6 class="tw-font-semibold">
         {{ cartStore.cartLength }} Course in Cart

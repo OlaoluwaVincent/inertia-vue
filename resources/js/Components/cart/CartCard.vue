@@ -106,7 +106,8 @@ const props = defineProps({
 
 @media (width>=768px) {
   .cart__image {
-    width: 150px;
+    width: 100px;
+    max-width: 150px;
   }
 
   .cart__price {

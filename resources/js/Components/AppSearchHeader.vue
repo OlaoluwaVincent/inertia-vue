@@ -1,6 +1,8 @@
 <template>
   <template v-if="$vuetify.display.mdAndUp">
-    <aside class="tw-flex tw-gap-3 tw-items-center tw-w-[300px]">
+    <aside
+      class="tw-flex tw-gap-3 tw-items-center tw-w-[300px] xl:tw-w-[500px]"
+    >
       <div
         class="tw-border tw-relative tw-rounded-xl tw-border-primary-100 tw-overflow-hidden flex-row-center relative tw-ms-[50px] tw-flex-1 tw-mx-auto"
       >
