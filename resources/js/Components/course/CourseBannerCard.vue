@@ -1,6 +1,5 @@
 <template>
     <section class="courseBannerCard">
-
         <v-card class="mx-auto !tw-p-5 !tw-rounded-2xl card__wrapper">
             <v-img height="180" class="!tw-rounded-2xl" :src="course.image" cover></v-img>
 
@@ -15,12 +14,12 @@
             </v-card-item>
 
             <div class="tw-flex tw-flex-col tw-gap-5">
-                <v-btn v-if="isExistInCart" @click="removeFromCart" block density='default'
+                <v-btn v-if="isExistInCart" @click="removeFromCart" block density="default"
                     :class="theme.isDark ? 'light' : 'dark'">Remove From Cart</v-btn>
-                <v-btn v-else @click="addToCart" block density='default' :class="theme.isDark ? 'light' : 'dark'">Add To
+                <v-btn v-else @click="addToCart" block density="default" :class="theme.isDark ? 'light' : 'dark'">Add To
                     Cart</v-btn>
 
-                <v-btn block density='default' :class="theme.isDark ? 'dark' : 'light'">Buy Now</v-btn>
+                <v-btn block density="default" :class="theme.isDark ? 'dark' : 'light'">Buy Now</v-btn>
             </div>
             <v-divider class="mx-4 my-1"></v-divider>
             <div class="tw-py-5">
@@ -32,41 +31,34 @@
             </div>
         </v-card>
     </section>
-    <v-snackbar v-model="snackbar" :timeout="2000" color="primary">
-        Added to Cart
-
-        <template v-slot:actions>
-            <v-btn color="warning" variant="text" @click="snackbar = false">
-                Close
-            </v-btn>
-        </template>
-    </v-snackbar>
+    <CartSnackBar v-model="snackbar" />
 </template>
 
 <script setup>
-import { useThemeStore } from '@/store/theme';
-import SocialMediaShare from '@/utils/shareCourse'
-import { useCartStore } from '@/store/cart';
-import { ref } from 'vue';
+import { useThemeStore } from "@/store/theme";
+import SocialMediaShare from "@/utils/shareCourse";
+import { useCartStore } from "@/store/cart";
+import CartSnackBar from "@/Components/CartSnackBar.vue";
+import { ref } from "vue";
 
-const socialMediaShare = new SocialMediaShare(window.location.pathname)
+const socialMediaShare = new SocialMediaShare(window.location.pathname);
 const cartStore = useCartStore();
-const snackbar = ref(false)
+const snackbar = ref(false);
 
-const theme = useThemeStore()
+const theme = useThemeStore();
 
 const props = defineProps({
     course: Object,
     isExistInCart: Boolean,
-})
+});
 
 function addToCart() {
-    cartStore.addToCart(props.course)
-    snackbar.value = true
+    cartStore.addToCart(props.course);
+    snackbar.value = true;
 }
 
 function removeFromCart() {
-    cartStore.removeFromCart(props.course.id)
+    cartStore.removeFromCart(props.course.id);
 }
 </script>
 

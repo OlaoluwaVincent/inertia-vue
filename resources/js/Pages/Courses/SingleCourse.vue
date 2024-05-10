@@ -1,88 +1,41 @@
 <template>
-    <section class="tw-mb-10 tw-relative content__padding tw-min-h-[90svh]"
-        :class="theme.isDark ? 'tw-bg-gray-800' : 'tw-bg-gray-50'">
-        <div class="tw-relative">
+  <section
+    class="tw-mb-10 tw-relative content__padding tw-min-h-[90svh]"
+    :class="theme.isDark ? 'tw-bg-gray-800' : 'tw-bg-gray-50'"
+  >
+    <div class="tw-relative">
+      <CourseBanner :course="props.course" />
+      <CourseBannerCard :isExistInCart="isExistInCart" :course="course" />
+    </div>
+    <MobileCheckoutButton :course="course" v-model="snackbar" />
+    <CourseLessons :lessons="course.lessons" />
 
-            <CourseBanner :course="props.course" />
-            <CourseBannerCard :isExistInCart="isExistInCart" :course="course" />
+    <div class="tw-py-10 md:tw-py-32" />
 
-        </div>
-        <div class="tw-flex md:tw-hidden tw-flex-col tw-gap-5 tw-mt-5 tw-mx-auto tw-w-[80%] ">
-            <v-btn v-if="isExistInCart" block density='default' @click="removeFromCart"
-                :class="theme.isDark ? 'light' : 'dark'">Remove From
-                Cart</v-btn>
-
-            <v-btn v-else block density='default' @click="addToCart" :class="theme.isDark ? 'light' : 'dark'">Add To
-                Cart</v-btn>
-
-            <v-btn block density='default' :class="theme.isDark ? 'dark' : 'light'">Buy Now</v-btn>
-        </div>
-
-        <v-snackbar v-model="snackbar" :timeout="timeout" color="primary">
-            Added to Cart
-
-            <template v-slot:actions>
-                <v-btn color="warning" variant="text" @click="snackbar = false">
-                    Close
-                </v-btn>
-            </template>
-        </v-snackbar>
-
-        <section id="lessons" class="md:tw-max-w-[60%] tw-my-5">
-            <h5 class="tw-font-bold tw-mb-4">Lessons in this course</h5>
-
-            <div>
-                <v-expansion-panels v-for="lesson in course.lessons" :key="lesson.id">
-                    <v-expansion-panel :title="lesson.title" :text="lesson.description">
-                    </v-expansion-panel>
-                </v-expansion-panels>
-            </div>
-        </section>
-    </section>
-
+    <RelatedCourses :instructor_id="course.instructor_id" />
+  </section>
 </template>
 
 <script setup>
-import CourseBanner from '@/Components/course/CourseBanner.vue';
-import CourseBannerCard from '@/Components/course/CourseBannerCard.vue';
-import { useThemeStore } from '@/store/theme';
-import { useCartStore } from '@/store/cart'
-import { computed, ref } from 'vue';
+import CourseBanner from "@/Components/course/CourseBanner.vue";
+import CourseBannerCard from "@/Components/course/CourseBannerCard.vue";
+import MobileCheckoutButton from "@/Components/course/MobileCheckoutButton.vue";
+import RelatedCourses from "@/Components/course/RelatedCourses.vue";
+import CourseLessons from "@/Components/course/CourseLessons.vue";
 
-const timeout = ref(2000)
-const snackbar = ref(false)
+import { useThemeStore } from "@/store/theme";
+import { useCartStore } from "@/store/cart";
+import { computed, ref } from "vue";
 
 const cartStore = useCartStore();
 const theme = useThemeStore();
 
 const props = defineProps({
-    course: Object
-})
+  course: Object,
+});
 
-console.log(props.course)
+console.log(props.course);
 
-const isExistInCart = computed(() => cartStore.checkExisting(props.course.id))
-
-function addToCart() {
-    cartStore.addToCart(props.course)
-    snackbar.value = true
-}
-
-function removeFromCart() {
-    cartStore.removeFromCart(props.course.id)
-}
+const snackbar = ref(false);
+const isExistInCart = computed(() => cartStore.checkExisting(props.course.id));
 </script>
-
-
-<style scoped>
-.dark {
-    background: #222;
-    color: white;
-}
-
-.light {
-    background: white;
-    color: #222;
-    border: 1px solid #222;
-}
-</style>

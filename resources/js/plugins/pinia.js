@@ -3,9 +3,5 @@ import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
 
 const pinia = createPinia();
-pinia.use(
-    createPersistedState({
-        storage: sessionStorage,
-    })
-);
+pinia.use(createPersistedState());
 export default pinia;
