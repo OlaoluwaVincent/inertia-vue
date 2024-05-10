@@ -1,10 +1,36 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const useCartStore = defineStore(
     "cart",
     () => {
         const cart = ref([]);
+        const cartLength = computed(() => cart.value.length);
+        const price = computed(() => {
+            if (cart.value.length) {
+                const totalPrice = cart.value.reduce(
+                    (acc, course) => acc + parseFloat(course.price),
+                    0
+                );
+                return totalPrice.toFixed(2);
+            }
+        });
+        const discount = computed(() => {
+            if (cart.value.length) {
+                const totalPrice = cart.value.reduce((acc, course) => {
+                    if (course.discount) {
+                        return acc + parseFloat(course.discount);
+                    }
+                    return acc;
+                }, 0);
+                return totalPrice.toFixed(2);
+            }
+        });
+
+        const tax = computed(() => {
+            const taxRate = 0.075;
+            return (taxRate * price.value).toFixed(2);
+        });
 
         function addToCart(value) {
             if (checkExisting(value.id)) return;
@@ -25,7 +51,11 @@ export const useCartStore = defineStore(
         }
 
         return {
+            cartLength,
             cart,
+            discount,
+            price,
+            tax,
             addToCart,
             removeFromCart,
             checkExisting,

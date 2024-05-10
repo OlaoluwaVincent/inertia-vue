@@ -12,7 +12,9 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
-
+Route::get('/cart', function () {
+    return Inertia::render('Cart');
+})->name('cart');
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
 
