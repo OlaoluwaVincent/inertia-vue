@@ -25,7 +25,9 @@
       }}</span>
     </p>
 
-    <v-btn color="black">Proceed to Checkout</v-btn>
+    <v-btn color="black" :href="route('payment.checkout')"
+      >Proceed to Checkout</v-btn
+    >
   </section>
 </template>
 

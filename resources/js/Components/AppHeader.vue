@@ -22,7 +22,7 @@
 
     <v-spacer></v-spacer>
     <!-- Show on small screen -->
-    <aside class="tw-flex">
+    <aside class="tw-flex tw-items-center">
       <v-btn
         v-if="!$vuetify.display.xs && isAuth"
         icon="mdi-bell"
@@ -30,13 +30,13 @@
         color="orange-darken-2"
       ></v-btn>
 
-      <v-btn class="text-none" stacked>
-        <v-badge color="error" :content="cartStore.cartLength">
-          <Link :href="route('cart')">
+      <Link :href="route('cart')">
+        <v-btn class="text-none" stacked>
+          <v-badge color="error" :content="cartStore.cartLength">
             <v-icon>mdi-cart</v-icon>
-          </Link>
-        </v-badge>
-      </v-btn>
+          </v-badge>
+        </v-btn>
+      </Link>
     </aside>
     <AppHeaderAuthBtn v-if="$vuetify.display.mdAndUp" :isAuth="isAuth" />
 
