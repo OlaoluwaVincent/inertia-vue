@@ -1,14 +1,15 @@
 <template>
   <section class="tw-mt-10" v-if="relatedCourses.length">
     <h5 class="tw-font-semibold tw-mb-5">Courses by the same Author</h5>
-    <section class="courses">
-      <CourseCard :data="relatedCourses" />
-    </section>
+    <ScrollX :scrollable="true">
+      <CourseCard :data="relatedCourses" size="tw-min-w-[200px]" />
+    </ScrollX>
   </section>
 </template>
 
 <script setup>
 import axios from "axios";
+import ScrollX from "../ScrollX.vue";
 import CourseCard from "@/Components/CourseCard.vue";
 import { onMounted, ref } from "vue";
 
@@ -33,32 +34,3 @@ onMounted(() => {
   getRelatedCourses();
 });
 </script>
-
-
-<style scoped>
-.courses {
-  padding: 5%;
-  padding-top: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-@media (width>430px) {
-  .courses {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (width>768px) {
-  .courses {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-@media (width>=1024px) {
-  .courses {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-}
-</style>

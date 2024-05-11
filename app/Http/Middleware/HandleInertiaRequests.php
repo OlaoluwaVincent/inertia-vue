@@ -2,9 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\DatabaseModelsCount;
-use App\Models\Course;
-use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -36,6 +33,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                // 'message' => fn () => $request->session()->get('message'),
             ],
         ];
     }

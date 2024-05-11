@@ -3,6 +3,7 @@
     v-for="(item, key) in data"
     :key="key"
     class="v__card-popular tw-mx-auto tw-w-full tw-relative"
+    :class="size"
   >
     <v-img :src="item.image" cover class="img__height tw-relative">
       <v-btn
@@ -60,6 +61,7 @@ const store = useCartStore();
 
 const props = defineProps({
   data: Array,
+  size: String,
 });
 
 function handleCartClick(value) {

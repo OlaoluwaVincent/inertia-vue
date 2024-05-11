@@ -8,30 +8,9 @@
         title="What Our Customers Say About Us"
         class="tw-max-w-[220px]"
       />
-      <aside>
-        <v-btn
-          color="blue-grey-lighten-1"
-          @click="scrollLeft"
-          :rounded="false"
-          size="small"
-          icon="mdi-chevron-left"
-        ></v-btn>
-        <v-btn
-          color="blue-grey-lighten-1"
-          class="tw-ms-3"
-          @click="scrollRight"
-          :rounded="false"
-          size="small"
-          icon="mdi-chevron-right"
-        ></v-btn>
-      </aside>
     </div>
-    <v-sheet
-      id="parent"
-      class="sheet__wrapper !tw-py-5"
-      color="transparent"
-      v-if="data && data.length > 0"
-    >
+
+    <ScrollX :controller="true">
       <div
         v-for="(compliment, key) in data"
         :key="key"
@@ -48,13 +27,15 @@
         </p>
         <UserBox :user="compliment.user" class="tw-mt-5" />
       </div>
-    </v-sheet>
+    </ScrollX>
   </section>
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
+import ScrollX from "../ScrollX.vue";
 import SectionTitle from "./SectionTitle.vue";
+
 import UserBox from "../UserBox.vue";
 import axios from "axios";
 import { useThemeStore } from "@/store/theme";
@@ -75,26 +56,9 @@ async function getCompliments() {
 onMounted(async () => {
   await getCompliments();
 });
-
-function scrollRight() {
-  const parent = document.getElementById("parent");
-  parent.scrollLeft += 200;
-}
-
-function scrollLeft() {
-  const parent = document.getElementById("parent");
-  parent.scrollLeft -= 200;
-}
 </script>
 
 <style scoped>
-.sheet__wrapper {
-  display: flex;
-  overflow-x: hidden;
-  gap: 20px;
-  scroll-behavior: smooth;
-}
-
 .inner__sheet {
   border-radius: 20px;
   display: flex;

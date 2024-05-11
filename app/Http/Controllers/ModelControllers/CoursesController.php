@@ -42,7 +42,6 @@ class CoursesController extends Controller
         // Return view with courses
         return Inertia::render('Courses/AllCourses', [
             'courses' => $courses,
-            'categories' => CategoryController::show()
         ]);
     }
 
@@ -51,10 +50,9 @@ class CoursesController extends Controller
     /** the Course view with the course data {category, course, instructor} */
     public function show($id)
     {
-        $course = Course::with('category', 'instructor', 'lessons')->find($id);
+        $course = Course::with('category', 'instructor', 'lessons', 'reviews')->find($id);
 
         return Inertia::render('Courses/SingleCourse', [
-            'id' => $id,
             'course' => $course,
         ]);
     }

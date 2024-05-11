@@ -1,7 +1,7 @@
 <template>
   <section
     class="tw-bg-gray-300 tw-flex tw-flex-col tw-gap-5 tw-w-full tw-p-4 tw-rounded-md"
-    :class="theme.isDark && '!tw-bg-gray-900'"
+    :class="theme.isDark && 'tw-bg-gray-900'"
   >
     <p>
       Price: <span>{{ cartStore.price }}</span>
@@ -16,27 +16,51 @@
     <v-divider class="tw-border-gray-600"></v-divider>
     <p class="tw-text-lg tw-uppercase tw-font-bold">
       Total:
-      <span>{{
-        (
-          parseFloat(cartStore.price) +
-          parseFloat(cartStore.tax) +
-          parseFloat(cartStore.discount)
-        ).toFixed(2)
-      }}</span>
+      <span>{{ total }}</span>
     </p>
-
-    <v-btn color="black" :href="route('payment.checkout')"
-      >Proceed to Checkout</v-btn
-    >
+    <!-- <Link
+      as="button"
+      :href="route('pay')"
+      method="post"
+      :data="{ amount: total }"
+    > -->
+    <v-btn color="black" @click="proceedToCheckout">Proceed to Checkout</v-btn>
+    <!-- </Link> -->
   </section>
 </template>
 
 <script setup>
+import { Link, router, usePage } from "@inertiajs/vue3";
 import { useCartStore } from "@/store/cart";
 import { useThemeStore } from "@/store/theme";
+import { computed } from "vue";
 
+// Get CSRF token from meta tag
+function csrfToken() {
+  return document.head.querySelector('meta[name="csrf-token"]').content;
+}
+
+const page = usePage();
 const theme = useThemeStore();
 const cartStore = useCartStore();
+
+const total = computed(() =>
+  (
+    parseFloat(cartStore.price) +
+    parseFloat(cartStore.tax) +
+    parseFloat(cartStore.discount)
+  ).toFixed(2)
+);
+
+// Function to handle button click
+const proceedToCheckout = () => {
+  const amount = total.value;
+  const token = csrfToken();
+  // Send data to the backend
+  // Assuming you're using Inertia.js
+  // You may need to adjust this according to your backend setup
+  router.post("pay", { amount, _token: token });
+};
 </script>
 
 <style scoped>

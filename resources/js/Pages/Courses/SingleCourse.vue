@@ -12,7 +12,10 @@
     <CourseLessons :lessons="course.lessons" />
 
     <div class="tw-py-10 md:tw-py-32" />
+    {{ message }}
+    <ReviewForm :id="course.id" :errors="errors" />
 
+    <div class="tw-py-10 md:tw-py-32" />
     <RelatedCourses :instructor_id="course.instructor_id" />
   </section>
 </template>
@@ -24,6 +27,7 @@ import CourseBannerCard from "@/Components/course/CourseBannerCard.vue";
 import MobileCheckoutButton from "@/Components/course/MobileCheckoutButton.vue";
 import RelatedCourses from "@/Components/course/RelatedCourses.vue";
 import CourseLessons from "@/Components/course/CourseLessons.vue";
+import ReviewForm from "@/Components/course/ReviewForm.vue";
 
 import { useThemeStore } from "@/store/theme";
 import { useCartStore } from "@/store/cart";
@@ -34,6 +38,7 @@ const theme = useThemeStore();
 
 const props = defineProps({
   course: Object,
+  errors: Object,
 });
 
 const snackbar = ref(false);

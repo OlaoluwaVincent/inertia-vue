@@ -4,27 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 use Unicodeveloper\Paystack\Facades\Paystack;
 
 class PaymentController extends Controller
 {
-
-    public function show()
-    {
-        return Inertia::render("Payment/Checkout");
-    }
     /**
      * Redirect the User to Paystack Payment Page
      * @return Url
      */
-    public function redirectToGateway()
+    public function redirectToGateway(Request $request)
     {
+        $metadata = json_encode(['product_name' => 'Niccompop',]);
+        $userData = [
+            "amount" => intval($request->amount),
+            "reference" => Paystack::genTranxRef(),
+            "email" => $request->user()->email,
+            "first_name" => $request->user()->fullname,
+            "last_name" => $request->user()->username,
+            "metadata" => $metadata,
+        ];
         try {
-            return Paystack::getAuthorizationUrl()->redirectNow();
+            return Paystack::getAuthorizationUrl($userData)->redirectNow();
         } catch (\Exception $e) {
             return Redirect::back()->withMessage(['msg' => 'The paystack token has expired. Please refresh the page and try again.', 'type' => 'error']);
         }

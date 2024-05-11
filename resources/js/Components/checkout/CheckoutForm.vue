@@ -1,32 +1,38 @@
 <template>
-  <section class="tw-w-full">
-    <div class="country">
-      <aside>
-        <label for="country">Country</label>
-        <input
-          type="text"
-          name="country"
-          id="country"
-          placeholder="Enter Country"
-          required
-        />
-      </aside>
-      <aside>
-        <label for="state">State/Union Tertiary</label>
-        <input
-          type="text"
-          name="state"
-          id="state"
-          placeholder="Enter State"
-          required
-        />
-      </aside>
-    </div>
-    <h3>Payment Method</h3>
-  </section>
+  <form class="country tw-w-full">
+    <aside>
+      <label for="country">Country</label>
+      <input
+        type="text"
+        name="country"
+        id="country"
+        v-model="country"
+        placeholder="Enter Country"
+        required
+      />
+    </aside>
+    <aside>
+      <label for="state">State/Union Tertiary</label>
+      <input
+        type="text"
+        name="state"
+        id="state"
+        v-model="state"
+        placeholder="Enter State"
+        required
+      />
+    </aside>
+  </form>
+  <h3>Payment Method</h3>
 </template>
 
 <script setup>
+import { useForm } from "@inertiajs/vue3";
+
+const form = useForm({
+  country: "",
+  state: "",
+});
 </script>
 
 <style scoped>
