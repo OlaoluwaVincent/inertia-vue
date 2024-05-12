@@ -13,11 +13,23 @@ class ReviewController extends Controller
 
     public function show($id)
     {
-        $reviews = Review::where('course_id', $id)->with('user')->orderBy('created_at')->get();
-        if (!$reviews) {
+        $allReviews = Review::where('course_id', $id)->with('user')->orderBy('created_at')->get();
+        if (!$allReviews) {
             return ['message', abort(404)];
         }
-        return $reviews;
+        $totalRating = Review::where('course_id', $id)->sum('rating');
+        $totalRatingsCount = Review::where('course_id', $id)->count('user_id');
+        $averageRating = $totalRatingsCount > 0 ? $totalRating / $totalRatingsCount : 0;
+
+
+        // Append the total rating and average rating to the response
+        $total_raters = $totalRatingsCount;
+        $average_rating = $averageRating;
+        return [
+            'reviews' => $allReviews,
+            "total_raters" => $total_raters,
+            "average_rating" => $average_rating,
+        ];
     }
     public function store(Request $request, $id)
     {
@@ -34,7 +46,7 @@ class ReviewController extends Controller
         try {
             $course = Course::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            return ['message' => "You cannot create a Review for this course"];
+            return ['message', abort(404)];
         }
 
         // If you reach this point, the course was found

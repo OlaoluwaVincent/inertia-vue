@@ -2,42 +2,54 @@
   <section
     class="tw-bg-inherit tw-py-10 tw-flex tw-flex-col-reverse tw-gap-8 md:tw-flex-row"
   >
-    <form
-      class="tw-w-full tw-p-[5%] md:tw-p-[2%] tw-mx-auto tw-max-w-[70%] tw-bg-gray-100 tw-h-max"
-      :class="theme.isDark && '!tw-bg-gray-900'"
-      @submit.prevent="submit"
-    >
-      <h1 class="tw-mb-5 tw-font-bold">Add Review</h1>
-      <p class="tw-pl-3">Select a Rating</p>
-      <v-rating
-        v-model="rating"
-        active-color="orange"
-        color="orange-lighten-1"
-      ></v-rating>
-      <div class="tw-relative">
-        <textarea
-          name="comment"
-          class="tw-w-full tw-h-[150px] tw-bg-white"
-          placeholder="Leave a Review..."
-          required
-          v-model="comment"
-        />
-        <button
-          type="submit"
-          :disabled="isDisabled"
-          class="!tw-absolute tw-right-3 tw-bottom-5 tw-bg-gray-300 !tw-block !tw-p-2 tw-rounded-md hover:tw-bg-gray-200"
-        >
-          <v-icon
-            class="tw-text-blue-700 tw-text-2xl"
-            :class="isDisabled && 'tw-text-gray-400'"
-            >mdi-send</v-icon
+    <aside class="tw-w-full tw-mx-auto tw-max-w-[70%]">
+      <form
+        class="tw-p-[5%] md:tw-p-[2%] tw-bg-gray-100 tw-h-max"
+        :class="theme.isDark && '!tw-bg-gray-900'"
+        @submit.prevent="submit"
+      >
+        <h1 class="tw-mb-5 tw-font-bold">Add Review</h1>
+        <p class="tw-pl-3">Select a Rating</p>
+        <v-rating
+          v-model="rating"
+          active-color="orange"
+          color="orange-lighten-1"
+        ></v-rating>
+        <div class="tw-relative">
+          <textarea
+            name="comment"
+            class="tw-w-full tw-h-[150px] tw-bg-white"
+            placeholder="Leave a Review..."
+            required
+            v-model="comment"
+          />
+          <button
+            type="submit"
+            :disabled="isDisabled"
+            class="!tw-absolute tw-right-3 tw-bottom-5 tw-bg-gray-300 !tw-block !tw-p-2 tw-rounded-md hover:tw-bg-gray-200"
           >
-        </button>
+            <v-icon
+              class="tw-text-blue-700 tw-text-2xl"
+              :class="isDisabled && 'tw-text-gray-400'"
+              >mdi-send</v-icon
+            >
+          </button>
+        </div>
+        <p class="tw-text-red-500" v-show="error">
+          {{ error }}
+        </p>
+      </form>
+      <div class="tw-flex tw-gap-3 tw-mt-3" v-if="reviews.length">
+        <v-rating
+          v-model="average_rating"
+          readonly
+          density="compact"
+          active-color="orange"
+          color="orange-lighten-1"
+        ></v-rating>
+        <p>({{ total_raters }})</p>
       </div>
-      <p class="tw-text-red-500" v-show="error">
-        {{ error }}
-      </p>
-    </form>
+    </aside>
 
     <section
       id="reviews"
@@ -66,7 +78,8 @@ const _reviews = ref([]);
 const rating = ref(2);
 const isDisabled = ref(true);
 const comment = ref("");
-
+const total_raters = ref(0);
+const average_rating = ref(0);
 watch(comment, () => {
   if (comment.value.length > 5) {
     return (isDisabled.value = false);
@@ -94,7 +107,9 @@ const submit = async () => {
 async function getReviews() {
   try {
     const res = await axios.get("/reviews/" + props.id);
-    _reviews.value = res.data;
+    _reviews.value = res.data.reviews;
+    total_raters.value = res.data.total_raters;
+    average_rating.value = res.data.average_rating;
   } catch (error) {
     console.log(error.message);
   }
