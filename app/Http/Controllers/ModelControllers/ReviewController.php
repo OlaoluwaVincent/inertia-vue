@@ -7,29 +7,34 @@ use App\Models\Course;
 use App\Models\Review;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
 
-    public function show(Review $review)
+    public function show($id)
     {
-        $reviews = Review::where("id", $review)->get();
+        $reviews = Review::where('course_id', $id)->with('user')->orderBy('created_at')->get();
+        if (!$reviews) {
+            return ['message', abort(404)];
+        }
         return $reviews;
     }
     public function store(Request $request, $id)
     {
         // Validate the request
-        $request->validate([
+        $requestValidated = $request->validate([
             "comment" => "required|string|max:255",
             'rating' => "required",
         ]);
 
+        if (!$requestValidated) {
+            return $requestValidated;
+        }
 
         try {
-            $course = Course::findOrFail(900);
+            $course = Course::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            return back()->with("message", "You cannot leave a review for this");
+            return ['message' => "You cannot create a Review for this course"];
         }
 
         // If you reach this point, the course was found
@@ -42,10 +47,8 @@ class ReviewController extends Controller
         $review->course()->associate($course);
         $review->save();
 
-        return back()->with('message', 'Created');
+        return Review::where('course_id', $id)->with('user')->orderBy('created_at')->get();
     }
-
-
     public function destroy(Review $review)
     {
         $review->delete();

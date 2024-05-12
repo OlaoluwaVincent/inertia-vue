@@ -1,17 +1,23 @@
 <template>
-  <section class="tw-bg-slate-300 tw-py-10">
-    <h1>Add Review</h1>
-    <form class="tw-w-full tw-px-[5%]" @submit.prevent="submit">
+  <section
+    class="tw-bg-inherit tw-py-10 tw-flex tw-flex-col-reverse tw-gap-8 md:tw-flex-row"
+  >
+    <form
+      class="tw-w-full tw-p-[5%] md:tw-p-[2%] tw-mx-auto tw-max-w-[70%] tw-bg-gray-100 tw-h-max"
+      :class="theme.isDark && '!tw-bg-gray-900'"
+      @submit.prevent="submit"
+    >
+      <h1 class="tw-mb-5 tw-font-bold">Add Review</h1>
+      <p class="tw-pl-3">Select a Rating</p>
       <v-rating
         v-model="rating"
         active-color="orange"
         color="orange-lighten-1"
-        name="rating"
       ></v-rating>
       <div class="tw-relative">
         <textarea
           name="comment"
-          class="tw-w-full tw-h-[200px] tw-bg-white"
+          class="tw-w-full tw-h-[150px] tw-bg-white"
           placeholder="Leave a Review..."
           required
           v-model="comment"
@@ -28,24 +34,35 @@
           >
         </button>
       </div>
-      <p class="tw-text-red-500" v-show="errors">
-        {{ errors.comment || errors.rating || message }}
+      <p class="tw-text-red-500" v-show="error">
+        {{ error }}
       </p>
     </form>
+
+    <section
+      id="reviews"
+      v-if="reviews.length"
+      class="tw-w-full tw-flex tw-flex-col tw-gap-4"
+    >
+      <UserReview :reviews="reviews" />
+    </section>
+
+    <div v-else>No Reviews yet, Be the first to Leave a Review</div>
   </section>
 </template>
-
 <script setup>
-import { router, usePage } from "@inertiajs/vue3";
-import { computed, ref, watch } from "vue";
+import { useThemeStore } from "@/store/theme";
+import { computed, onMounted, ref, watch } from "vue";
+import UserReview from "./UserReview.vue";
 
-const page = usePage();
-const message = computed(() => page.props.message);
 const props = defineProps({
   id: Number,
-  errors: Object,
 });
 
+const theme = useThemeStore();
+
+const error = ref(null);
+const _reviews = ref([]);
 const rating = ref(2);
 const isDisabled = ref(true);
 const comment = ref("");
@@ -57,13 +74,40 @@ watch(comment, () => {
   isDisabled.value = true;
 });
 
-const submit = () => {
-  router.post("/reviews/" + props.id, {
-    rating: rating.value,
-    comment: comment.value,
-  });
+const reviews = computed(() => _reviews.value);
+
+const submit = async () => {
+  try {
+    const res = await axios.post("/reviews/" + props.id, {
+      rating: rating.value,
+      comment: comment.value,
+    });
+    _reviews.value = res.data;
+    if (res.data) {
+      comment.value = "";
+    }
+  } catch (err) {
+    error.value = err.response.data.message || err.message;
+  }
 };
+
+async function getReviews() {
+  try {
+    const res = await axios.get("/reviews/" + props.id);
+    _reviews.value = res.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+onMounted(() => {
+  return getReviews();
+});
 </script>
 
-<style>
+
+<style scoped>
+form {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 </style>

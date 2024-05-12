@@ -41,6 +41,7 @@ function csrfToken() {
 }
 
 const page = usePage();
+const user = computed(() => page.props.auth.user);
 const theme = useThemeStore();
 const cartStore = useCartStore();
 
@@ -54,12 +55,13 @@ const total = computed(() =>
 
 // Function to handle button click
 const proceedToCheckout = () => {
-  const amount = total.value;
-  const token = csrfToken();
-  // Send data to the backend
-  // Assuming you're using Inertia.js
-  // You may need to adjust this according to your backend setup
-  router.post("pay", { amount, _token: token });
+  if (!user.value) {
+    return router.visit("/login", { method: "get" });
+  } else {
+    const amount = total.value;
+    const token = csrfToken();
+    router.post("pay", { amount, _token: token });
+  }
 };
 </script>
 

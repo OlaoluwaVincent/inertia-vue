@@ -12,10 +12,9 @@
     <CourseLessons :lessons="course.lessons" />
 
     <div class="tw-py-10 md:tw-py-32" />
-    {{ message }}
-    <ReviewForm :id="course.id" :errors="errors" />
+    <ReviewForm :id="course.id" />
 
-    <div class="tw-py-10 md:tw-py-32" />
+    <div class="tw-py-10" />
     <RelatedCourses :instructor_id="course.instructor_id" />
   </section>
 </template>
