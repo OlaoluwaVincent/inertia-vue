@@ -39,7 +39,10 @@
           {{ error }}
         </p>
       </form>
-      <div class="tw-flex tw-gap-3 tw-mt-3" v-if="reviews.length">
+      <div
+        class="tw-flex tw-gap-3 tw-mt-3 tw-items-center"
+        v-if="reviews.length"
+      >
         <v-rating
           v-model="average_rating"
           readonly

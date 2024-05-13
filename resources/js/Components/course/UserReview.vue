@@ -17,9 +17,15 @@
           active-color="orange"
           color="orange-lighten-1"
         ></v-rating>
-        <p>{{ showDate(review.created_at) }}</p>
+        <v-icon
+          v-if="canDelete"
+          class="tw-cursor-pointer hover:tw-text-red-700"
+          @click="router.delete(route('review.destroy', { id: review.id }))"
+          >mdi-delete</v-icon
+        >
       </div>
-      <p>{{ review.comment }}</p>
+      <p class="tw-whitespace-pre tw-text-wrap">{{ review.comment }}</p>
+      <p class="tw-opacity-80">{{ showDate(review.created_at) }}</p>
     </aside>
   </v-sheet>
 </template>
@@ -28,9 +34,11 @@
 import UserBox from "../UserBox.vue";
 import { format } from "date-fns";
 import { useThemeStore } from "@/store/theme";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
   reviews: Array,
+  canDelete: Boolean,
 });
 
 const theme = useThemeStore();

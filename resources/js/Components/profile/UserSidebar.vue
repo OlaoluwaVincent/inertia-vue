@@ -1,10 +1,10 @@
 <template>
-  <v-card width="300" class="profile__card !tw-bg-gray-200 tw-h-max">
+  <v-card width="350" class="profile__card !tw-bg-gray-200 tw-h-max">
     <v-sheet class="upper" color="transparent">
       <v-img
         rounded="shaped"
         :src="user.profile_picture"
-        :width="smAndDown ? 100 : 120"
+        :width="smAndDown ? 150 : 200"
         aspect-ratio="1/1"
         cover
         class="!tw-object-top"
@@ -28,7 +28,7 @@
           :key="item.title"
           :href="item.value"
           class="link"
-          :class="page.url === item.value && 'active'"
+          :class="page.url.startsWith(item.value) && 'active'"
         >
           {{ item.title }}
         </Link>
@@ -58,7 +58,7 @@ const items = [
   },
   { title: "My Courses", value: "/courses" },
   { title: "Message", value: "/message" },
-  { title: "Teachers", value: "/teachers" },
+  { title: "Colleagues", value: "/colleagues" },
   { title: "Reviews", value: "/reviews" },
 ];
 

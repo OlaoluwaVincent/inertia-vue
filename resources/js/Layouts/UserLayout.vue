@@ -7,7 +7,7 @@
 
         <div id="layout__content">
           <h2
-            class="tw-font-semibold tw-text-xl tw-text-gray-800 tw-leading-tight tw-capitalize"
+            class="tw-font-semibold tw-text-xl tw-text-gray-800 tw-leading-tight tw-capitalize tw-mb-2"
           >
             {{ url }}
           </h2>

@@ -7,9 +7,16 @@ use App\Models\Course;
 use App\Models\Review;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class ReviewController extends Controller
 {
+    public function index(Request $request)
+    {
+        $reviews = Review::where('user_id', $request->user()->id)->with('user')->orderBy('created_at', 'desc')->paginate(10);
+        return Inertia::render("Reviews", ['reviews' => $reviews, 'status' => session('status'),]);
+    }
 
     public function show($id)
     {
@@ -61,9 +68,14 @@ class ReviewController extends Controller
 
         return Review::where('course_id', $id)->with('user')->orderBy('created_at')->get();
     }
-    public function destroy(Review $review)
+    public function destroy(Review $id)
     {
-        $review->delete();
-        return ['message' => 'deleted successfully'];
+        $isDeleted = $id->delete();
+
+        if ($isDeleted) {
+            return Redirect::route('review.index')->with('status', 'Successful');
+        } else {
+            return Redirect::route('review.index')->with('status', 'Failed');
+        }
     }
 }

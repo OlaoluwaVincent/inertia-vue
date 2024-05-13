@@ -2,7 +2,7 @@
   <section class="tw-mt-10" v-if="relatedCourses.length">
     <h5 class="tw-font-semibold tw-mb-5">Courses by the same Author</h5>
     <ScrollX :scrollable="true">
-      <CourseCard :data="relatedCourses" size="tw-min-w-[200px]" />
+      <CourseCard :data="relatedCourses" />
     </ScrollX>
   </section>
 </template>
