@@ -45,7 +45,10 @@
     <div class="tw-hidden sm:tw-flex tw-mx-3">
       <v-avatar
         v-if="isAuth"
-        :image="`https://via.placeholder.com/640x480.png/001155?text=${user?.email}`"
+        :image="
+          user.profile_picture ||
+          `https://via.placeholder.com/640x480.png/001155?text=${user?.email}`
+        "
       ></v-avatar>
     </div>
 
@@ -63,10 +66,8 @@ import AppSearchHeader from "@/Components/AppSearchHeader.vue";
 import CoursesFilter from "@/Components/CoursesFilter.vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
-import { useThemeStore } from "@/store/theme";
 import { useCartStore } from "@/store/cart";
 
-const themeStore = useThemeStore();
 const cartStore = useCartStore();
 
 const userData = usePage();
@@ -75,11 +76,6 @@ const user = computed(() => userData.props.auth.user ?? null);
 
 const drawer = ref(false);
 const group = ref(null);
-
-const props = defineProps({
-  courses: Object,
-  categories: Array,
-});
 
 watch(group, () => {
   drawer.value = false;

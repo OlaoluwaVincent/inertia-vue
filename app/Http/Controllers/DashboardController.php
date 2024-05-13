@@ -10,12 +10,10 @@ use Inertia\Response;
 class DashboardController extends Controller
 {
 
-    public function show(): Response
+    public function show(Request $request)
     {
-        $instructors = Instructor::all();
         return Inertia::render('Dashboard', [
             'status' => session('status'),
-            'instructors' => $instructors,
         ]);
     }
 }
