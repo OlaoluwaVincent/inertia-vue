@@ -9,17 +9,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InstructorFactory extends Factory
 {
- /**
-  * Define the model's default state.
-  *
-  * @return array<string, mixed>
-  */
- public function definition(): array
- {
-  return [
-   "name" => fake()->name(),
-   "bio" => fake()->text(),
-   "profile_picture" => fake()->imageUrl($width = 640, $height = 480),
-  ];
- }
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'followers' => fake(),
+            'headline' => fake(),
+            'professional_experience' => fake(),
+            'expertise' => fake(),
+            'languages' => fake(),
+        ];
+    }
 }

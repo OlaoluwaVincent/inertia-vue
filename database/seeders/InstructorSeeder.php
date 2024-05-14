@@ -19,13 +19,5 @@ class InstructorSeeder extends Seeder
     {
         Instructor::factory()->count(1)->create();
         $instructors = Instructor::all();
-
-        // Loop through each instructor and update the username column
-        foreach ($instructors as $instructor) {
-            // Update the username column with a fake name
-            $instructor->update([
-                'email' => fake()->email()
-            ]);
-        }
     }
 }
