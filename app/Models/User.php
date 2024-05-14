@@ -22,7 +22,6 @@ class User extends Authenticatable
         'role',
         'email',
         'password',
-        'socials',
         'profile_picture',
         'socials',
     ];
@@ -47,6 +46,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'socials' => 'array',
         ];
     }
 
