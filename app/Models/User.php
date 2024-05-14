@@ -23,6 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'socials',
+        'profile_picture',
+        'socials',
     ];
 
     /**
@@ -46,5 +48,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function instructor()
+    {
+        return $this->hasOne(Instructor::class)->where('role', 'INSTRUCTOR');
     }
 }
