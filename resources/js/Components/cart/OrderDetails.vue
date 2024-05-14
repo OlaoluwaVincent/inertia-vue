@@ -35,11 +35,6 @@ import { useCartStore } from "@/store/cart";
 import { useThemeStore } from "@/store/theme";
 import { computed } from "vue";
 
-// Get CSRF token from meta tag
-function csrfToken() {
-  return document.head.querySelector('meta[name="csrf-token"]').content;
-}
-
 const page = usePage();
 const user = computed(() => page.props.auth.user);
 const theme = useThemeStore();
@@ -55,13 +50,14 @@ const total = computed(() =>
 
 // Function to handle button click
 const proceedToCheckout = () => {
-  if (!user.value) {
-    return router.visit("/login", { method: "get" });
-  } else {
-    const amount = total.value;
-    const token = csrfToken();
-    router.post("pay", { amount, _token: token });
-  }
+  // if (!user.value) {
+  //   return router.visit("/login", { method: "get" });
+  // } else {
+  //   const amount = total.value;
+  //   router.post("pay", { amount });
+  // }
+  const amount = total.value;
+  router.post("pay", { amount });
 };
 </script>
 

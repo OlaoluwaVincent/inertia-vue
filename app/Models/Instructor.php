@@ -11,10 +11,15 @@ class Instructor extends Model
 
     protected $fillable = [
         'name',
+        'password',
         'bio',
         'profile_picture',
         'socials',
         'followers',
+        'headline',
+        'professional_experience',
+        'expertise',
+        'languages'
     ];
 
     public function courses()

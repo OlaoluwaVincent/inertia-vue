@@ -12,7 +12,7 @@ class PaymentController extends Controller
 {
     /**
      * Redirect the User to Paystack Payment Page
-     * @return Url
+     * 
      */
     public function redirectToGateway(Request $request)
     {
@@ -20,14 +20,19 @@ class PaymentController extends Controller
         $userData = [
             "amount" => intval($request->amount),
             "reference" => Paystack::genTranxRef(),
-            "email" => $request->user()->email,
-            "first_name" => $request->user()->fullname,
-            "last_name" => $request->user()->username,
+            "email" => 'Olaoluwavincent@gmail.com',
+            // "email" => $request->user()->email,
+            // "first_name" => $request->user()->fullname,
+            // "last_name" => $request->user()->username,
             "metadata" => $metadata,
         ];
         try {
+            // dd(Paystack::getAuthorizationUrl($userData));
             return Paystack::getAuthorizationUrl($userData)->redirectNow();
+            // return Redirect::back()->withMessage(['status' => $authorizationUrl->url]);
+            // return Redirect::route('cart')->with('status', $authorizationUrl->url);
         } catch (\Exception $e) {
+            dd('Error', $e);
             return Redirect::back()->withMessage(['msg' => 'The paystack token has expired. Please refresh the page and try again.', 'type' => 'error']);
         }
     }

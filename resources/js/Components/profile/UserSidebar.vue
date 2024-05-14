@@ -1,5 +1,9 @@
 <template>
-  <v-card width="350" class="profile__card !tw-bg-gray-200 tw-h-max">
+  <v-card
+    width="350"
+    class="profile__card !tw-bg-gray-200 tw-h-max"
+    :class="theme.isDark && '!tw-bg-gray-900'"
+  >
     <v-sheet class="upper" color="transparent">
       <v-img
         rounded="shaped"
@@ -13,7 +17,7 @@
       <v-btn
         flat
         append-icon="mdi-share-variant"
-        color="black"
+        :class="theme.isDark ? 'tw-text-white' : 'tw-text-gray-900'"
         variant="text"
         @click="handleShare"
       >
@@ -41,9 +45,11 @@
 import { useDisplay } from "vuetify";
 import { Link, usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
+import { useThemeStore } from "@/store/theme";
 const page = usePage();
 
 const user = computed(() => page.props.auth.user);
+const theme = useThemeStore();
 
 const { smAndDown } = useDisplay();
 
@@ -51,12 +57,9 @@ const items = [
   { title: "Dashboard", value: "/dashboard" },
   {
     title: "Profile",
-    value:
-      user.value.role === "USER"
-        ? "/profile"
-        : `/profile?role=${user.value.role}`,
+    value: "/profile",
   },
-  { title: "My Courses", value: "/courses" },
+  { title: "My Courses", value: "/my-courses" },
   { title: "Message", value: "/message" },
   { title: "Colleagues", value: "/colleagues" },
   { title: "Reviews", value: "/reviews" },
@@ -109,6 +112,13 @@ function handleShare() {
 }
 
 .active {
-  @apply !tw-bg-gray-900 tw-text-white;
+  @apply tw-bg-gray-900 tw-text-white;
+}
+
+.link__dark {
+  @apply tw-p-2 tw-rounded-md tw-transition-all hover:tw-bg-gray-100 hover:tw-text-gray-900;
+}
+.active__dark {
+  @apply !tw-bg-gray-100 tw-text-gray-900;
 }
 </style>
