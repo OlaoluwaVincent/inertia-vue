@@ -18,7 +18,7 @@ class CoursesController extends Controller
         $price = $request->query('price');
         $sort = $request->query('sort');
 
-        $query = Course::with('instructor');
+        $query = Course::with('instructor.user');
 
 
         // Filter courses by category if category is provided
@@ -50,7 +50,7 @@ class CoursesController extends Controller
     /** the Course view with the course data {category, course, instructor} */
     public function show($id)
     {
-        $course = Course::with('category', 'instructor', 'lessons', 'reviews')->find($id);
+        $course = Course::with('category', 'instructor.user', 'lessons', 'reviews',)->find($id);
 
         return Inertia::render('Courses/SingleCourse', [
             'course' => $course,
@@ -62,7 +62,7 @@ class CoursesController extends Controller
      */
     public function popularCourse()
     {
-        $courses = Course::with('instructor')->get();
+        $courses = Course::with('instructor.user')->get();
         $result = [];
 
         foreach ($courses as $item) {
@@ -74,10 +74,7 @@ class CoursesController extends Controller
                 'image' => $item['image'],
                 'price' => $item['price'],
                 'duration' => $item['duration'],
-                'instructor' => [
-                    'id' => $item['instructor']['id'],
-                    'name' => $item['instructor']['name']
-                ]
+                'instructor' => $item['instructor'],
             ];
 
             // Push the modified object into the result array

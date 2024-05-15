@@ -28,9 +28,8 @@
 
       <v-card-subtitle class="!tw-b-0">
         <span class="tw-me-1 tw-text-xs md:tw-text-base"
-          >By {{ item.instructor.name }}</span
+          >By {{ item.instructor.user.fullname }}</span
         >
-        <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
       </v-card-subtitle>
     </v-card-item>
 

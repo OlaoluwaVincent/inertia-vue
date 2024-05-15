@@ -14,7 +14,7 @@ class InstructorsController extends Controller
     public function showPopularInstructors()
     {
         $results = [];
-        $instructors = Instructor::with('courses')->get();
+        $instructors = Instructor::with('courses', 'user')->get();
 
         // Sort the instructors by the highest number of courses
         $sortedInstructors = $instructors->sortByDesc(function ($instructor) {
@@ -22,15 +22,15 @@ class InstructorsController extends Controller
         });
 
         foreach ($sortedInstructors as $instructor) {
-            $data = [
-                'id' => $instructor->id,
-                'name' => $instructor->name,
-                'bio' => $instructor->bio,
-                'profile' => $instructor->profile_picture,
-                'instructor_courses' => count($instructor->courses),
-            ];
-
-            $results[] = $data;
+            if ($instructor->user) {
+                $data = [
+                    'id' => $instructor->id,
+                    'name' => $instructor->user ? $instructor->user->fullname : null,
+                    'profile' => $instructor->user ? $instructor->user->profile_picture : null,
+                    'instructor_courses' => count($instructor->courses),
+                ];
+                $results[] = $data;
+            }
         }
         return array_slice($results, 0, 5);
     }

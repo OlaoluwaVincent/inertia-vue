@@ -10,7 +10,7 @@ class LessonController extends Controller
 {
     public function showRelated($instructor_id)
     {
-        $courses = Course::where('instructor_id', $instructor_id)->with('instructor')->get();
+        $courses = Course::where('instructor_id', $instructor_id)->with('instructor.user')->get();
 
         return $courses;
     }

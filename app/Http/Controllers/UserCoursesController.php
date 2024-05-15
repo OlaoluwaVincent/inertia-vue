@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Class\UserClass;
 use App\Models\Course;
+use App\Models\Instructor;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,13 +12,18 @@ class UserCoursesController extends Controller
     /**
      * Display a listing of the User/Instructors Courses.
      */
-    public function index(Request $request, UserClass $user)
+
+    public function index(Request $request)
     {
+        // Get the ID of the authenticated user
+        $userId = $request->user()->id;
 
-        $courses = Course::where("user_id", $request->user()->id)->get();
-
+        // Retrieve courses where the instructor is associated with the specified user
+        $courses = Course::with('instructor.user')->paginate(10);
+        // Return the courses to the view
         return Inertia::render('MyCourses', ['courses' => $courses]);
     }
+
 
     /**
      * Show the form for creating a new resource.

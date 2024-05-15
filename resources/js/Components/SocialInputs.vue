@@ -34,7 +34,7 @@
 
 <script setup>
 import { useForm, usePage } from "@inertiajs/vue3";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const socialsFromDB = computed(() => usePage().props.auth.user.socials);
 
@@ -64,14 +64,17 @@ const socialMedia = [
     ],
   },
 ];
-
-// Prefill inputs if the handle matches data from the database
-socialMedia.forEach((social) => {
-  const matchingSocial = socialsFromDB.value.find(
-    (dbSocial) => dbSocial.handle === social.handle
-  );
-  if (matchingSocial) {
-    social.link.value = matchingSocial.link;
+onMounted(() => {
+  if (socialsFromDB.value) {
+    // Prefill inputs if the handle matches data from the database
+    socialMedia.forEach((social) => {
+      const matchingSocial = socialsFromDB.value.find(
+        (dbSocial) => dbSocial.handle === social.handle
+      );
+      if (matchingSocial) {
+        social.link.value = matchingSocial.link;
+      }
+    });
   }
 });
 

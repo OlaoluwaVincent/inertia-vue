@@ -5,13 +5,9 @@
       <Link :href="route('course.show')" class="tw-underline">View All</Link>
     </div>
 
-    <v-sheet
-      class="sheet__wrapper !tw-py-5"
-      color="transparent"
-      v-if="data && data.length > 0"
-    >
+    <ScrollX v-if="data && data.length" :scrollable="true">
       <CourseCard :data="data" />
-    </v-sheet>
+    </ScrollX>
   </section>
 </template>
 
@@ -21,6 +17,7 @@ import { Link } from "@inertiajs/vue3";
 import axios from "axios";
 import SectionTitle from "./SectionTitle.vue";
 import CourseCard from "@/Components/CourseCard.vue";
+import ScrollX from "../ScrollX.vue";
 
 const data = ref([]);
 

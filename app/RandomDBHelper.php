@@ -30,6 +30,13 @@ class RandomDBHelper
     {
         return User::inRandomOrder()->first()->id;
     }
+    public function userInstructorId()
+    {
+        return $user = User::inRandomOrder()
+            ->whereNull('instructor_id')
+            ->where('role', 'INSTRUCTOR')
+            ->first()->id;
+    }
 
 
 

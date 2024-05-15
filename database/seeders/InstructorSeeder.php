@@ -17,7 +17,7 @@ class InstructorSeeder extends Seeder
      */
     public function run(): void
     {
-        Instructor::factory()->count(1)->create();
+        Instructor::factory()->count(4)->create();
         // $instructors = Instructor::all();
         // foreach ($instructors as $instructor) {
         //     $instructor->user_id = 23;

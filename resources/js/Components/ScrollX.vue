@@ -34,6 +34,7 @@ const props = defineProps({
 });
 function scrollRight() {
   const parent = document.getElementById("parent");
+  console;
   parent.scrollLeft += 200;
 }
 
@@ -48,6 +49,7 @@ function scrollLeft() {
   display: flex;
   gap: 20px;
   scroll-behavior: smooth;
+  width: 100%;
 }
 
 .sheet__wrapper::-webkit-scrollbar {

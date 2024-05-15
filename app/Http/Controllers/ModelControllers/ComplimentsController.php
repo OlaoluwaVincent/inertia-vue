@@ -17,7 +17,7 @@ class ComplimentsController extends Controller
             // Assuming you want to attach the user to the compliment object
             $compliment->user = [
                 'name' => $user->fullname,
-                'image' => $user->profile_picture,
+                'profile_picture' => $user->profile_picture,
             ];
         }
         return $compliments;

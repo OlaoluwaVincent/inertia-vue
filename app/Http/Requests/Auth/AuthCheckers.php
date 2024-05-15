@@ -23,6 +23,9 @@ class AuthCheckers extends FormRequest
      */
     public function isAdmin(): bool
     {
+        if (!Auth::user()->role) {
+            return false;
+        }
         return Auth::user()->role === UserRoleEnum::ADMIN;
     }
 
@@ -33,6 +36,9 @@ class AuthCheckers extends FormRequest
      */
     public function isInstructor(): bool
     {
+        if (!Auth::user()->role) {
+            return false;
+        }
         return Auth::user()->role === UserRoleEnum::INSTRUCTOR;
     }
 

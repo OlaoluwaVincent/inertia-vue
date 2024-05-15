@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\RandomDBHelper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class InstructorFactory extends Factory
@@ -13,13 +14,14 @@ class InstructorFactory extends Factory
      */
     public function definition(): array
     {
+        fake()->addProvider(new RandomDBHelper());
         return [
             // 'followers' => fake(),
-            'headline' => 'Frontend Developer at WorldTech',
+            'headline' => fake()->realText(40),
             'professional_experience' => fake()->realTextBetween(200, 300),
             // 'expertise' => fake(),
             // 'languages' => fake(),
-            'user_id' => 23,
+            'user_id' => fake()->userInstructorId(),
         ];
     }
 }

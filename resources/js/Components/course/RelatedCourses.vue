@@ -1,5 +1,5 @@
 <template>
-  <section class="tw-mt-10" v-if="relatedCourses.length">
+  <section class="tw-mt-10" v-if="relatedCourses && relatedCourses.length">
     <h5 class="tw-font-semibold tw-mb-5">Courses by the same Author</h5>
     <ScrollX :scrollable="true">
       <CourseCard :data="relatedCourses" />

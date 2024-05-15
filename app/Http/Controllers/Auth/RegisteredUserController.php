@@ -39,6 +39,7 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'role' => ['string', 'in:USER,TEACHER,ADMIN'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'instructor' => ['required', 'boolean'],
         ]);
 
 
@@ -46,7 +47,7 @@ class RegisteredUserController extends Controller
             'fullname' => $request->fullname,
             'username' => $request->username,
             'email' => $request->email,
-            'role' => $request->role ?? $defaultRole,
+            'role' => $request->instructor ? 'INSTRUCTOR' : $defaultRole,
             'password' => Hash::make($request->password),
         ]);
 
