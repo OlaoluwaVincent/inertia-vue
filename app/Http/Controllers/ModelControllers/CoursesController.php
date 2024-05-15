@@ -60,7 +60,7 @@ class CoursesController extends Controller
     /**
      * This returns all the courses and their related Instructors
      */
-    public function showCourses()
+    public function popularCourse()
     {
         $courses = Course::with('instructor')->get();
         $result = [];

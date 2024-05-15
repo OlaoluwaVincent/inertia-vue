@@ -1,9 +1,6 @@
 <template>
   <v-sheet rounded color="transparent" class="userBox">
-    <v-avatar
-      :image="props.user.image ?? props.user.profile_picture"
-      :size="size"
-    ></v-avatar>
+    <v-avatar :image="props.user.profile_picture" :size="size"></v-avatar>
     <h5 class="tw-text-sm md:tw-text-base tw-text-blue-600 tw-underline">
       <Link href="#"> {{ props.user.name || props.user.username }}</Link>
     </h5>

@@ -9,6 +9,14 @@
   >
     <UserBox size="50" :user="review.user" />
     <aside>
+      <p v-if="review.course">
+        Course title:
+        <Link
+          class="tw-font-semibold"
+          :href="route('course.single', { id: review.course.id })"
+          >{{ review.course.title }}</Link
+        >
+      </p>
       <div class="rating">
         <v-rating
           v-model="review.rating"
@@ -34,7 +42,7 @@
 import UserBox from "../UserBox.vue";
 import { format } from "date-fns";
 import { useThemeStore } from "@/store/theme";
-import { router } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 
 const props = defineProps({
   reviews: Array,

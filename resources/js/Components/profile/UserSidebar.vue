@@ -59,11 +59,21 @@ const items = [
     title: "Profile",
     value: "/profile",
   },
+  instructorDetailsLink(),
   { title: "My Courses", value: "/my-courses" },
   { title: "Message", value: "/message" },
-  { title: "Colleagues", value: "/colleagues" },
   { title: "Reviews", value: "/reviews" },
 ];
+
+function instructorDetailsLink() {
+  if (user.value.role === "INSTRUCTOR") {
+    return {
+      title: "My Details",
+      value: "/my-details",
+    };
+  }
+  return { title: "Colleagues", value: "/colleagues" };
+}
 
 function handleShare() {
   const url = window.location.href;

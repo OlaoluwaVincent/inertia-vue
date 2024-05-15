@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ModelControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\AuthCheckers;
 use App\Models\Course;
 use App\Models\Review;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -12,12 +13,36 @@ use Inertia\Inertia;
 
 class ReviewController extends Controller
 {
-    public function index(Request $request)
+    /** 
+     * Returns all the Users Reviews
+     */
+    public function index(AuthCheckers $request)
     {
-        $reviews = Review::where('user_id', $request->user()->id)->with('user')->orderBy('created_at', 'desc')->paginate(10);
-        return Inertia::render("Reviews", ['reviews' => $reviews, 'status' => session('status'),]);
+        if ($request->isInstructor()) {
+            $instructors_courses = $request->user()->instructor->courses;
+            $reviews = null;
+            foreach ($instructors_courses as $course) {
+                // Paginate the reviews for each course
+                $course_reviews = $course->reviews()->with('user', 'course')->paginate(10);
+                // Push paginated reviews into the $reviews array
+                $reviews = $course_reviews;
+            }
+            return Inertia::render("Reviews", ['reviews' => $reviews, 'status' => session('status'), 'canDelete' => $request->isAdmin()]);
+        } else {
+            $reviews = Review::where('user_id', $request->user()->id)->with('user')->orderBy('created_at', 'desc')->paginate(10);
+            return Inertia::render("Reviews", ['reviews' => $reviews, 'status' => session('status'),]);
+        }
     }
 
+    /**
+     * Returns all the reviews on a course.
+     *
+     * @return array [
+     *     'totalRaters' => The total number of raters,
+     *     'averageRaters' => The average rating,
+     *     'reviews' => An array containing all the reviews,
+     * ]
+     */
     public function show($id)
     {
         $allReviews = Review::where('course_id', $id)->with('user')->orderBy('created_at')->get();

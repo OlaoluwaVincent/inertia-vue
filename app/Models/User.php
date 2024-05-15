@@ -52,6 +52,6 @@ class User extends Authenticatable
 
     public function instructor()
     {
-        return $this->hasOne(Instructor::class)->where('role', 'INSTRUCTOR');
+        return $this->hasOne(Instructor::class);
     }
 }

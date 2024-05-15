@@ -2,7 +2,7 @@
   <v-card
     v-for="(item, key) in data"
     :key="key"
-    class="v__card-popular tw-mx-auto tw-w-full tw-relative tw-min-w-[200px] lg:tw-min-w-[250px]"
+    class="v__card-popular tw-mx-auto tw-w-full tw-relative tw-min-w-[200px] lg:tw-min-w-[250px] tw-max-w-[280px]"
     :class="className"
   >
     <v-img :src="item.image" cover class="img__height tw-relative">

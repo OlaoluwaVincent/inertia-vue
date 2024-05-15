@@ -3,7 +3,7 @@
     You have not given any reviews yet
   </h4>
   <setion class="tw-flex tw-gap-5 tw-flex-col tw-mb-12">
-    <UserReview :reviews="reviews.data" :canDelete="true" />
+    <UserReview :reviews="reviews.data" :canDelete="canDelete" />
   </setion>
   <Pagination :links="reviews.links" />
 </template>
@@ -17,7 +17,10 @@ defineOptions({ layout: UserLayout });
 
 const props = defineProps({
   reviews: Object,
+  canDelete: Boolean,
 });
+
+console.log(props.canDelete);
 </script>
 
 <style>

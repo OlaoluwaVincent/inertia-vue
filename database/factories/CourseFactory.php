@@ -27,8 +27,8 @@ class CourseFactory extends Factory
         fake()->addProvider(new RandomDBHelper());
 
         return [
-            "title" => fake()->name(),
-            "description" => fake()->text(),
+            "title" => fake()->realTextBetween(40, 60),
+            "description" => fake()->text(500),
             "image" => fake()->imageUrl($width = 640, $height = 480),
             "price" => fake()->randomFloat(2, 20, 700),
             "duration" => fake()->randomNumber(2),

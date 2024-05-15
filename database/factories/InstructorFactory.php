@@ -4,9 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
- */
 class InstructorFactory extends Factory
 {
     /**
@@ -17,11 +14,12 @@ class InstructorFactory extends Factory
     public function definition(): array
     {
         return [
-            'followers' => fake(),
-            'headline' => fake(),
-            'professional_experience' => fake(),
-            'expertise' => fake(),
-            'languages' => fake(),
+            // 'followers' => fake(),
+            'headline' => 'Frontend Developer at WorldTech',
+            'professional_experience' => fake()->realTextBetween(200, 300),
+            // 'expertise' => fake(),
+            // 'languages' => fake(),
+            'user_id' => 23,
         ];
     }
 }
