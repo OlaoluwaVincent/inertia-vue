@@ -53,11 +53,20 @@ function scrollLeft() {
 }
 
 .sheet__wrapper::-webkit-scrollbar {
+  display: none;
   width: 6px;
   height: 6px;
 }
 
-.sheet__wrapper::-webkit-scrollbar-thumb {
+.sheet__wrapper {
+  scrollbar-width: none; /* Hides scrollbar in Firefox */
+}
+
+.sheet__wrapper::-webkit-scrollbar {
+  display: none; /* Hides scrollbar in Webkit browsers */
+}
+
+/* .sheet__wrapper::-webkit-scrollbar-thumb {
   @apply tw-bg-slate-200;
 }
 
@@ -67,5 +76,5 @@ function scrollLeft() {
 
 .sheet__wrapper::-webkit-scrollbar-thumb {
   @apply tw-bg-slate-200;
-}
+} */
 </style>

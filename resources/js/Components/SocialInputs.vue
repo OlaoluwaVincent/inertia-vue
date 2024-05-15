@@ -10,7 +10,7 @@
         >Upload</v-btn
       >
 
-      <div class="social__wrapper">
+      <div class="social__wrapper tw-mt-3">
         <div
           v-for="social in socialMedia"
           :key="social.handle"
@@ -20,6 +20,8 @@
             v-model="social.link.value"
             :label="social.handle"
             dense
+            class="tw-bg-gray-300"
+            :class="theme.isDark && '!tw-bg-gray-800 !tw-text-white'"
             :rules="social.rules"
             @input="validateLink(social)"
           ></v-text-field>
@@ -35,6 +37,8 @@
 <script setup>
 import { useForm, usePage } from "@inertiajs/vue3";
 import { ref, computed, onMounted } from "vue";
+import { useThemeStore } from "@/store/theme";
+const theme = useThemeStore();
 
 const socialsFromDB = computed(() => usePage().props.auth.user.socials);
 

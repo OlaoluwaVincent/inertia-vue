@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthCheckers;
 use App\Models\Course;
 use App\Models\Review;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -63,8 +64,11 @@ class ReviewController extends Controller
             "average_rating" => $average_rating,
         ];
     }
-    public function store(Request $request, $id)
+    public function store(AuthCheckers $request, $id)
     {
+        if ($request->isInstructor()) {
+            throw new Exception("Only Students can do this", 1);
+        }
         // Validate the request
         $requestValidated = $request->validate([
             "comment" => "required|string|max:255",

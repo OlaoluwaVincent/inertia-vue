@@ -12,8 +12,8 @@
     </div>
 
     <div class="cart__info">
-      <h3>{{ course.title }}</h3>
-      <h5>By {{ course.instructor.name }}</h5>
+      <h4>{{ course.title }}</h4>
+      <h5>By {{ course.instructor.user.fullname }}</h5>
 
       <div class="cart__info--time">
         <p class="tw-text-xs sm:tw-text-sm">

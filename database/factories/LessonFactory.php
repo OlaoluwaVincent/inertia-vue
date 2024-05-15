@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\RandomDBHelper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +17,12 @@ class LessonFactory extends Factory
      */
     public function definition(): array
     {
+        fake()->addProvider(new RandomDBHelper());
         return [
             'title' => fake()->realText(20),
             'description' => fake()->realTextBetween(30, 120),
             'video_url' => fake()->url(),
-            'course_id' => fake()->numberBetween(1, 20),
+            'course_id' => fake()->courseId(),
             'sequence' => 0,
         ];
     }

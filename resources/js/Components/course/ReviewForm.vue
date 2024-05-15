@@ -19,6 +19,7 @@
           <textarea
             name="comment"
             class="tw-w-full tw-h-[150px] tw-bg-white"
+            :class="theme.isDark && '!tw-bg-gray-700'"
             placeholder="Leave a Review..."
             required
             v-model="comment"

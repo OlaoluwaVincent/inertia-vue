@@ -1,9 +1,7 @@
 <template>
   <Head title="Cart" />
   <section id="cart" class="tw-mb-52 tw-p-5">
-    <aside
-      class="tw-flex tw-flex-col tw-gap-5 tw-flex-shrink-0 lg:tw-w-[70%] xl:tw-w-[60%]"
-    >
+    <aside class="tw-flex tw-flex-col tw-gap-5 tw-flex-shrink-0 md:tw-w-[60%]">
       <h6 class="tw-font-semibold">
         {{ cartStore.cartLength }} Course in Cart
       </h6>
@@ -19,7 +17,7 @@
       />
     </aside>
 
-    <aside class="tw-flex tw-flex-col tw-gap-5 tw-w-full md:tw-w-max">
+    <aside class="tw-flex tw-flex-col tw-gap-5 md:tw-w-[40%]">
       <h6 class="tw-font-semibold">Order Details</h6>
       <v-divider
         :thickness="5"

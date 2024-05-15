@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Category;
+use App\Models\Course;
 use App\Models\Instructor;
 use App\Models\User;
 
@@ -48,5 +49,9 @@ class RandomDBHelper
     public function instructorId()
     {
         return Instructor::inRandomOrder()->first()->id;
+    }
+    public function courseId()
+    {
+        return Course::inRandomOrder()->first()->id;
     }
 }
