@@ -1,4 +1,12 @@
 <template>
+  <!-- <v-btn color="success" @click="isOpen = !isOpen">Menu</v-btn> -->
+
+  <!-- <v-navigation-drawer
+    :location="$vuetify.display.mobile ? 'right' : 'left'"
+    v-model="isOpen"
+    class="!tw-max-h-fit"
+  >
+</v-navigation-drawer> -->
   <v-card
     width="350"
     class="profile__card !tw-bg-gray-200 tw-h-max"
@@ -9,9 +17,10 @@
         rounded="shaped"
         :src="user.profile_picture"
         :width="smAndDown ? 150 : 200"
-        aspect-ratio="1/1"
+        :height="smAndDown ? 150 : 200"
         cover
-        class="!tw-object-top"
+        position="top"
+        class="!tw-object-bottom"
       />
       <h4>{{ user.fullname }}</h4>
       <v-btn
@@ -44,9 +53,10 @@
 <script setup>
 import { useDisplay } from "vuetify";
 import { Link, usePage } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useThemeStore } from "@/store/theme";
 const page = usePage();
+const isOpen = ref(true);
 
 const user = computed(() => page.props.auth.user);
 const theme = useThemeStore();
@@ -99,6 +109,12 @@ function handleShare() {
   justify-content: center;
   gap: 20px;
   align-items: center;
+  display: none;
+}
+@media (width >= 768px) {
+  .profile__card {
+    display: flex;
+  }
 }
 
 .upper,

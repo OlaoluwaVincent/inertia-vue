@@ -19,7 +19,7 @@ Route::get('/cart', function () {
 })->name('cart');
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/my-courses', [UserCoursesController::class, 'show'])->middleware(['auth', 'verified'])->name('user');
+// Route::get('/my-courses', [UserCoursesController::class, 'show'])->middleware(['auth', 'verified'])->name('user.courses');
 
 
 Route::group(['prefix' => 'my-courses'], function () {

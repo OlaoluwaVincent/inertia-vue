@@ -1,17 +1,18 @@
 <template>
-  <h4 class="tw-text-4xl tw-mb-10 content__padding" v-if="!reviews.data.length">
+  <p class="tw-text-2xl tw-mb-10 content__padding" v-if="isNotAvailable">
     You have not given any reviews yet
-  </h4>
-  <setion class="tw-flex tw-gap-5 tw-flex-col tw-mb-12">
+  </p>
+  <!-- <setion class="tw-flex tw-gap-5 tw-flex-col tw-mb-12">
     <UserReview :reviews="reviews.data" :canDelete="canDelete" />
   </setion>
-  <Pagination :links="reviews.links" />
+  <Pagination :links="reviews.links" /> -->
 </template>
 
 <script setup>
 import Pagination from "@/Components/Pagination.vue";
 import UserReview from "@/Components/course/UserReview.vue";
 import UserLayout from "@/Layouts/UserLayout.vue";
+import { computed } from "vue";
 
 defineOptions({ layout: UserLayout });
 
@@ -19,8 +20,10 @@ const props = defineProps({
   reviews: Object,
   canDelete: Boolean,
 });
-
-console.log(props.canDelete);
+console.log(props.reviews);
+const isNotAvailable = computed(
+  () => props.reviews !== null || props.reviews !== undefined
+);
 </script>
 
 <style>

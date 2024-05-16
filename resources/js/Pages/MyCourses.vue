@@ -1,8 +1,10 @@
 <template>
   <div class="tw-pt-5">
+    <p v-if="courses.data === undefined">You have not created any course yet</p>
     <section class="courses">
       <CourseCard :data="courses.data" />
     </section>
+
     <Pagination v-if="courses.next_page_url" :links="courses.links" />
   </div>
 </template>
@@ -18,7 +20,6 @@ defineOptions({ layout: UserLayout });
 const props = defineProps({
   courses: Object,
 });
-console.log(props.courses);
 </script>
 
 <style scoped>

@@ -16,10 +16,10 @@ class UserCoursesController extends Controller
     public function index(Request $request)
     {
         // Get the ID of the authenticated user
-        $userId = $request->user()->id;
+        $instructor_id = $request->user()->instructor_id;
 
-        // Retrieve courses where the instructor is associated with the specified user
-        $courses = Course::with('instructor.user')->paginate(10);
+        // Course::with('instructor.user')->paginate(10);
+        $courses = Course::where('instructor_id', $instructor_id)->with('instructor.user')->paginate(10);
         // Return the courses to the view
         return Inertia::render('MyCourses', ['courses' => $courses]);
     }

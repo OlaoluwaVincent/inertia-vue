@@ -20,14 +20,20 @@ class ReviewController extends Controller
     public function index(AuthCheckers $request)
     {
         if ($request->isInstructor()) {
+            if ($request->user()->instructor_id === null) {
+                return Inertia::render("Reviews", ['reviews' => ['data' => []], 'status' => session('status'),]);
+            }
+
             $instructors_courses = $request->user()->instructor->courses;
             $reviews = null;
+
             foreach ($instructors_courses as $course) {
                 // Paginate the reviews for each course
                 $course_reviews = $course->reviews()->with('user', 'course')->paginate(10);
                 // Push paginated reviews into the $reviews array
                 $reviews = $course_reviews;
             }
+
             return Inertia::render("Reviews", ['reviews' => $reviews, 'status' => session('status'), 'canDelete' => $request->isAdmin()]);
         } else {
             $reviews = Review::where('user_id', $request->user()->id)->with('user')->orderBy('created_at', 'desc')->paginate(10);
