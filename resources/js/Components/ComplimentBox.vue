@@ -35,7 +35,7 @@ const props = defineProps({
   flex-direction: column;
   gap: 12px;
   justify-content: space-between;
-  width: 80%;
+  /* width: 80%; */
   max-width: 300px;
 }
 

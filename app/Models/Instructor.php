@@ -16,8 +16,19 @@ class Instructor extends Authenticatable
         'headline',
         'professional_experience',
         'expertise',
-        'languages'
+        'languages',
+        'user_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'followers' => 'array',
+            'languages' => 'array',
+            'expertise' => 'array'
+        ];
+    }
+
 
     public function user()
     {

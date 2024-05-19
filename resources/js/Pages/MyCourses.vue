@@ -1,6 +1,8 @@
 <template>
   <div class="tw-pt-5">
-    <p v-if="courses.data === undefined">You have not created any course yet</p>
+    <p v-if="courses.data === undefined || !courses.data.length">
+      You have not created any course yet
+    </p>
     <section class="courses">
       <CourseCard :data="courses.data" />
     </section>
@@ -20,6 +22,7 @@ defineOptions({ layout: UserLayout });
 const props = defineProps({
   courses: Object,
 });
+console.log(props.courses);
 </script>
 
 <style scoped>

@@ -8,7 +8,7 @@
       class="tw-max-w-[220px]"
     />
 
-    <ScrollX v-if="data && data.length" :scrollable="true">
+    <ScrollX v-if="data && data.length" scrollable controller>
       <ComplimentBox :data="data" />
     </ScrollX>
   </section>

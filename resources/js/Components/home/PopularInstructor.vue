@@ -8,7 +8,12 @@
         min-width="150"
         :key="key"
       >
-        <v-img :src="instructor.profile" cover></v-img>
+        <v-img
+          :src="instructor.profile"
+          cover
+          position="top"
+          class="img"
+        ></v-img>
 
         <v-card-item>
           <v-card-title class="!tw-text-sm md:!tw-text-base">{{
@@ -67,7 +72,8 @@ onMounted(async () => {
 
 <style scoped>
 .img__height {
-  height: 180px;
+  height: 140px;
+  max-height: 180px;
 }
 
 .divider__line {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InstructorDetailsController;
 use App\Http\Controllers\ModelControllers\CoursesController;
 use App\Http\Controllers\ModelControllers\ReviewController;
 use App\Http\Controllers\PaymentController;
@@ -19,16 +20,24 @@ Route::get('/cart', function () {
 })->name('cart');
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
-// Route::get('/my-courses', [UserCoursesController::class, 'show'])->middleware(['auth', 'verified'])->name('user.courses');
 
 
-Route::group(['prefix' => 'my-courses'], function () {
+Route::group(['prefix' => 'my-details', 'middleware' => ['auth', 'verified']], function () {
+    Route::get('/', [InstructorDetailsController::class, 'index'])->name('userDetails.index')->middleware('auth');
+    Route::get('/{id}', [InstructorDetailsController::class, 'show'])->name('userDetails.show');
+    Route::patch('/{id}', [InstructorDetailsController::class, 'edit'])->name('userDetails.edit');
+    Route::post('/', [InstructorDetailsController::class, 'store'])->name('userDetails.store');
+    Route::delete('/{id}', [InstructorDetailsController::class, 'delete'])->name('userDetails.delte');
+});
+
+Route::group(['prefix' => 'my-courses', 'middleware' => ['auth', 'verified']], function () {
     Route::get('/', [UserCoursesController::class, 'index'])->name('userCourse.index');
     Route::get('/{id}', [UserCoursesController::class, 'show'])->name('userCourse.show');
     Route::patch('/{id}', [UserCoursesController::class, 'edit'])->name('userCourse.edit');
     Route::post('/{id}', [UserCoursesController::class, 'store'])->name('userCourse.store');
-    Route::delete('/{id}', [UserCoursesController::class, 'delete'])->name('userCourse.delte');
-})->middleware(['auth', 'verified']);
+    Route::delete('/{id}', [UserCoursesController::class, 'delete'])->name('userCourse.delete');
+});
+
 
 Route::group(['prefix' => 'courses'], function () {
     Route::get('/', [CoursesController::class, 'index'])->name('course.show');
