@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InstructorDetailsValidate;
 use App\Models\Instructor;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,22 +15,14 @@ class InstructorDetailsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('InstructorDetails', [
-            'status' => session('status'),
-            'isOnBoard' => auth()->user()->hasOnboarded(),
+        $user = $request->user();
+        return Inertia::render('Profile/InstructorDetails', [
+            'isOnBoard' => $user->hasOnboarded(),
             'details' => auth()->user()->instructor
         ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -41,6 +34,9 @@ class InstructorDetailsController extends Controller
             throw new Exception('Unauthorised');
         }
 
+        if ($user->hasOnboarded()) {
+            throw new Exception('Forbidden Access');
+        }
         // Fill the User model with the validated fields
         $validated = $request->validated();
         // dd($user->id);
@@ -61,17 +57,25 @@ class InstructorDetailsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $id)
     {
+        $user = $id;
+        return Inertia::render('Instructor', [
+            'details' => $user
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(InstructorDetailsValidate $request, string $id,)
     {
-        dd($id);
-        //
+        $validated = $request->user()->instructor->fill($request->validated());
+        if (!$validated) {
+            throw new Exception('All Fields are required');
+        }
+
+        $request->user()->instuctor->save();
     }
 
     /**

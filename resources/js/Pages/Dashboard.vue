@@ -1,6 +1,4 @@
-<template>
-  <h1>Helo</h1>
-</template>
+<template></template>
 
 <script setup>
 import UserLayout from "@/Layouts/UserLayout.vue";
@@ -8,8 +6,12 @@ import UserLayout from "@/Layouts/UserLayout.vue";
 defineOptions({ layout: UserLayout });
 
 const props = defineProps({
-  user: Object,
+  auth: Object,
+  errors: Object,
+  isOnboard: Boolean,
 });
+
+console.log(props.isOnboard);
 </script>
 
 <style scoped>

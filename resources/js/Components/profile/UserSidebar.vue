@@ -70,7 +70,7 @@ const items = [
     value: "/profile",
   },
   instructorDetailsLink(),
-  { title: "My Courses", value: "/my-courses" },
+  { title: "My Courses", value: `/my-courses/${user.value.id}` },
   { title: "Message", value: "/message" },
   { title: "Reviews", value: "/reviews" },
 ];

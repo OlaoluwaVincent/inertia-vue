@@ -12,7 +12,7 @@
           :src="instructor.profile"
           cover
           position="top"
-          class="img"
+          class="img__height"
         ></v-img>
 
         <v-card-item>
@@ -73,7 +73,6 @@ onMounted(async () => {
 <style scoped>
 .img__height {
   height: 140px;
-  max-height: 180px;
 }
 
 .divider__line {
@@ -84,13 +83,13 @@ onMounted(async () => {
 
 @media (width>430px) {
   .img__height {
-    height: 200px;
+    height: 150px;
   }
 }
 
 @media (width>=768px) {
   .img__height {
-    height: 200px;
+    height: 160px;
   }
 }
 </style>

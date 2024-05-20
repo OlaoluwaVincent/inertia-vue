@@ -70,24 +70,18 @@ function handleCartClick(value) {
 
 <style scoped>
 .img__height {
-  height: 180px;
+  height: 140px;
 }
 
 @media (width>430px) {
   .img__height {
-    height: 200px;
+    height: 150px;
   }
 }
 
 @media (width>=768px) {
   .img__height {
-    height: 200px;
-  }
-}
-
-@media (width>=1024px) {
-  .v__card-popular:last-child {
-    display: block;
+    height: 160px;
   }
 }
 </style>

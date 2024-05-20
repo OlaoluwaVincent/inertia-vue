@@ -28,6 +28,11 @@ class User extends Authenticatable
         'socials',
     ];
 
+
+    protected $with = [
+        'instructor'
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -51,6 +56,7 @@ class User extends Authenticatable
             'socials' => 'array',
         ];
     }
+
 
     public function instructor()
     {

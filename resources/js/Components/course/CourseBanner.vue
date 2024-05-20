@@ -41,7 +41,8 @@ const theme = useThemeStore();
 const props = defineProps({
   course: Object,
 });
-const user = computed(() => props.course.instructor);
+
+const user = computed(() => props.course.instructor.user);
 const course = computed(() => props.course);
 </script>
 

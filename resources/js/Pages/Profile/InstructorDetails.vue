@@ -105,7 +105,6 @@ const props = defineProps({
   details: Object,
   errors: Object,
   auth: Object,
-  status: String,
 });
 
 const form = useForm({

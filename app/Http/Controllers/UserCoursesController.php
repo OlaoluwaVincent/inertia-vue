@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Instructor;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,13 +16,6 @@ class UserCoursesController extends Controller
 
     public function index(Request $request)
     {
-        // Get the ID of the authenticated user
-        $instructor_id = $request->user()->instructor_id;
-
-        // Course::with('instructor.user')->paginate(10);
-        $courses = Course::where('instructor_id', $instructor_id)->with('instructor.user')->paginate(10);
-        // Return the courses to the view
-        return Inertia::render('MyCourses', ['courses' => $courses]);
     }
 
 
@@ -44,9 +38,13 @@ class UserCoursesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $id)
     {
-        //
+        $user = $id;
+
+        $courses = Course::where('instructor_id', $user->id)->with('instructor.user')->paginate(10);
+        // Return the courses to the view
+        return Inertia::render('MyCourses', ['courses' => $courses]);
     }
 
     /**

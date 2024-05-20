@@ -12,8 +12,9 @@ class DashboardController extends Controller
 
     public function show(Request $request)
     {
+        $user = $request->user();
         return Inertia::render('Dashboard', [
-            'status' => session('status'),
+            'isOnboard' => $user->hasOnboarded(),
         ]);
     }
 }
