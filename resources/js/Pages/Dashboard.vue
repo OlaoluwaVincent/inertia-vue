@@ -1,6 +1,15 @@
-<template></template>
+<template>
+  <Link
+    v-if="isOnboard"
+    href="courses/create"
+    class="tw-bg-teal-800 tw-text-white tw-p-2 rounded-md"
+  >
+    Add Course
+  </Link>
+</template>
 
 <script setup>
+import { Link } from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
 
 defineOptions({ layout: UserLayout });

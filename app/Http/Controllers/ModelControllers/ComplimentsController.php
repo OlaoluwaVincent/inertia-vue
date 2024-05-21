@@ -18,6 +18,8 @@ class ComplimentsController extends Controller
             $compliment->user = [
                 'name' => $user->fullname,
                 'profile_picture' => $user->profile_picture,
+                'id' => $user->id,
+                'instructor_id' => $user->instructor_id,
             ];
         }
         return $compliments;

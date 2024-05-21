@@ -1,94 +1,105 @@
 <template>
-  <h1>Please Fill in your Onboarding Details</h1>
+  <section>
+    <h1>Please Fill in your Onboarding Details</h1>
 
-  <form id="form" @keydown.enter.prevent @submit.prevent>
-    <div class="form__group">
-      <label for="headline" class="form__label">Headline</label>
-      <div class="form__input-container">
-        <input
-          type="text"
-          id="headline"
-          class="form__input"
-          v-model="form.headline"
-        />
+    <section id="form">
+      <div class="form__group">
+        <label for="headline" class="form__label">Headline</label>
+        <div class="form__input-container">
+          <input
+            type="text"
+            id="headline"
+            class="form__input"
+            v-model="form.headline"
+          />
+        </div>
+        <InputError class="mt-2" :message="form.errors.headline" />
       </div>
-      <InputError class="mt-2" :message="form.errors.headline" />
-    </div>
 
-    <div class="form__group">
-      <label for="professional_experience" class="form__label"
-        >Professional Experience</label
-      >
-      <div class="form__input-container">
-        <textarea
-          id="professional_experience"
-          class="form__input tw-m-0 tw-outline-0 focus:tw-outline-0 tw-h-[150px] tw-bg-white"
-          :class="theme.isDark && '!tw-bg-gray-700'"
-          v-model="form.professional_experience"
-        />
-      </div>
-      <InputError class="mt-2" :message="form.errors.professional_experience" />
-    </div>
-
-    <div class="form__group">
-      <label for="professional_experience" class="form__label"
-        >Areas of Expertise</label
-      >
-      <div class="form__input-container">
-        <input
-          type="text"
-          class="form__input"
-          @keydown.enter="keyPressed('expertise')"
-          v-model="expertise"
-        />
-      </div>
-      <InputError class="mt-2" :message="form.errors.expertise" />
-
-      <v-list v-if="form.expertise.length" density="compact">
-        <v-list-item
-          v-for="(item, index) in form.expertise"
-          :key="index"
-          density="compact"
+      <div class="form__group">
+        <label for="professional_experience" class="form__label"
+          >Professional Experience</label
         >
-          <span class="tw-mr-3 tw-cursor-pointer">
-            <v-icon color="error" @click="deleteItem('expertise', index)"
-              >mdi-delete</v-icon
-            ></span
-          >{{ item }}
-        </v-list-item>
-      </v-list>
-    </div>
-
-    <div class="form__group">
-      <label for="professional_experience" class="form__label"
-        >Spoken languages</label
-      >
-      <div class="form__input-container">
-        <input
-          type="text"
-          class="form__input"
-          @keydown.enter="keyPressed('languages')"
-          v-model="languages"
+        <div class="form__input-container">
+          <textarea
+            id="professional_experience"
+            class="form__input tw-m-0 tw-outline-0 focus:tw-outline-0 tw-h-[150px] tw-bg-white"
+            :class="theme.isDark && '!tw-bg-gray-700'"
+            v-model="form.professional_experience"
+          />
+        </div>
+        <InputError
+          class="mt-2"
+          :message="form.errors.professional_experience"
         />
       </div>
-      <InputError class="mt-2" :message="form.errors.languages" />
 
-      <v-list v-if="form.languages.length" density="compact">
-        <v-list-item
-          v-for="(item, index) in form.languages"
-          :key="index + 1"
-          density="compact"
+      <div class="form__group">
+        <label for="professional_experience" class="form__label"
+          >Areas of Expertise</label
         >
-          <span class="tw-mr-3 tw-cursor-pointer">
-            <v-icon color="error" @click="deleteItem('languages', index)"
-              >mdi-delete</v-icon
-            ></span
-          >{{ item }}
-        </v-list-item>
-      </v-list>
-    </div>
-    <v-btn type="submit" color="teal-darken-3" @click="submit">Submit</v-btn>
-  </form>
+        <div class="form__input-container">
+          <input
+            type="text"
+            class="form__input"
+            @keydown.enter="pressed('expertise')"
+            v-model="expertise"
+          />
+        </div>
+        <InputError class="mt-2" :message="form.errors.expertise" />
+
+        <v-list v-if="form.expertise.length" density="compact">
+          <v-list-item
+            v-for="(item, index) in form.expertise"
+            :key="index"
+            density="compact"
+          >
+            <span class="tw-mr-3 tw-cursor-pointer">
+              <v-icon color="error" @click="removeItem('expertise', index)"
+                >mdi-delete</v-icon
+              ></span
+            >{{ item }}
+          </v-list-item>
+        </v-list>
+      </div>
+
+      <div class="form__group">
+        <label for="professional_experience" class="form__label"
+          >Spoken languages</label
+        >
+        <div class="form__input-container">
+          <input
+            type="text"
+            class="form__input"
+            @keydown.enter="pressed('languages')"
+            v-model="languages"
+          />
+        </div>
+        <InputError class="mt-2" :message="form.errors.languages" />
+
+        <v-list v-if="form.languages.length" density="compact">
+          <v-list-item
+            v-for="(item, index) in form.languages"
+            :key="index + 1"
+            density="compact"
+          >
+            <span class="tw-mr-3 tw-cursor-pointer">
+              <v-icon color="error" @click="removeItem('languages', index)"
+                >mdi-delete</v-icon
+              ></span
+            >{{ item }}
+          </v-list-item>
+        </v-list>
+      </div>
+      <v-btn type="submit" color="teal-darken-3" @click="submit">{{
+        isOnBoard ? "Update Details" : "Save"
+      }}</v-btn>
+    </section>
+
+    <InstructorSnackbar v-model="snackbar">
+      {{ isOnBoard ? "Updated" : "Saved" }} Succesfully
+    </InstructorSnackbar>
+  </section>
 </template>
 
 <script setup>
@@ -97,6 +108,8 @@ import UserLayout from "@/Layouts/UserLayout.vue";
 import { useThemeStore } from "@/store/theme";
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
+import InstructorSnackbar from "@/Components/SnackBar.vue";
+import { keyPressed, deleteItem } from "@/composable/instructorComposable";
 defineOptions({ layout: UserLayout });
 
 const theme = useThemeStore();
@@ -116,36 +129,28 @@ const form = useForm({
 
 const expertise = ref("");
 const languages = ref("");
+const snackbar = ref(false);
 
-function keyPressed(type) {
-  if (type === "languages") {
-    if (!languages.value.length) return;
-
-    form.languages.push(languages.value);
-    return (languages.value = "");
-  } else {
-    if (!expertise.value.length) return;
-
-    form.expertise.push(expertise.value);
-    expertise.value = "";
-  }
+function pressed(type) {
+  keyPressed(type, languages, form, expertise);
 }
 
-function deleteItem(type, itemId) {
-  const index = itemId;
-  if (type === "languages") {
-    form.languages = form.languages.filter((item, id) => id !== index);
-  } else {
-    form.expertise = form.expertise.filter((item, id) => id !== index);
-  }
+function removeItem(type, itemId) {
+  deleteItem(type, itemId, form);
 }
 
 const submit = () => {
   if (props.isOnBoard) {
-    return form.patch(route("userDetails.edit", { id: props.auth.user.id }));
+    return form.patch(route("userDetails.edit", { id: props.auth.user.id }), {
+      onSuccess: () => {
+        snackbar.value = true;
+      },
+    });
   }
   form.post(route("userDetails.store"), {
-    onError: () => {},
+    onSuccess: () => {
+      snackbar.value = true;
+    },
   });
 };
 </script>

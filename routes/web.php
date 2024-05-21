@@ -20,34 +20,36 @@ Route::get('/cart', function () {
 })->name('cart');
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/details/{id}', [InstructorDetailsController::class, 'show'])->middleware('auth')->name('userDetails');
 
 
 Route::group(['prefix' => 'my-details', 'middleware' => ['auth', 'verified']], function () {
-    Route::get('/', [InstructorDetailsController::class, 'index'])->name('userDetails.index')->middleware('auth');
-    Route::get('/{id}', [InstructorDetailsController::class, 'show'])->name('userDetails.show');
+    Route::get('/', [InstructorDetailsController::class, 'index'])->name('userDetails.index');
     Route::patch('/{id}', [InstructorDetailsController::class, 'edit'])->name('userDetails.edit');
     Route::post('/', [InstructorDetailsController::class, 'store'])->name('userDetails.store');
-    Route::delete('/{id}', [InstructorDetailsController::class, 'delete'])->name('userDetails.delte');
 });
+## Details for Instructor
 
 Route::group(['prefix' => 'my-courses', 'middleware' => ['auth', 'verified']], function () {
     Route::get('/', [UserCoursesController::class, 'index'])->name('userCourse.index');
     Route::get('/{id}', [UserCoursesController::class, 'show'])->name('userCourse.show');
     Route::patch('/{id}', [UserCoursesController::class, 'edit'])->name('userCourse.edit');
     Route::post('/{id}', [UserCoursesController::class, 'store'])->name('userCourse.store');
-    Route::delete('/{id}', [UserCoursesController::class, 'delete'])->name('userCourse.delete');
 });
 
 
 Route::group(['prefix' => 'courses'], function () {
     Route::get('/', [CoursesController::class, 'index'])->name('course.show');
 
+    Route::get('/create', [CoursesController::class, 'form'])->name('course.form');
+    Route::post('/create', [CoursesController::class, 'store'])->name('course.create');
     Route::get('/{id}', [CoursesController::class, 'show'])->name('course.single');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.patch');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

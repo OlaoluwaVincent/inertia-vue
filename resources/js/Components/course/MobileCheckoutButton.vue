@@ -30,7 +30,7 @@
 <script setup>
 import { useCartStore } from "@/store/cart";
 import { useThemeStore } from "@/store/theme";
-import CartSnackBar from "@/Components/CartSnackBar.vue";
+import CartSnackBar from "@/Components/SnackBar.vue";
 import { computed } from "vue";
 const theme = useThemeStore();
 const cartStore = useCartStore();

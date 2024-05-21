@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\ModelControllers;
 
+use App\Class\ImageUploader;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CourseRequestValidator;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class CoursesController extends Controller
@@ -45,7 +48,35 @@ class CoursesController extends Controller
         ]);
     }
 
+    public function form(Request $request)
+    {
+        $user = $request->user();
+        if (!$user->isNotStudent()) {
+            return Redirect::to('/');
+        }
 
+        return Inertia::render('Courses/CreateCourse');
+    }
+
+    public function store(CourseRequestValidator $request)
+    {
+        $user = $request->user();
+        dd($request->files)->image;
+        if (!$user->isNotStudent()) {
+            return Redirect::to('/');
+        }
+
+        $validated =  $request->validated();
+        // $validated['image'] = ImageUploader::course($validated['image']);
+
+        $course = Course::create([
+            ...$validated,
+            'user_id' => $user->id,
+            'instructor_id' => $user->instructor_id,
+        ]);
+
+        return Redirect::to('/my-course/' . $user->id);
+    }
 
     /** the Course view with the course data {category, course, instructor} */
     public function show($id)

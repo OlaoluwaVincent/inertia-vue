@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InstructorDetailsValidate;
+use App\Models\Course;
 use App\Models\Instructor;
 use App\Models\User;
 use Exception;
@@ -55,17 +56,6 @@ class InstructorDetailsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(User $id)
-    {
-        $user = $id;
-        return Inertia::render('Instructor', [
-            'details' => $user
-        ]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(InstructorDetailsValidate $request, string $id,)
@@ -75,21 +65,19 @@ class InstructorDetailsController extends Controller
             throw new Exception('All Fields are required');
         }
 
-        $request->user()->instuctor->save();
+
+        $request->user()->instructor->save();
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function show(string $id)
     {
-    }
+        $user = User::find($id);
+        $courses = Course::where('instructor_id', $user->instructor_id)->get();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $user->courses = $courses;
+
+        return Inertia::render('Instructor', [
+            'details' => $user,
+        ]);
     }
 }

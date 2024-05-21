@@ -40,9 +40,9 @@ class UserCoursesController extends Controller
      */
     public function show(User $id)
     {
-        $user = $id;
 
-        $courses = Course::where('instructor_id', $user->id)->with('instructor.user')->paginate(10);
+        // Get the courses of the user
+        $courses = Course::where('instructor_id', $id->instructor_id)->with('instructor.user')->paginate(10);
         // Return the courses to the view
         return Inertia::render('MyCourses', ['courses' => $courses]);
     }

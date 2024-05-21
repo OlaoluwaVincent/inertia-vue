@@ -116,12 +116,12 @@ function submitForm() {
 
   form.socials = socials;
 
-  form.post("profile", {
+  form.patch("profile", {
     onSuccess: () => {
       message.value = "Successful";
     },
     onError: () => {
-      message.value = "Successful";
+      message.value = "Unsuccessful";
     },
   });
 }

@@ -1,10 +1,17 @@
 <template>
   <v-sheet rounded color="transparent" class="userBox">
     <v-avatar :image="user.profile_picture" :size="size"></v-avatar>
-    <h5 class="tw-text-sm md:tw-text-base tw-text-blue-600 tw-underline">
-      <Link :href="route('userDetails.show', { id: user.id })">
+    <h5 class="tw-text-sm md:tw-text-base tw-text-blue-600 tw-font-semibold">
+      <Link
+        v-if="user.instructor_id"
+        :href="`/details/${user.id}`"
+        class="tw-underline"
+      >
         {{ user.name || user.username }}</Link
       >
+      <p v-else class="tw-font-semibold">
+        {{ user.name || user.username }}
+      </p>
     </h5>
   </v-sheet>
 </template>

@@ -62,7 +62,7 @@
 import { useThemeStore } from "@/store/theme";
 import SocialMediaShare from "@/utils/shareCourse";
 import { useCartStore } from "@/store/cart";
-import CartSnackBar from "@/Components/CartSnackBar.vue";
+import CartSnackBar from "@/Components/SnackBar.vue";
 import { ref } from "vue";
 
 const socialMediaShare = new SocialMediaShare(window.location.pathname);

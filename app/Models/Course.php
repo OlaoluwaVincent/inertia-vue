@@ -18,8 +18,17 @@ class Course extends Model
         'category_id',
         'instructor_id',
         'rating_id',
-        'objectives',
+        'objective',
+        'requirement',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'objective' => 'array',
+            'requirement' => 'array',
+        ];
+    }
 
     public function category()
     {

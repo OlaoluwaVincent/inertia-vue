@@ -58,8 +58,7 @@ function previewImage() {
 }
 
 function updateProfile() {
-  //   router.patch("/profile");
-  form.post("profile", {
+  form.patch(route("profile.patch"), {
     onSuccess: () => {
       previewUrl.value = "";
     },
