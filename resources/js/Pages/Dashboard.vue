@@ -1,7 +1,7 @@
 <template>
   <Link
     v-if="isOnboard"
-    href="courses/create"
+    href="my-courses/create"
     class="tw-bg-teal-800 tw-text-white tw-p-2 rounded-md"
   >
     Add Course

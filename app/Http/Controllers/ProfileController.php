@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Class\ImageUploader;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -41,8 +42,11 @@ class ProfileController extends Controller
 
         // Check if an image was uploaded
         if ($request->image) {
-            $path = $request->image->store('images', 'public');;
-            $user->profile_picture = asset('storage/' . $path); // Update profile picture field
+            // Delete Existing profile Picture
+            ImageUploader::deleteImage($user->profile_picture);
+
+            $path = ImageUploader::profileImage($request->image);
+            $user->profile_picture = $path; // Update profile picture field
         }
 
         // If the email was edited, set the verified_at = null

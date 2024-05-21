@@ -6,8 +6,15 @@
     :class="className"
   >
     <v-img :src="item.image" cover class="img__height tw-relative">
+      <div
+        v-if="canDelete"
+        class="tw-absolute tw-top-3 tw-left-3 tw-z-10 tw-w-full"
+      >
+        <CourseCardDots :id="item.id" />
+      </div>
+
       <v-btn
-        v-if="!store.checkExisting(item.id)"
+        v-if="!store.checkExisting(item.id) && !canDelete"
         @click="() => handleCartClick(item)"
         class="tw-absolute tw-top-3 tw-left-3 tw-z-10 tw-w-full"
         color="warning"
@@ -54,17 +61,23 @@
 </template>
 
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import { useCartStore } from "@/store/cart";
+import CourseCardDots from "@/Components/CourseCardDots.vue";
 const store = useCartStore();
 
 const props = defineProps({
   data: Array,
   className: String,
+  canDelete: Boolean,
 });
 
 function handleCartClick(value) {
   store.addToCart(value);
+}
+
+function deleteCourse(id) {
+  router.delete(route("course.delete", { id: id }));
 }
 </script>
 

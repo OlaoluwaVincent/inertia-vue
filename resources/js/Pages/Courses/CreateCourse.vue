@@ -65,13 +65,16 @@
             <InputError class="mt-2" :message="form.errors.duration" />
           </div>
 
-          <v-select
-            v-model="form.category_id"
-            :items="categories"
-            hint="Pick a Category"
-            label="Select Category"
-            class="tw-mt-4"
-          ></v-select>
+          <div>
+            <v-select
+              v-model="form.category_id"
+              :items="categories"
+              hint="Pick a Category"
+              label="Select Category"
+              class="tw-mt-4"
+            ></v-select>
+            <InputError class="tw-mt-2" :message="form.errors.category_id" />
+          </div>
         </aside>
         <aside>
           <v-file-input
@@ -97,7 +100,7 @@
         </aside>
       </section>
 
-      <div class="tw-flex tw-flex-col tw-gap-6">
+      <div class="tw-flex tw-flex-col tw-gap-6 tw-mt-4">
         <CustomInputSelect
           v-model="objective"
           label="List out Course Objectives"
@@ -119,7 +122,9 @@
         />
       </div>
 
-      <button @click="submit">Submit</button>
+      <v-btn color="teal-darken-4" block class="tw-mt-10" @click="submit">{{
+        form.processing ? "Processing" : "Save"
+      }}</v-btn>
     </section>
   </section>
 </template>
@@ -137,6 +142,9 @@ import { deleteOne } from "@/composable/instructorComposable";
 import UserLayout from "@/Layouts/UserLayout.vue";
 
 defineOptions({ layout: UserLayout });
+const props = defineProps({
+  course: Object,
+});
 
 onMounted(() => getCategories());
 
@@ -158,17 +166,17 @@ async function getCategories() {
 const theme = useThemeStore();
 
 const form = useForm({
-  title: "",
-  description: "",
+  title: props.course?.title || "",
+  description: props.course?.description || "",
   image: null,
-  price: null,
-  duration: null,
-  category_id: "",
-  objective: [],
-  requirement: [],
+  price: props.course?.price || null,
+  duration: props.course?.duration || null,
+  category_id: props.course?.category_id || "",
+  objective: props.course?.objective || [],
+  requirement: props.course?.requirement || [],
 });
 
-const previewUrl = ref("");
+const previewUrl = ref(props.course?.image || "");
 const objective = ref("");
 const requirement = ref("");
 
@@ -184,7 +192,11 @@ function previewImage() {
 }
 
 function submit() {
-  form.submit("post", route("course.create"));
+  if (props.course) {
+    form.submit("post", route("userCourse.edit", { course: props.course.id }));
+    return;
+  }
+  form.submit("post", route("userCourse.store"));
 }
 </script>
 

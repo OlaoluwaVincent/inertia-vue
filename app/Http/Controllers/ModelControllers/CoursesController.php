@@ -58,25 +58,12 @@ class CoursesController extends Controller
         return Inertia::render('Courses/CreateCourse');
     }
 
-    public function store(CourseRequestValidator $request)
-    {
-        $user = $request->user();
-        dd($request->files)->image;
-        if (!$user->isNotStudent()) {
-            return Redirect::to('/');
-        }
-
-        $validated =  $request->validated();
-        // $validated['image'] = ImageUploader::course($validated['image']);
-
-        $course = Course::create([
-            ...$validated,
-            'user_id' => $user->id,
-            'instructor_id' => $user->instructor_id,
-        ]);
-
-        return Redirect::to('/my-course/' . $user->id);
-    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
 
     /** the Course view with the course data {category, course, instructor} */
     public function show($id)

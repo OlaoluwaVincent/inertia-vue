@@ -32,18 +32,19 @@ Route::group(['prefix' => 'my-details', 'middleware' => ['auth', 'verified']], f
 
 Route::group(['prefix' => 'my-courses', 'middleware' => ['auth', 'verified']], function () {
     Route::get('/', [UserCoursesController::class, 'index'])->name('userCourse.index');
-    Route::get('/{id}', [UserCoursesController::class, 'show'])->name('userCourse.show');
-    Route::patch('/{id}', [UserCoursesController::class, 'edit'])->name('userCourse.edit');
-    Route::post('/{id}', [UserCoursesController::class, 'store'])->name('userCourse.store');
+
+    Route::get('/create', [UserCoursesController::class, 'create'])->name('userCourse.create');
+    Route::post('/create', [UserCoursesController::class, 'store'])->name('userCourse.store');
+    Route::get('/edit/{course}', [UserCoursesController::class, 'show'])->name('userCourse.show');
+    Route::post('/edit/{course}', [UserCoursesController::class, 'edit'])->name('userCourse.edit');
+    Route::delete('/{course}', [UserCoursesController::class, 'destroy'])->name('userCourse.delete');
 });
 
 
 Route::group(['prefix' => 'courses'], function () {
     Route::get('/', [CoursesController::class, 'index'])->name('course.show');
-
-    Route::get('/create', [CoursesController::class, 'form'])->name('course.form');
-    Route::post('/create', [CoursesController::class, 'store'])->name('course.create');
     Route::get('/{id}', [CoursesController::class, 'show'])->name('course.single');
+    Route::delete('/{id}', [CoursesController::class, 'delete'])->name('course.delete');
 });
 
 Route::middleware('auth')->group(function () {

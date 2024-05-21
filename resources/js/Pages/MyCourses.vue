@@ -4,7 +4,7 @@
       You have not created any course yet
     </p>
     <section class="courses">
-      <CourseCard :data="courses.data" />
+      <CourseCard :data="courses.data" canDelete />
     </section>
 
     <Pagination v-if="courses.next_page_url" :links="courses.links" />
@@ -22,7 +22,6 @@ defineOptions({ layout: UserLayout });
 const props = defineProps({
   courses: Object,
 });
-console.log(props.courses);
 </script>
 
 <style scoped>
