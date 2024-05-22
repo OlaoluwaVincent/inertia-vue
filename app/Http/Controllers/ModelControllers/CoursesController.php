@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\ModelControllers;
 
-use App\Class\ImageUploader;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CourseRequestValidator;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -21,8 +19,8 @@ class CoursesController extends Controller
         $price = $request->query('price');
         $sort = $request->query('sort');
 
+        // Start building the query without executing it
         $query = Course::with('instructor.user');
-
 
         // Filter courses by category if category is provided
         if ($category) {
@@ -36,17 +34,21 @@ class CoursesController extends Controller
             $query->where('price', '<=', $price);
         }
 
-
-
-        // Paginate the results
+        // Paginate the results after processing
         $courses = $query->paginate(10);
-        // return $courses;
 
-        // Return view with courses
+        // Iterate through each course to calculate average ratings
+        foreach ($courses->items() as $course) {
+            $course->reviewsAverage();
+        }
+
+
+        // Return view with paginated courses
         return Inertia::render('Courses/AllCourses', [
             'courses' => $courses,
         ]);
     }
+
 
     public function form(Request $request)
     {
@@ -69,7 +71,7 @@ class CoursesController extends Controller
     public function show($id)
     {
         $course = Course::with('category', 'instructor.user', 'lessons', 'reviews',)->find($id);
-
+        $course->reviewsAverage();
         return Inertia::render('Courses/SingleCourse', [
             'course' => $course,
         ]);
@@ -81,6 +83,7 @@ class CoursesController extends Controller
     public function popularCourse()
     {
         $courses = Course::with('instructor.user')->get();
+
         $result = [];
 
         foreach ($courses as $item) {
@@ -93,6 +96,7 @@ class CoursesController extends Controller
                 'price' => $item['price'],
                 'duration' => $item['duration'],
                 'instructor' => $item['instructor'],
+                'avg_rating' => $item->reviewsAverage(),
             ];
 
             // Push the modified object into the result array

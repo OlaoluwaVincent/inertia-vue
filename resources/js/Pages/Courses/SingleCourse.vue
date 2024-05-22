@@ -39,6 +39,7 @@ const props = defineProps({
   course: Object,
   errors: Object,
 });
+
 const snackbar = ref(false);
 const isExistInCart = computed(() => cartStore.checkExisting(props.course.id));
 </script>

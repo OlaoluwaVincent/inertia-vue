@@ -47,6 +47,7 @@
         <v-rating
           v-model="average_rating"
           readonly
+          half-increments
           density="compact"
           active-color="orange"
           color="orange-lighten-1"

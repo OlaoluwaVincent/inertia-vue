@@ -56,18 +56,21 @@ class ReviewController extends Controller
         if (!$allReviews) {
             return ['message', abort(404)];
         }
-        $totalRating = Review::where('course_id', $id)->sum('rating');
-        $totalRatingsCount = Review::where('course_id', $id)->count('user_id');
-        $averageRating = $totalRatingsCount > 0 ? $totalRating / $totalRatingsCount : 0;
+        // $totalRating = Review::where('course_id', $id)->sum('rating');
+        // $totalRatingsCount = Review::where('course_id', $id)->count('user_id');
+        // $averageRating = $totalRatingsCount > 0 ? $totalRating / $totalRatingsCount : 0;
+
+        $ratings = $allReviews->pluck('rating')->toArray();
+        $average = !empty($ratings) ? array_sum($ratings)  / count($ratings) : 0;
 
 
         // Append the total rating and average rating to the response
-        $total_raters = $totalRatingsCount;
-        $average_rating = $averageRating;
+        // $total_raters = $totalRatingsCount;
+        // $average_rating = $averageRating;
         return [
             'reviews' => $allReviews,
-            "total_raters" => $total_raters,
-            "average_rating" => $average_rating,
+            "total_raters" => count($ratings),
+            "average_rating" => $average,
         ];
     }
     public function store(AuthCheckers $request, $id)

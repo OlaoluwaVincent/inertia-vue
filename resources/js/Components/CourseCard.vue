@@ -43,14 +43,16 @@
     <v-card-text>
       <div class="tw-flex tw-items-center tw-mx-0 tw-gap-4">
         <v-rating
-          :model-value="4.5"
+          :model-value="item?.avg_rating"
           color="amber"
           density="compact"
           size="small"
           half-increments
           readonly
         ></v-rating>
-        <div class="tw-text-grey-400 tw-hidden md:tw-block">4.5 (413)</div>
+        <div class="tw-text-grey-400 tw-hidden md:tw-block">
+          {{ item?.avg_rating }}
+        </div>
         <p>{{ item.duration }}hrs</p>
       </div>
 

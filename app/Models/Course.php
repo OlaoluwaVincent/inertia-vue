@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\CourseTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, CourseTrait;
 
     protected $fillable = [
         'title',
@@ -20,6 +21,7 @@ class Course extends Model
         'rating_id',
         'objective',
         'requirement',
+        'avg_rating'
     ];
 
     protected function casts(): array

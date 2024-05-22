@@ -20,6 +20,8 @@ import Pagination from "@/Components/Pagination.vue";
 const props = defineProps({
   courses: Object,
 });
+
+console.log(props.courses);
 </script>
 
 
