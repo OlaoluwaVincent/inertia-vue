@@ -15,16 +15,14 @@
         :key="index"
         :value="index"
       >
-        <v-list-item-title>
-          <Link
-            :href="route(item.route)"
-            :method="item.method"
-            as="button"
-            class="tw-capitalize"
-          >
-            {{ item.title }}</Link
-          >
-        </v-list-item-title>
+        <Link
+          :href="route(item.route)"
+          :method="item.method"
+          as="button"
+          class="tw-capitalize"
+        >
+          {{ item.title }}</Link
+        >
       </v-list-item>
     </v-list>
   </v-menu>
