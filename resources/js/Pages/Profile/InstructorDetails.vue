@@ -141,11 +141,15 @@ function removeItem(type, itemId) {
 
 const submit = () => {
   if (props.isOnBoard) {
-    return form.patch(route("userDetails.edit", { id: props.auth.user.id }), {
-      onSuccess: () => {
-        snackbar.value = true;
-      },
-    });
+    return form.submit(
+      "patch",
+      route("userDetails.edit", { instructor: props.auth.user.instructor_id }),
+      {
+        onSuccess: () => {
+          snackbar.value = true;
+        },
+      }
+    );
   }
   form.post(route("userDetails.store"), {
     onSuccess: () => {

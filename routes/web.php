@@ -25,7 +25,7 @@ Route::get('/details/{id}', [InstructorDetailsController::class, 'show'])->middl
 
 Route::group(['prefix' => 'my-details', 'middleware' => ['auth', 'verified']], function () {
     Route::get('/', [InstructorDetailsController::class, 'index'])->name('userDetails.index');
-    Route::patch('/{id}', [InstructorDetailsController::class, 'edit'])->name('userDetails.edit');
+    Route::patch('/{instructor}', [InstructorDetailsController::class, 'edit'])->name('userDetails.edit');
     Route::post('/', [InstructorDetailsController::class, 'store'])->name('userDetails.store');
 });
 ## Details for Instructor

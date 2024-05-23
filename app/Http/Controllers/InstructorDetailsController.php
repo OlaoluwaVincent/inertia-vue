@@ -32,15 +32,10 @@ class InstructorDetailsController extends Controller
         $user = $request->user();
 
         if (!$user->isNotStudent()) {
-            throw new Exception('Unauthorised');
-        }
-
-        if ($user->hasOnboarded()) {
             throw new Exception('Forbidden Access');
         }
         // Fill the User model with the validated fields
         $validated = $request->validated();
-        // dd($user->id);
         $instructor = Instructor::create(
             [
                 'user_id' => $user->id,
@@ -51,6 +46,8 @@ class InstructorDetailsController extends Controller
             ]
         );
 
+
+
         $user->instructor_id = $instructor->id;
         $user->save();
     }
@@ -58,20 +55,23 @@ class InstructorDetailsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(InstructorDetailsValidate $request, string $id,)
+    public function edit(InstructorDetailsValidate $request, Instructor $instructor)
     {
-        $validated = $request->user()->instructor->fill($request->validated());
+        $validated = $request->validated();
+
         if (!$validated) {
             throw new Exception('All Fields are required');
         }
 
-
-        $request->user()->instructor->save();
+        $instructor->update([
+            ...$validated
+        ]);
     }
 
-    public function show(string $id)
+    public function show(User $id)
     {
-        $user = User::find($id);
+
+        $user = $id;
         $courses = Course::where('instructor_id', $user->instructor_id)->get();
 
         $user->courses = $courses;

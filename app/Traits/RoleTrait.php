@@ -14,9 +14,9 @@ trait RoleTrait
 
     public function hasOnboarded(): bool
     {
-        if (!$this->instructor_id && $this->role !== UserRoleEnum::INSTRUCTOR) {
-            return false;
+        if ($this->instructor_id && $this->role === UserRoleEnum::INSTRUCTOR) {
+            return true;
         }
-        return true;
+        return false;
     }
 }
