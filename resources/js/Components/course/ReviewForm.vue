@@ -2,7 +2,7 @@
   <section
     class="tw-bg-inherit tw-py-10 tw-flex tw-flex-col-reverse tw-gap-8 md:tw-flex-row"
   >
-    <aside class="tw-w-full tw-mx-auto tw-max-w-[70%]">
+    <aside class="tw-w-full tw-mx-auto md:tw-max-w-[70%]">
       <form
         class="tw-p-[5%] md:tw-p-[2%] tw-bg-gray-100 tw-h-max"
         :class="theme.isDark && '!tw-bg-gray-900'"
@@ -128,6 +128,7 @@ onMounted(() => {
 
 <style scoped>
 form {
+  width: 100%;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 </style>

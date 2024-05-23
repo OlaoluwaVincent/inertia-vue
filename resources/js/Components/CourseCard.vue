@@ -50,8 +50,11 @@
           half-increments
           readonly
         ></v-rating>
-        <div class="tw-text-grey-400 tw-hidden md:tw-block">
-          {{ item?.avg_rating }}
+        <div
+          class="tw-text-grey-400 tw-hidden md:tw-block"
+          v-if="item?.avg_rating"
+        >
+          {{ item?.avg_rating }}|({{ item?.avg_voters }})
         </div>
         <p>{{ item.duration }}hrs</p>
       </div>

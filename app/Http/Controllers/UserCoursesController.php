@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Class\ImageUploader;
 use App\Http\Requests\CourseRequestValidator;
+use App\Models\Category;
 use App\Models\Course;
 use App\Models\Instructor;
 use App\Models\User;
@@ -49,13 +50,17 @@ class UserCoursesController extends Controller
         $validated['image'] = ImageUploader::course($validated['image']);
 
         // Create a new course record in the database
-        Course::create([
+        $course = Course::create([
             // Spread the validated data
             ...$validated,
             // Set the user_id and instructor_id fields
             'user_id' => $user->id,
             'instructor_id' => $user->instructor_id,
         ]);
+        $course->save();
+        $category = Category::find($validated['category_id']);
+        array_push($category->category_ids, $course->id);
+        $category->save();
 
         // Redirect to the user's course page
         return Redirect::to('/my-courses/');
@@ -95,11 +100,25 @@ class UserCoursesController extends Controller
             ]
         );
         // Upload the course image
-        ImageUploader::deleteImage($course->image);
-        $validated['image'] = ImageUploader::course($validated['image']);
-        $course->fill($validated);
+        if ($validated['image']) {
+            ImageUploader::deleteImage($course->image);
+        }
+        // dd($course->image);
+        $course->update([
+            ...$validated,
+            'image' => ImageUploader::course($validated['image']) ?? $course->image,
+        ]);
         $course->save();
 
+        $category = Category::find($validated['category_id']);
+        $category_ids = $category->category_ids ?? [];
+
+        // Append the id of the course to the category_ids array
+        $category_ids[] = $course->id;
+
+        // Update the category_ids field in the category model
+        $category->category_ids = $category_ids;
+        $category->save();
         // Redirect to the user's course page
         return Redirect::to('/my-courses/');
     }

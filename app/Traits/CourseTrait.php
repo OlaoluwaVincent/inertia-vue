@@ -19,7 +19,9 @@ trait CourseTrait
         }
 
         $average = array_sum($ratings) / count($ratings);
-        return $courseObject->avg_rating = $average;
+        $courseObject->avg_rating = $average;
+        $courseObject->avg_voters = count($ratings);
+        return;
 
         // return $average;
     }
