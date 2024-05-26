@@ -20,8 +20,6 @@
             v-model="social.link.value"
             :label="social.handle"
             dense
-            class="tw-bg-gray-300"
-            :class="theme.isDark && '!tw-bg-gray-800 !tw-text-white'"
             :rules="social.rules"
             @input="validateLink(social)"
           ></v-text-field>

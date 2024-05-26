@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstructorDetailsController;
 use App\Http\Controllers\ModelControllers\CoursesController;
+use App\Http\Controllers\ModelControllers\LessonController;
 use App\Http\Controllers\ModelControllers\ReviewController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
@@ -38,6 +39,10 @@ Route::group(['prefix' => 'my-courses', 'middleware' => ['auth', 'verified']], f
     Route::get('/edit/{course}', [UserCoursesController::class, 'show'])->name('userCourse.show');
     Route::post('/edit/{course}', [UserCoursesController::class, 'edit'])->name('userCourse.edit');
     Route::delete('/{course}', [UserCoursesController::class, 'destroy'])->name('userCourse.delete');
+    Route::get('/lesson', [LessonController::class, 'index'])->name('lesson.index');
+    Route::post('/lesson', [LessonController::class, 'store'])->name('lesson.store');
+    Route::patch('/lesson/{lesson}', [LessonController::class, 'update'])->name('lesson.update');
+    Route::delete('/lesson/{lesson}', [LessonController::class, 'destroy'])->name('lesson.destroy');
 });
 
 

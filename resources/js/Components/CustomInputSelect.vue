@@ -68,5 +68,6 @@ function deleteItem(index) {
 
 .form__input {
   width: 100%;
+  color: #222;
 }
 </style>

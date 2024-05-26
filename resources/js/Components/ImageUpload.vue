@@ -7,7 +7,7 @@
       id="file"
       v-model="form.image"
       accept="image/*"
-      @change="previewImage"
+      @change="previewImage(form.image)"
       outlined
       required
       prepend-icon="mdi-camera"
@@ -30,32 +30,19 @@
 </template>
 
 <script setup>
-import { useForm, usePage } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
+import { usePreviewImg } from "@/composable/usePreviewImg";
 
 const props = defineProps({
   imgSize: Number,
 });
 
-const user = usePage().props.auth.user;
-
-const previewUrl = ref("");
+const { previewImage, previewUrl } = usePreviewImg();
 
 const form = useForm({
   image: null,
 });
-
-function previewImage() {
-  if (form.image !== null) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      previewUrl.value = event.target.result;
-    };
-
-    reader.readAsDataURL(form.image);
-  }
-}
 
 function updateProfile() {
   form.submit("post", route("profile.update"), {

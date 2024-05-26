@@ -57,10 +57,11 @@ class UserCoursesController extends Controller
             'user_id' => $user->id,
             'instructor_id' => $user->instructor_id,
         ]);
+
         $course->save();
         $category = Category::find($validated['category_id']);
-        array_push($category->category_ids, $course->id);
-        $category->save();
+        $category->courses()->save($course);
+
 
         // Redirect to the user's course page
         return Redirect::to('/my-courses/');
@@ -124,13 +125,6 @@ class UserCoursesController extends Controller
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     public function destroy(Course $course)
     {

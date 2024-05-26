@@ -10,6 +10,9 @@
         class="!tw-opacity-50 !tw-border-blue-500"
       ></v-divider>
 
+      <p v-if="!cartStore?.cart?.length" class="tw-font-semibold md:tw-text-lg">
+        You have no Items in your Cart
+      </p>
       <CartCard
         v-for="course in cartStore.cart"
         :key="course.id"

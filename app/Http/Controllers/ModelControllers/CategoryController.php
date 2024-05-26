@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class CategoryController extends Controller
 {
     /**
@@ -14,27 +16,20 @@ class CategoryController extends Controller
 
     public static function showPopularCategories()
     {
+
         // Get all categories with the count of associated courses
-        $categories = Category::withCount('courses')->get();
-        $notNullCategory = [];
+        $categories = Category::whereHas('courses')->select('id', 'name')->get();
 
-        foreach ($categories as $category) {
-            if ($category->category_ids !== null) {
-                // Append the category data to the $notNullCategory array
-                $notNullCategory[] = [
-                    'id' => $category->id,
-                    'name' => $category->name,
-                    'category_ids' => $category->category_ids,
-                ];
-            }
-        }
 
-        return $notNullCategory;
+        return $categories;
     }
 
     public static function show()
     {
-        $categories = Category::all();
+        $categories = Category::withCount('courses')
+            ->orderBy('courses_count', 'desc')
+            ->get();
+
         return $categories;
     }
 }

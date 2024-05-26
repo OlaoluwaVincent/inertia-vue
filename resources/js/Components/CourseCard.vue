@@ -3,7 +3,7 @@
     v-for="(item, key) in data"
     :key="key"
     class="v__card-popular tw-mx-auto tw-w-full tw-relative tw-min-w-[200px] lg:tw-min-w-[250px] tw-max-w-[280px]"
-    :class="className"
+    :class="`${className} ${theme.isDark && '!tw-bg-gray-900'}`"
   >
     <v-img :src="item.image" cover class="img__height tw-relative">
       <div
@@ -35,7 +35,7 @@
 
       <v-card-subtitle class="!tw-b-0">
         <span class="tw-me-1 tw-text-xs md:tw-text-base"
-          >By {{ item.instructor.user.fullname }}</span
+          >By {{ item?.fullname || item.instructor.user.fullname }}</span
         >
       </v-card-subtitle>
     </v-card-item>
@@ -69,7 +69,9 @@
 import { Link, router } from "@inertiajs/vue3";
 import { useCartStore } from "@/store/cart";
 import CourseCardDots from "@/Components/CourseCardDots.vue";
+import { useThemeStore } from "@/store/theme";
 const store = useCartStore();
+const theme = useThemeStore();
 
 const props = defineProps({
   data: Array,

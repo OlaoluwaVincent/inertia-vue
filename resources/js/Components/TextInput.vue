@@ -26,8 +26,8 @@ defineExpose({ focus: () => input.value.focus(), onChange: "handleChange" });
   width: 100%;
   border-radius: 20px;
   border: 1px solid teal;
-  color: #222;
   outline: transparent;
+  color: #222 !important;
 }
 
 .input:focus {

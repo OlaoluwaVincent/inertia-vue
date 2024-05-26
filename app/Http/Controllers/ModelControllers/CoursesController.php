@@ -18,6 +18,7 @@ class CoursesController extends Controller
         $category = $request->query('category');
         $price = $request->query('price');
         $sort = $request->query('sort');
+        $rating = $request->query('rating');
 
         // Start building the query without executing it
         $query = Course::with('instructor.user');
@@ -82,10 +83,9 @@ class CoursesController extends Controller
      */
     public function popularCourse()
     {
-        $courses = Course::with('instructor.user')->get();
+        $courses = Course::with('instructor.user')->take(5)->get();
 
         $result = [];
-
         foreach ($courses as $item) {
             // Create a new object with required keys
             $newItem = [
@@ -95,14 +95,13 @@ class CoursesController extends Controller
                 'image' => $item['image'],
                 'price' => $item['price'],
                 'duration' => $item['duration'],
-                'instructor' => $item['instructor'],
-                'avg_rating' => $item->reviewsAverage(),
+                'fullname' => $item['instructor']['user']['fullname'],
             ];
 
             // Push the modified object into the result array
             $result[] = $newItem;
         }
-        return array_slice($result, 0, 5);
+        return $result;
     }
 
     public static function coursesCount()

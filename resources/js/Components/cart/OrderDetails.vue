@@ -10,21 +10,17 @@
       Discount: <span>{{ cartStore.discount }}</span>
     </p>
     <p>
-      Tax: <span>{{ cartStore.tax }}</span>
+      Tax: <span v-if="typeof total == 'number'">{{ cartStore.tax }}</span>
     </p>
 
     <v-divider class="tw-border-gray-600"></v-divider>
     <p class="tw-text-lg tw-uppercase tw-font-bold">
       Total:
-      <span>{{ total }}</span>
+      <span v-if="typeof total == 'number'">{{ total }}</span>
     </p>
-    <!-- <Link
-      as="button"
-      :href="route('pay')"
-      method="post"
-      :data="{ amount: total }"
-    > -->
-    <v-btn color="black" @click="proceedToCheckout">Proceed to Checkout</v-btn>
+    <v-btn color="black" @click="proceedToCheckout" :disabled="!cartStore.price"
+      >Proceed to Checkout</v-btn
+    >
     <!-- </Link> -->
   </section>
 </template>
@@ -50,14 +46,12 @@ const total = computed(() =>
 
 // Function to handle button click
 const proceedToCheckout = () => {
-  // if (!user.value) {
-  //   return router.visit("/login", { method: "get" });
-  // } else {
-  //   const amount = total.value;
-  //   router.post("pay", { amount });
-  // }
-  const amount = total.value;
-  router.post("pay", { amount });
+  if (!user.value) {
+    return router.visit("/login", { method: "get" });
+  } else {
+    const amount = total.value;
+    router.post("pay", { amount });
+  }
 };
 </script>
 

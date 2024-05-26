@@ -29,9 +29,9 @@ class User extends Authenticatable
     ];
 
 
-    protected $with = [
-        'instructor'
-    ];
+    // protected $with = [
+    //     'instructor'
+    // ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -60,6 +60,6 @@ class User extends Authenticatable
 
     public function instructor()
     {
-        return $this->belongsTo(Instructor::class);
+        return $this->hasOne(Instructor::class);
     }
 }

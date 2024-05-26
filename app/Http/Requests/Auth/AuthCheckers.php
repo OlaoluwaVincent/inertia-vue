@@ -36,7 +36,7 @@ class AuthCheckers extends FormRequest
      */
     public function isInstructor(): bool
     {
-        if (!Auth::user()->role) {
+        if (!Auth::user()) {
             return false;
         }
         return Auth::user()->role === UserRoleEnum::INSTRUCTOR;

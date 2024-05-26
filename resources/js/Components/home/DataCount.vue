@@ -1,8 +1,8 @@
 <template>
   <v-sheet
     id="count"
-    color="grey-lighten-3"
-    class="!tw-flex !tw-flex-col md:!tw-flex-row !tw-gap-10 !tw-items-center !tw-justify-between content__padding !tw-py-10"
+    class="!tw-bg-gray-200 !tw-flex !tw-flex-col md:!tw-flex-row !tw-gap-10 !tw-items-center !tw-justify-between content__padding !tw-py-10"
+    :class="theme.isDark && '!tw-bg-gray-900'"
   >
     <v-sheet
       v-for="(item, key) in items"
@@ -19,8 +19,11 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import axios from "axios";
 
+import axios from "axios";
+import { useThemeStore } from "@/store/theme";
+
+const theme = useThemeStore();
 const props = defineProps({ data: Object });
 const coursesCount = ref(0);
 const lessonHrs = ref(0);

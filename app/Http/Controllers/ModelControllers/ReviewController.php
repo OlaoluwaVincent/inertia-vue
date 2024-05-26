@@ -20,7 +20,7 @@ class ReviewController extends Controller
     public function index(AuthCheckers $request)
     {
         if ($request->isInstructor()) {
-            if ($request->user()->instructor_id === null) {
+            if (!$request->user()->hasOnboarded()) {
                 return Inertia::render("Reviews", ['reviews' => ['data' => []], 'status' => session('status'),]);
             }
 
@@ -29,13 +29,12 @@ class ReviewController extends Controller
 
             foreach ($instructors_courses as $course) {
                 // Paginate the reviews for each course
-                $course_reviews = $course->reviews()->with('user', 'course')->paginate(10);
-                // Push paginated reviews into the $reviews array
-                $reviews = $course_reviews;
+                $$reviews = $course->reviews()->with('user', 'course')->paginate(10);
             }
-
+            // For Certified Instructors
             return Inertia::render("Reviews", ['reviews' => $reviews, 'status' => session('status'), 'canDelete' => $request->isAdmin()]);
         } else {
+            // For Students
             $reviews = Review::where('user_id', $request->user()->id)->with('user')->orderBy('created_at', 'desc')->paginate(10);
             return Inertia::render("Reviews", ['reviews' => $reviews, 'status' => session('status'),]);
         }
@@ -76,7 +75,7 @@ class ReviewController extends Controller
     public function store(AuthCheckers $request, $id)
     {
         if ($request->isInstructor()) {
-            throw new Exception("Only Students can do this", 1);
+            throw new Exception("Only Students can do this", 401);
         }
         // Validate the request
         $requestValidated = $request->validate([

@@ -1,6 +1,12 @@
 <template>
   <section class="content__padding tw-mb-5 tw-gap-8">
-    <h1 class="tw-font-semibold tw-text-lg">ADD A COURSE</h1>
+    <div class="tw-flex tw-justify-between tw-items-end">
+      <h1 class="tw-font-semibold tw-text-lg">ADD A COURSE</h1>
+      <Link :href="route('lesson.index')" v-show="course?.title">
+        <v-btn prepend-icon="mdi-plus" color="teal">LESSON </v-btn>
+      </Link>
+    </div>
+
     <section>
       <div class="mt-4">
         <InputLabel for="title" value="Course Title" />
@@ -17,18 +23,10 @@
         <InputError class="mt-2" :message="form.errors.title" />
       </div>
 
-      <div class="">
-        <label for="description" class="form__label">Description</label>
-        <div class="tw-border !tw-border-teal-700">
-          <textarea
-            id="description"
-            class="!tw-m-0 tw-outline-0 focus:tw-outline-0 tw-h-[150px] tw-bg-white tw-w-full"
-            :class="theme.isDark && '!tw-bg-gray-700'"
-            v-model="form.description"
-          />
-        </div>
-        <InputError class="mt-2" :message="form.errors.description" />
-      </div>
+      <TextDescription
+        v-model="form.description"
+        :description-error="form.errors.description"
+      />
 
       <section
         class="tw-flex tw-flex-col-reverse md:tw-flex-row tw-gap-4 md:tw-gap-6 tw-items-center tw-justify-between"
@@ -65,16 +63,11 @@
             <InputError class="mt-2" :message="form.errors.duration" />
           </div>
 
-          <div>
-            <v-select
-              v-model="form.category_id"
-              :items="categories"
-              hint="Pick a Category"
-              label="Select Category"
-              class="tw-mt-4"
-            ></v-select>
-            <InputError class="tw-mt-2" :message="form.errors.category_id" />
-          </div>
+          <SelectList
+            v-model="form.category_id"
+            :lists="categories"
+            :list-error="form.errors.category_id"
+          />
         </aside>
         <aside>
           <v-file-input
@@ -130,7 +123,7 @@
 </template>
 
 <script  setup>
-import { useForm } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
@@ -140,6 +133,8 @@ import { onMounted, ref } from "vue";
 import axios from "axios";
 import { deleteOne } from "@/composable/instructorComposable";
 import UserLayout from "@/Layouts/UserLayout.vue";
+import TextDescription from "@/Components/TextDescription.vue";
+import SelectList from "@/Components/SelectList.vue";
 
 defineOptions({ layout: UserLayout });
 const props = defineProps({

@@ -4,6 +4,7 @@
     <ScrollX v-if="data && data.length > 0" :scrollable="true">
       <v-card
         class="tw-max-w-[220px] tw-mx-auto tw-w-full tw-relative !tw-p-3"
+        :class="theme.isDark && '!tw-bg-gray-900'"
         v-for="(instructor, key) in data"
         min-width="150"
         :key="key"
@@ -52,6 +53,9 @@ import axios from "axios";
 import { ref, onMounted } from "vue";
 import SectionTitle from "./SectionTitle.vue";
 import ScrollX from "../ScrollX.vue";
+import { useThemeStore } from "@/store/theme";
+
+const theme = useThemeStore();
 
 const data = ref([]);
 
