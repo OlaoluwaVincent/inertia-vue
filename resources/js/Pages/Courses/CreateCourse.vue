@@ -2,7 +2,11 @@
   <section class="content__padding tw-mb-5 tw-gap-8">
     <div class="tw-flex tw-justify-between tw-items-end">
       <h1 class="tw-font-semibold tw-text-lg">ADD A COURSE</h1>
-      <Link :href="route('lesson.index')" v-show="course?.title">
+      <Link
+        v-if="course"
+        :href="route('lesson.index', { course: course?.id })"
+        v-show="course?.title"
+      >
         <v-btn prepend-icon="mdi-plus" color="teal">LESSON </v-btn>
       </Link>
     </div>
@@ -24,14 +28,14 @@
       </div>
 
       <TextDescription
-        v-model="form.description"
+        v-model:description="form.description"
         :description-error="form.errors.description"
       />
 
       <section
         class="tw-flex tw-flex-col-reverse md:tw-flex-row tw-gap-4 md:tw-gap-6 tw-items-center tw-justify-between"
       >
-        <aside class="tw-flex-1">
+        <aside class="tw-flex-1 tw-w-full">
           <div class="mt-4">
             <InputLabel for="price" value="Price" />
 
@@ -47,29 +51,15 @@
 
             <InputError class="mt-2" :message="form.errors.price" />
           </div>
-          <div class="mt-4">
-            <InputLabel for="duration" value="Estimated Duration" />
-
-            <TextInput
-              id="duration"
-              type="number"
-              min="1"
-              class="mt-1 block w-full !tw-rounded-md"
-              v-model="form.duration"
-              required
-              autocomplete="duration"
-            />
-
-            <InputError class="mt-2" :message="form.errors.duration" />
-          </div>
 
           <SelectList
             v-model="form.category_id"
             :lists="categories"
+            label="Select Category"
             :list-error="form.errors.category_id"
           />
         </aside>
-        <aside>
+        <aside class="tw-block tw-mx-auto tw-mt-5">
           <v-file-input
             id="file"
             v-model="form.image"
@@ -165,7 +155,6 @@ const form = useForm({
   description: props.course?.description || "",
   image: null,
   price: props.course?.price || null,
-  duration: props.course?.duration || null,
   category_id: props.course?.category_id || "",
   objective: props.course?.objective || [],
   requirement: props.course?.requirement || [],

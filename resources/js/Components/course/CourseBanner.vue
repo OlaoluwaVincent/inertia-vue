@@ -24,7 +24,7 @@
         <div class="tw-text-grey-400 tw-hidden md:tw-block">4.5 (413)</div>
       </span>
 
-      <p>{{ course.duration }}hrs</p>
+      <p>{{ duration }}hrs</p>
     </div>
 
     <UserBox :user="user" class="mt-8" />
@@ -44,6 +44,7 @@ const props = defineProps({
 
 const user = computed(() => props.course.instructor.user);
 const course = computed(() => props.course);
+const duration = computed(() => (props.course.duration / 3600).toFixed(2));
 </script>
 
 <style scoped></style>

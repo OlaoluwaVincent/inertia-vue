@@ -53,6 +53,7 @@ class UserCoursesController extends Controller
         $course = Course::create([
             // Spread the validated data
             ...$validated,
+            'duration' => 0.00,
             // Set the user_id and instructor_id fields
             'user_id' => $user->id,
             'instructor_id' => $user->instructor_id,
@@ -112,13 +113,10 @@ class UserCoursesController extends Controller
         $course->save();
 
         $category = Category::find($validated['category_id']);
-        $category_ids = $category->category_ids ?? [];
 
         // Append the id of the course to the category_ids array
-        $category_ids[] = $course->id;
 
         // Update the category_ids field in the category model
-        $category->category_ids = $category_ids;
         $category->save();
         // Redirect to the user's course page
         return Redirect::to('/my-courses/');

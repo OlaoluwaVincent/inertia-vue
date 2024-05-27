@@ -21,11 +21,8 @@ class UpdateCourseDuration
 
         $duration = VideoUploader::getVideoDuration($videoPath);
 
-        // Round up the duration to the nearest seconds
-        $roundedDuration = $course->duration * 3600;
-
         // Add rounded duration to the existing duration
-        $course->duration = $roundedDuration + $duration;
+        $course->duration += $duration;
 
         // Save the updated course duration
         $course->save();

@@ -14,14 +14,26 @@ use Inertia\Inertia;
 class LessonController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(Course $course)
     {
+        $lessons = $course->lessons;
+        return Inertia::render('Lessons/Lessons', ['course' => $course, 'lesson' => $lessons,]);
+    }
+
+    public function create(Request $request)
+    {
+        $query =  $request->query('course');
         $user = $request->user();
+
         if (!$user->isNotStudent()) {
             return Redirect::to(route("dashboard"));
         };
+
         $user_courses = Course::where("instructor_id", $user->instructor_id)->select('id', 'title')->get();
-        return Inertia::render("Lessons/AddLesson", ['courses' => $user_courses]);
+        return Inertia::render(
+            "Lessons/AddLesson",
+            ['courses' => $user_courses, 'query' => $query]
+        );
     }
 
     public function store(Request $request)
@@ -45,7 +57,21 @@ class LessonController extends Controller
 
         UpdateDuration::dispatch($course, $validated['video']);
 
-        return Redirect::to('dashboard');
+        return Redirect::to(route('lesson.index', $course->id));
+    }
+
+    public function update(Request $request, Course $course, Lesson $lesson)
+    {
+        $user = $request->user();
+
+        if (!$user->isNotStudent()) {
+            return Redirect::to(route("dashboard"));
+        };
+
+        return Inertia::render(
+            "Lessons/AddLesson",
+            ['lesson' => $lesson]
+        );
     }
 
 

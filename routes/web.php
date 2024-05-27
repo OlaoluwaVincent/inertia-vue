@@ -39,10 +39,12 @@ Route::group(['prefix' => 'my-courses', 'middleware' => ['auth', 'verified']], f
     Route::get('/edit/{course}', [UserCoursesController::class, 'show'])->name('userCourse.show');
     Route::post('/edit/{course}', [UserCoursesController::class, 'edit'])->name('userCourse.edit');
     Route::delete('/{course}', [UserCoursesController::class, 'destroy'])->name('userCourse.delete');
-    Route::get('/lesson', [LessonController::class, 'index'])->name('lesson.index');
-    Route::post('/lesson', [LessonController::class, 'store'])->name('lesson.store');
-    Route::patch('/lesson/{lesson}', [LessonController::class, 'update'])->name('lesson.update');
-    Route::delete('/lesson/{lesson}', [LessonController::class, 'destroy'])->name('lesson.destroy');
+
+    Route::post('/lesson', [LessonController::class, 'store'])->name('lesson.store'); // Store a new Lesson
+    Route::get('/lesson/create', [LessonController::class, 'create'])->name('lesson.create'); // /Show the Create Lesson Page
+    Route::get('/lesson/{course}', [LessonController::class, 'index'])->name('lesson.index'); // Show all lessons assigned to a course
+    Route::patch('course/{course}/lesson/{lesson}', [LessonController::class, 'update'])->name('lesson.update'); // Update an existing lesson
+    Route::delete('course/{course}/lesson/{lesson}', [LessonController::class, 'destroy'])->name('lesson.destroy'); // Delete a lesson
 });
 
 

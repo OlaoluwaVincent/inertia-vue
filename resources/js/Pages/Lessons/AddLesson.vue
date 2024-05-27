@@ -60,7 +60,11 @@ const props = defineProps({
   courses: Array,
   auth: Object,
   errors: Object,
+  query: String,
+  lesson: Object,
 });
+
+console.log(props.lesson);
 
 const course_list = computed(() => {
   return props.courses.map((course) => ({
@@ -71,7 +75,7 @@ const course_list = computed(() => {
 
 const form = useForm({
   title: "",
-  course_id: "",
+  course_id: Number(props.query) || "",
   description: "",
   video: "",
 });

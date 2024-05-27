@@ -26,7 +26,6 @@ class CourseRequestValidator extends FormRequest
             'description' => 'required|string|max:700',
             'image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:10240'],
             'price' => 'required|numeric',
-            'duration' => 'required|numeric',
             'category_id' => 'required|numeric',
             'objective' => 'required|array',
             'requirement' => 'required|array',

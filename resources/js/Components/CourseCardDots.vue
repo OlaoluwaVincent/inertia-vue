@@ -38,6 +38,6 @@ const props = defineProps({
 const authItems = [
   { title: "Delete", route: "userCourse.delete", method: "delete" },
   { title: "Edit", route: "userCourse.show", method: "get" },
-  { title: "Add Lesson", route: "lesson.index", method: "get" },
+  { title: "Lessons", route: "lesson.index", method: "get" },
 ];
 </script>

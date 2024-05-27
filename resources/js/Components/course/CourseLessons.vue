@@ -8,7 +8,11 @@
 
     <div>
       <v-expansion-panels v-for="lesson in lessons" :key="lesson.id">
-        <v-expansion-panel :title="lesson.title" :text="lesson.description">
+        <v-expansion-panel
+          class="tw-whitespace-pre"
+          :title="lesson.title"
+          :text="lesson.description"
+        >
         </v-expansion-panel>
       </v-expansion-panels>
     </div>

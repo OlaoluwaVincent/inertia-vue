@@ -3,6 +3,12 @@
     <p v-if="courses.data === undefined || !courses.data.length">
       You have not created any course yet
     </p>
+    <Link
+      href="my-courses/create"
+      class="tw-bg-teal-800 tw-text-white tw-p-2 rounded-md tw-mb-5 tw-block tw-w-fit"
+    >
+      Add Course
+    </Link>
     <section class="courses">
       <CourseCard :data="courses.data" canDelete />
     </section>
@@ -12,6 +18,7 @@
 </template>
 
 <script setup>
+import { Link } from "@inertiajs/vue3";
 import CourseCard from "@/Components/CourseCard.vue";
 import Pagination from "@/Components/Pagination.vue";
 

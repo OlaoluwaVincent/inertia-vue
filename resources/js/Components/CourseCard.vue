@@ -56,7 +56,7 @@
         >
           {{ item?.avg_rating }}|({{ item?.avg_voters }})
         </div>
-        <p>{{ item.duration }}hrs</p>
+        <p>{{ (item.duration / 3600).toFixed(2) }}hrs</p>
       </div>
 
       <!-- <div>{{ item.duration }} Total Hours</div> -->
