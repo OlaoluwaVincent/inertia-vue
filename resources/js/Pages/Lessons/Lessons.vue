@@ -3,7 +3,9 @@
     <Link :href="route('lesson.create', { course: course.id })">
       <v-btn color="success" prepend-icon="mdi-plus">Add New Lesson</v-btn>
     </Link>
-    <h1 class="text-center tw-font-bold tw-text-lg">{{ course.title }}</h1>
+    <h1 class="text-center tw-font-bold tw-text-lg tw-my-4">
+      {{ course.title }}
+    </h1>
 
     <LessonCards :lessons="lesson" />
   </section>

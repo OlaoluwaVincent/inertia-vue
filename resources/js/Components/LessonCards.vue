@@ -6,14 +6,18 @@
       </v-expansion-panel-title>
 
       <v-expansion-panel-text>
-        <span>
-          <v-btn @click="updateLesson(lesson.course_id, lesson.id)"
-            ><v-icon color="warning">mdi-pencil</v-icon></v-btn
+        <div class="tw-my-4 tw-space-x-4">
+          <v-btn
+            color="warning"
+            @click="updateLesson(lesson.course_id, lesson.id)"
+            ><v-icon>mdi-pencil</v-icon></v-btn
           >
-          <v-btn @click="deleteLesson(lesson.course_id, lesson.id)"
-            ><v-icon color="error">mdi-delete</v-icon></v-btn
+          <v-btn
+            color="error"
+            @click="deleteLesson(lesson.course_id, lesson.id)"
+            ><v-icon>mdi-delete</v-icon></v-btn
           >
-        </span>
+        </div>
         {{ lesson.description }}
         <video
           :src="lesson.video_url"

@@ -30,7 +30,7 @@
     <UploadVideo
       :videoError="form.errors.video"
       @get-video-url="getVideoUrl"
-      :preview="lesson.video_url"
+      :preview="lesson?.video_url"
     />
 
     <v-btn
@@ -104,9 +104,9 @@ function getVideoUrl(videoFile) {
 
 function submit() {
   if (onEdit) {
-    console.log(props.lesson.course_id, props.lesson.id);
+    console.log(form.data());
     form.submit(
-      "patch",
+      "post",
       route("lesson.update", {
         course: props.lesson.course_id,
         lesson: props.lesson.id,
@@ -114,7 +114,9 @@ function submit() {
       {
         onSuccess: () => {
           form.reset();
-          router.visit(route("lesson.index", { course: Number(props.query) }));
+          router.visit(
+            route("lesson.index", { course: Number(props.course_query) })
+          );
         },
       }
     );
@@ -123,7 +125,9 @@ function submit() {
   form.submit("post", route("lesson.store"), {
     onSuccess: () => {
       form.reset();
-      router.visit(route("lesson.index", { course: Number(props.query) }));
+      router.visit(
+        route("lesson.index", { course: Number(props.course_query) })
+      );
     },
   });
 }

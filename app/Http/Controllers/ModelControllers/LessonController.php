@@ -30,14 +30,12 @@ class LessonController extends Controller
         if (!$user->isNotStudent()) {
             return Redirect::to(route("dashboard"));
         };
-        if ($lesson_query) {
-            $lesson = Lesson::find(intval($lesson_query));
-        }
+        $lesson = Lesson::find(intval($lesson_query));
 
         $user_courses = Course::where("instructor_id", $user->instructor_id)->select('id', 'title')->get();
         return Inertia::render(
             "Lessons/AddLesson",
-            ['courses_snippet' => $user_courses, 'course_query' => $course_query, 'lesson' => $lesson]
+            ['courses_snippet' => $user_courses, 'course_query' => $course_query, 'lesson' => $lesson ? $lesson : null]
         );
     }
 
@@ -65,9 +63,28 @@ class LessonController extends Controller
         Redirect::to("/my-courses/lesson/" . $course->id);
     }
 
-    public function update(Course $course, Lesson $lesson)
+    public function update(Request $request, Course $course, Lesson $lesson)
     {
-        dd('Updating lesson');
+        $validated = $request->validate([
+            'title' => 'string|max:255',
+            'course_id' => 'numeric',
+            'description' => 'string|max:700',
+            'video' => 'nullable|file|mimetypes:video/mp4,video/mpeg,video/quicktime,video/x-msvideo,video/x-flv,video/x-ms-wmv,video/3gpp,video/x-matroska,application/octet-stream'
+        ]);
+
+        $video_url = $lesson->video_url;
+
+        if ($validated['video']) {
+            VideoUploader::deleteVideo($lesson->video_url);
+            $video_url = VideoUploader::saveVideo($validated['video']);
+        }
+
+        UpdateDuration::dispatch($course, $validated['video']);
+
+        $lesson->update([
+            ...$validated,
+            'video_url' => $video_url,
+        ]);
     }
 
 

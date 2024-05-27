@@ -43,7 +43,7 @@ Route::group(['prefix' => 'my-courses', 'middleware' => ['auth', 'verified']], f
     Route::get('/lesson/create', [LessonController::class, 'create'])->name('lesson.create'); // /Show the Create Lesson Page
     Route::post('/lesson', [LessonController::class, 'store'])->name('lesson.store'); // Store a new Lesson
     Route::get('/lesson/{course}', [LessonController::class, 'index'])->name('lesson.index'); // Show all lessons assigned to a course
-    Route::patch('course/{course}/lesson/{lesson}', [LessonController::class, 'update'])->name('lesson.update'); // Update an existing lesson
+    Route::post('course/{course}/lesson/{lesson}', [LessonController::class, 'update'])->name('lesson.update'); // Update an existing lesson
     Route::delete('course/{course}/lesson/{lesson}', [LessonController::class, 'destroy'])->name('lesson.destroy'); // Delete a lesson
 });
 
