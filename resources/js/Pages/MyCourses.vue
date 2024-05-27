@@ -28,7 +28,9 @@ defineOptions({ layout: UserLayout });
 
 const props = defineProps({
   courses: Object,
+  status: String,
 });
+console.log(props.status);
 </script>
 
 <style scoped>

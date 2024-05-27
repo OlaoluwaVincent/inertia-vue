@@ -6,6 +6,14 @@
       </v-expansion-panel-title>
 
       <v-expansion-panel-text>
+        <span>
+          <v-btn @click="updateLesson(lesson.course_id, lesson.id)"
+            ><v-icon color="warning">mdi-pencil</v-icon></v-btn
+          >
+          <v-btn @click="deleteLesson(lesson.course_id, lesson.id)"
+            ><v-icon color="error">mdi-delete</v-icon></v-btn
+          >
+        </span>
         {{ lesson.description }}
         <video
           :src="lesson.video_url"
@@ -19,9 +27,11 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
+import { Link, router } from "@inertiajs/vue3";
 
 interface Lesson {
   id: number;
+  course_id: number;
   title: string;
   description: string;
   video_url: string;
@@ -33,6 +43,20 @@ const props = defineProps({
     required: true,
   },
 });
+
+const deleteLesson = (course_id, lesson_id) => {
+  router.delete(
+    route("lesson.destroy", { course: course_id, lesson: lesson_id }),
+    {
+      onSuccess: () => {
+        console.log("Successful");
+      },
+    }
+  );
+};
+const updateLesson = (course_id, lesson_id) => {
+  router.get(route("lesson.create", { course: course_id, lesson: lesson_id }));
+};
 </script>
 
 <style>

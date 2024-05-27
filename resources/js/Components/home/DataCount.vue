@@ -41,7 +41,7 @@ function getCounts() {
     .then((response) => {
       const data = response.data;
       coursesCount.value = data.coursesNum;
-      lessonHrs.value = data.lessonHrs;
+      lessonHrs.value = Number((data.lessonHrs / 3600).toFixed(2));
       updateItems();
     })
     .catch((error) => {

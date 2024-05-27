@@ -2,12 +2,11 @@
   <section class="content__padding tw-mb-5 tw-gap-8">
     <div class="tw-flex tw-justify-between tw-items-end">
       <h1 class="tw-font-semibold tw-text-lg">ADD A COURSE</h1>
-      <Link
-        v-if="course"
-        :href="route('lesson.index', { course: course?.id })"
-        v-show="course?.title"
-      >
-        <v-btn prepend-icon="mdi-plus" color="teal">LESSON </v-btn>
+
+      <Link v-if="course" :href="route('lesson.create', { course: course.id })">
+        <v-btn color="teal-darken-4" prepend-icon="mdi-plus"
+          >Add New Lesson</v-btn
+        >
       </Link>
     </div>
 

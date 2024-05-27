@@ -15,8 +15,8 @@
     </label>
     <div class="tw-relative video__controller">
       <video
-        v-if="previewUrl"
-        :src="previewUrl"
+        v-if="previewUrl || preview"
+        :src="previewUrl || preview"
         controls
         class="tw-h-full tw-w-full"
       />
@@ -35,6 +35,7 @@ const emits = defineEmits(["getVideoUrl"]);
 
 const props = defineProps({
   videoError: String,
+  preview: String,
 });
 
 const previewUrl = ref("");

@@ -7,6 +7,7 @@ use App\Events\UpdateDuration;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -22,17 +23,21 @@ class LessonController extends Controller
 
     public function create(Request $request)
     {
-        $query =  $request->query('course');
+        $course_query =  $request->query('course');
+        $lesson_query =  $request->query('lesson');
         $user = $request->user();
 
         if (!$user->isNotStudent()) {
             return Redirect::to(route("dashboard"));
         };
+        if ($lesson_query) {
+            $lesson = Lesson::find(intval($lesson_query));
+        }
 
         $user_courses = Course::where("instructor_id", $user->instructor_id)->select('id', 'title')->get();
         return Inertia::render(
             "Lessons/AddLesson",
-            ['courses' => $user_courses, 'query' => $query]
+            ['courses_snippet' => $user_courses, 'course_query' => $course_query, 'lesson' => $lesson]
         );
     }
 
@@ -57,23 +62,30 @@ class LessonController extends Controller
 
         UpdateDuration::dispatch($course, $validated['video']);
 
-        return Redirect::to(route('lesson.index', $course->id));
+        Redirect::to("/my-courses/lesson/" . $course->id);
     }
 
-    public function update(Request $request, Course $course, Lesson $lesson)
+    public function update(Course $course, Lesson $lesson)
     {
-        $user = $request->user();
-
-        if (!$user->isNotStudent()) {
-            return Redirect::to(route("dashboard"));
-        };
-
-        return Inertia::render(
-            "Lessons/AddLesson",
-            ['lesson' => $lesson]
-        );
+        dd('Updating lesson');
     }
 
+
+    public function destroy(Course $course, Lesson $lesson)
+    {
+        $video_deleted = VideoUploader::deleteVideo($lesson->video_url);
+        if (!$video_deleted) {
+            throw new Exception('Error Deleting Lesson');
+        }
+
+        $deleted = Lesson::where('course_id', $course->id)
+            ->where('id', $lesson->id)
+            ->delete();
+
+        if (!$deleted) {
+            throw new Exception('Error Deleting Lesson');
+        }
+    }
 
     public function showRelated($instructor_id)
     {

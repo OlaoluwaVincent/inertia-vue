@@ -17,10 +17,10 @@ class VideoUploader
 
     public static function deleteVideo($path)
     {
-        if (!$path) return null;
+        if (!$path) return false;
         // Convert the URL to a path relative to the disk's root
         $path = str_replace(url('/storage'), 'public', $path);
-        Storage::delete($path);
+        return Storage::delete($path);
     }
 
     public static function getVideoDuration($videoPath)

@@ -27,9 +27,27 @@
       :descriptionError="form.errors.description"
     />
 
-    <UploadVideo :videoError="form.errors.video" @get-video-url="getVideoUrl" />
+    <UploadVideo
+      :videoError="form.errors.video"
+      @get-video-url="getVideoUrl"
+      :preview="lesson.video_url"
+    />
 
     <v-btn
+      v-if="onEdit"
+      block
+      color="blue-darken-4"
+      :disabled="form.processing"
+      @click="submit"
+      >{{ form.processing ? "Updating" : "Update" }}
+      <span
+        v-if="form.processing"
+        class="tw-flex tw-items-center tw-justify-between tw-bg-white tw-text-yellow-600 tw-p-2 tw-rounded-full tw-text-xs tw-ml-5"
+        >{{ form?.processing ? form?.progress?.percentage : "" }}</span
+      ></v-btn
+    >
+    <v-btn
+      v-else
       block
       color="teal-darken-4"
       :disabled="form.processing"
@@ -38,14 +56,14 @@
       <span
         v-if="form.processing"
         class="tw-flex tw-items-center tw-justify-between tw-bg-white tw-text-yellow-600 tw-p-2 tw-rounded-full tw-text-xs tw-ml-5"
-        >{{ form.processing ? form.progress.percentage : "" }}</span
+        >{{ form?.processing ? form?.progress?.percentage : "" }}</span
       ></v-btn
     >
   </section>
 </template>
 
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import { computed } from "vue";
 import UserLayout from "@/Layouts/UserLayout.vue";
 import SelectList from "@/Components/SelectList.vue";
@@ -57,26 +75,26 @@ import InputError from "@/Components/InputError.vue";
 
 defineOptions({ layout: UserLayout });
 const props = defineProps({
-  courses: Array,
+  courses_snippet: Array,
   auth: Object,
   errors: Object,
-  query: String,
+  course_query: String,
   lesson: Object,
 });
 
-console.log(props.lesson);
-
 const course_list = computed(() => {
-  return props.courses.map((course) => ({
+  return props.courses_snippet.map((course) => ({
     title: course.title,
     value: course.id,
   }));
 });
 
+const onEdit = computed(() => (props.lesson ? true : false));
+
 const form = useForm({
-  title: "",
-  course_id: Number(props.query) || "",
-  description: "",
+  title: props.lesson?.title ?? "",
+  course_id: props.lesson?.course_id ?? Number(props.course_query),
+  description: props.lesson?.description ?? "",
   video: "",
 });
 
@@ -85,9 +103,27 @@ function getVideoUrl(videoFile) {
 }
 
 function submit() {
+  if (onEdit) {
+    console.log(props.lesson.course_id, props.lesson.id);
+    form.submit(
+      "patch",
+      route("lesson.update", {
+        course: props.lesson.course_id,
+        lesson: props.lesson.id,
+      }),
+      {
+        onSuccess: () => {
+          form.reset();
+          router.visit(route("lesson.index", { course: Number(props.query) }));
+        },
+      }
+    );
+    return;
+  }
   form.submit("post", route("lesson.store"), {
     onSuccess: () => {
       form.reset();
+      router.visit(route("lesson.index", { course: Number(props.query) }));
     },
   });
 }
