@@ -10,10 +10,14 @@
       Add Course
     </Link>
     <section class="courses">
-      <CourseCard :data="courses.data" canDelete />
+      <CourseCard
+        :data="courseData.data"
+        :canDelete="!isStudent"
+        :isStudent="isStudent"
+      />
     </section>
 
-    <Pagination v-if="courses.next_page_url" :links="courses.links" />
+    <Pagination v-if="courseData.next_page_url" :links="courseData.links" />
   </div>
 </template>
 
@@ -23,14 +27,28 @@ import CourseCard from "@/Components/CourseCard.vue";
 import Pagination from "@/Components/Pagination.vue";
 
 import UserLayout from "@/Layouts/UserLayout.vue";
+import { computed, ref } from "vue";
 
 defineOptions({ layout: UserLayout });
 
 const props = defineProps({
   courses: Object,
   status: String,
+  isStudent: Boolean,
 });
-console.log(props.status);
+
+const courses_data = ref(props.courses);
+
+const courseData = computed(() =>
+  props.isStudent
+    ? {
+        ...props.courses,
+        data: courses_data.value["data"].map((course) => course.course[0]),
+      }
+    : props.courses
+);
+
+console.log(courseData.value);
 </script>
 
 <style scoped>

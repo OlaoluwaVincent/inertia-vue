@@ -38,6 +38,7 @@ const theme = useThemeStore();
 const props = defineProps({
   course: Object,
   errors: Object,
+  auth: Object,
 });
 
 const snackbar = ref(false);

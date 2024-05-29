@@ -8,7 +8,17 @@ import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import GuestLayout from "./Layouts/GuestLayout.vue";
 import vuetify from "./plugins/vuetify";
 import pinia from "@/plugins/pinia";
+import axios from "axios";
 
+// Set the CSRF token from the meta tag
+const token = document.head.querySelector('meta[name="csrf-token"]');
+if (token) {
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = token.content;
+} else {
+    console.error(
+        "CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token"
+    );
+}
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 createInertiaApp({

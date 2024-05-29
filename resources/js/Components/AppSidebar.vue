@@ -65,7 +65,7 @@ const items = [
   },
   {
     title: "Enrolled Courses",
-    value: "/enrolled-courses",
+    value: "/my-courses",
   },
 ];
 

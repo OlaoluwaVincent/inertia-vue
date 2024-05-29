@@ -6,7 +6,9 @@ use App\Class\ImageUploader;
 use App\Http\Requests\CourseRequestValidator;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\Instructor;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -21,10 +23,21 @@ class UserCoursesController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
+        $courses = null;
         // Get the courses of the user
-        $courses = Course::where('instructor_id', $user->instructor_id)->with('instructor.user')->paginate(10);
+        if ($user->role === 'USER') {
+            // return Enrolled courses
+            $courses = Enrollment::where('user_id', $user->id)->paginate(10);
+            $courses->each(function ($enrollment) {
+                $enrollment->course = Course::where('id', $enrollment->course_id)->with(['instructor.user', 'lessons'])->get();
+            });
+        }
+        if ($user->role !== 'USER') {
+            $courses = Course::where('instructor_id', $user->instructor_id)->with('instructor.user')->paginate(10);
+        }
+
         // Return the courses to the view
-        return Inertia::render('MyCourses', ['courses' => $courses]);
+        return Inertia::render('MyCourses', ['courses' => $courses, 'isStudent' => $user->role === 'USER']);
     }
 
     public function create()

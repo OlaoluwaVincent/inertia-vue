@@ -17,7 +17,7 @@
 
       <div class="cart__info--time">
         <p class="tw-text-xs sm:tw-text-sm">
-          {{ course.duration }} Total Hours
+          {{ (course.duration / 3600).toFixed(2) }} Total Hours
         </p>
         <p v-if="course.lessons" class="tw-text-xs sm:tw-text-sm">
           {{ course.lessons.length }} Lectures

@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserCoursesController;
 use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -69,7 +70,7 @@ Route::group(['prefix' => 'reviews'], function () {
 });
 
 Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
-Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->middleware(HandleCors::class)->name('pay');
+Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->middleware('auth')->name('pay');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/api.php';

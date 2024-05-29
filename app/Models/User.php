@@ -62,4 +62,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Instructor::class);
     }
+
+    public function transactions()
+    {
+        $this->hasMany(Transaction::class);
+    }
+
+    public function enrollmenst()
+    {
+        $this->hasMany(Enrollment::class);
+    }
 }

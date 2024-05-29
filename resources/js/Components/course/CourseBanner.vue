@@ -9,11 +9,11 @@
 
     <div class="tw-pt-5 tw-flex tw-gap-20 tw-items-center">
       <span
-        class="tw-flex tw-items-center gap-3 flex-1 tw-border-r tw-pr-20"
+        class="tw-flex tw-items-center gap-3 flex-1 tw-border-r tw-pr-20 tw-flex-col md:tw-flex-row"
         :class="theme.isDark ? 'tw-border-slate-100' : 'tw-border-gray-800'"
       >
         <v-rating
-          :model-value="4.5"
+          :model-value="course.avg_rating"
           color="amber"
           density="compact"
           size="small"
@@ -21,7 +21,9 @@
           readonly
         />
 
-        <div class="tw-text-grey-400 tw-hidden md:tw-block">4.5 (413)</div>
+        <div class="tw-text-grey-400">
+          {{ course.avg_rating }} ({{ course.avg_voters }})
+        </div>
       </span>
 
       <p>{{ duration }}hrs</p>
