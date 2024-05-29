@@ -12,15 +12,9 @@
       >
         <CourseCardDots :id="item.id" />
       </div>
-      <div
-        v-if="isStudent"
-        class="tw-absolute tw-top-3 tw-left-3 tw-z-10 tw-w-full"
-      >
-        <CourseCardDots :id="item.id" />
-      </div>
 
       <v-btn
-        v-if="!store.checkExisting(item.id) && !canDelete && !isStudent"
+        v-if="!store.checkExisting(item.id) && !canDelete"
         @click="() => handleCartClick(item)"
         class="tw-absolute tw-top-3 tw-left-3 tw-z-10 tw-w-full"
         color="warning"
@@ -83,7 +77,6 @@ const props = defineProps({
   data: Array,
   className: String,
   canDelete: Boolean,
-  isStudent: Boolean,
 });
 
 function handleCartClick(value) {

@@ -19,8 +19,6 @@ const props = defineProps({
   errors: Object,
   isOnboard: Boolean,
 });
-
-console.log(props.isOnboard);
 </script>
 
 <style scoped>

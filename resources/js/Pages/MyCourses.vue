@@ -9,11 +9,18 @@
     >
       Add Course
     </Link>
+    <div v-if="isStudent" class="tw-flex tw-flex-col tw-gap-5 md:tw-gap-8">
+      <EnrolledCard
+        v-for="course in courseData.data"
+        :course="course"
+        :key="course.id"
+      />
+    </div>
     <section class="courses">
       <CourseCard
+        v-if="!isStudent"
         :data="courseData.data"
         :canDelete="!isStudent"
-        :isStudent="isStudent"
       />
     </section>
 
@@ -24,6 +31,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import CourseCard from "@/Components/CourseCard.vue";
+import EnrolledCard from "@/Components/EnrolledCard.vue";
 import Pagination from "@/Components/Pagination.vue";
 
 import UserLayout from "@/Layouts/UserLayout.vue";
@@ -47,8 +55,6 @@ const courseData = computed(() =>
       }
     : props.courses
 );
-
-console.log(courseData.value);
 </script>
 
 <style scoped>

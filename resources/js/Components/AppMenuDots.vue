@@ -19,7 +19,7 @@
           :href="route(item.route)"
           :method="item.method"
           as="button"
-          class="tw-capitalize"
+          class="tw-capitalize tw-w-full tw-h-full"
         >
           {{ item.title }}</Link
         >
