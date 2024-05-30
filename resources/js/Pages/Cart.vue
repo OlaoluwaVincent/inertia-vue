@@ -1,31 +1,23 @@
 <template>
+
   <Head title="Cart" />
   <section id="cart" class="tw-mb-52 tw-p-5">
     <aside class="tw-flex tw-flex-col tw-gap-5 tw-flex-shrink-0 md:tw-w-[60%]">
       <h6 class="tw-font-semibold">
         {{ cartStore.cartLength }} Course in Cart
       </h6>
-      <v-divider
-        :thickness="5"
-        class="!tw-opacity-50 !tw-border-blue-500"
-      ></v-divider>
+      <v-divider :thickness="5" class="!tw-opacity-50 !tw-border-blue-500"></v-divider>
 
       <p v-if="!cartStore?.cart?.length" class="tw-font-semibold md:tw-text-lg">
         You have no Items in your Cart
       </p>
-      <CartCard
-        v-for="course in cartStore.cart"
-        :key="course.id"
-        :course="course"
-      />
+      <CartCard v-for="course in cartStore.cart" :key="course.id" :course="course"
+        :enrolledCourses="enrolled_courses" />
     </aside>
 
     <aside class="tw-flex tw-flex-col tw-gap-5 md:tw-w-[40%]">
       <h6 class="tw-font-semibold">Order Details</h6>
-      <v-divider
-        :thickness="5"
-        class="!tw-opacity-50 !tw-border-blue-500"
-      ></v-divider>
+      <v-divider :thickness="5" class="!tw-opacity-50 !tw-border-blue-500"></v-divider>
       <OrderDetails />
     </aside>
   </section>
@@ -37,8 +29,16 @@ import CartCard from "@/Components/cart/CartCard.vue";
 import OrderDetails from "@/Components/cart/OrderDetails.vue";
 
 import { useCartStore } from "@/store/cart";
+import { computed } from "vue";
+
+const props = defineProps({
+  enrolled_courses: Array,
+  errors: Object,
+  auth: Object,
+})
 
 const cartStore = useCartStore();
+
 </script>
 
 <style scoped>

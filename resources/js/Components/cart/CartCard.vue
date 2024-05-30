@@ -1,47 +1,35 @@
 <template>
-  <section class="cart__card" :class="theme.isDark && 'tw-bg-gray-900'">
-    <div class="tw-flex tw-flex-col">
-      <v-img
-        class="cart__image"
-        aspect-ratio="16/9"
-        cover
-        rounded
-        :src="course.image"
-      ></v-img>
-      <div class="tw-font-bold md:tw-hidden">${{ course.price }}</div>
-    </div>
-
-    <div class="cart__info">
-      <h4>{{ course.title }}</h4>
-      <h5>By {{ course.instructor.user.fullname }}</h5>
-
-      <div class="cart__info--time">
-        <p class="tw-text-xs sm:tw-text-sm">
-          {{ (course.duration / 3600).toFixed(2) }} Total Hours
-        </p>
-        <p v-if="course.lessons" class="tw-text-xs sm:tw-text-sm">
-          {{ course.lessons.length }} Lectures
-        </p>
+  <section :class="is_enrolled && ' tw-shadow-red-600 tw-shadow-md'">
+    <p :class="is_enrolled && 'tw-text-red-500'">You are already enrolled for this course</p>
+    <section class="cart__card" :class="theme.isDark && 'tw-bg-gray-900'">
+      <div class="tw-flex tw-flex-col">
+        <v-img class="cart__image" aspect-ratio="16/9" cover rounded :src="course.image"></v-img>
+        <div class="tw-font-bold md:tw-hidden">${{ course.price }}</div>
       </div>
 
-      <div class="cart__actions">
-        <!-- <v-btn
-          color="info"
-          variant="text"
-          class="!tw-capitalize !tw-text-xs md:!tw-text-sm"
-          >Save</v-btn
-        > -->
-        <v-btn
-          color="error"
-          variant="text"
-          @click="cartStore.removeFromCart(course.id)"
-          class="!tw-capitalize !tw-text-xs md:!tw-text-sm"
-          >Remove</v-btn
-        >
+      <div class="cart__info">
+        <h4>{{ course.title }}</h4>
+        <h5>By {{ course.instructor.user.fullname }}</h5>
+
+        <div class="cart__info--time">
+          <p class="tw-text-xs sm:tw-text-sm">
+            {{ (course.duration / 3600).toFixed(2) }} Total Hours
+          </p>
+          <p v-if="course.lessons" class="tw-text-xs sm:tw-text-sm">
+            {{ course.lessons.length }} Lectures
+          </p>
+        </div>
+
+        <div class="cart__actions">
+
+          <v-btn color="error" variant="text" @click="cartStore.removeFromCart(course.id)"
+            class="!tw-capitalize !tw-text-xs md:!tw-text-sm">Remove</v-btn>
+        </div>
       </div>
-    </div>
-    <div class="cart__price">${{ course.price }}</div>
+      <div class="cart__price">${{ course.price }}</div>
+    </section>
   </section>
+
 </template>
 
 <script setup>
@@ -52,7 +40,11 @@ const theme = useThemeStore();
 const cartStore = useCartStore();
 const props = defineProps({
   course: Object,
+  enrolledCourses: Array,
 });
+
+const is_enrolled = props.enrolledCourses.some(enrol => enrol.course_id === props.course.id)
+
 </script>
 
 <style scoped>

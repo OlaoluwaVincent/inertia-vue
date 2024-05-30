@@ -1,13 +1,17 @@
 <template>
   <section class="content__padding tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-gap-8 md:gap-0 tw-mb-10">
+
     <section id="about" class="tw-space-y-3 md:tw-space-y-5 md:tw-w-[60%]">
+
       <div>
         <h5 :class="theme.isDark && 'tw-text-slate-100'" class="tw-text-gray-600">Instructor</h5>
         <h1 class="tw-text-xl tw-font-bold md:tw-text-2xl tw-my-3">{{ details.user.fullname }}</h1>
         <p :class="theme.isDark && 'tw-text-slate-100'" class="tw-text-gray-600 tw-text-center md:tw-text-left">{{
           details.headline }}</p>
       </div>
+
       <v-divider class="mt-10"></v-divider>
+
       <div id="counts" class="tw-flex tw-items-center tw-gap-5 tw-justify-center md:tw-max-w-fit">
         <span class="tw-text-center">
           <h6 class="tw-mb-2">Total Students</h6>
@@ -16,7 +20,7 @@
 
         <span class="tw-text-center">
           <h6 class="tw-mb-2">Reviews</h6>
-          <p class="tw-font-semibold md:tw-font-black tw-text-xl md:tw-text-2xl">8</p>
+          <p class="tw-font-semibold md:tw-font-black tw-text-xl md:tw-text-2xl">{{ reviews.length }}</p>
         </span>
       </div>
 

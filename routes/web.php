@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstructorDetailsController;
 use App\Http\Controllers\ModelControllers\CoursesController;
@@ -17,9 +18,7 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
-Route::get('/cart', function () {
-    return Inertia::render('Cart', ['status' => session('status')]);
-})->name('cart');
+Route::get('/cart', CartController::class)->name('cart');
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/details/{id}', [InstructorDetailsController::class, 'show'])->name('userDetails');

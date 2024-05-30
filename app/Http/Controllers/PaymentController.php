@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\Enrollment;
 use App\Class\PaystackData;
+use App\Enums\CurrencyEnum;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -23,7 +23,7 @@ class PaymentController extends Controller
     public function redirectToGateway(Request $request)
     {
         $transactionData = [
-            "amount" => intval($request->amount) * 100 * 500,
+            "amount" => intval($request->amount) * CurrencyEnum::TO_DOLLAR,
             "reference" => PaystackData::genTranxRef(),
             "email" => $request->user()->email,
             "metadata" => $request->metadata,
@@ -61,7 +61,6 @@ class PaymentController extends Controller
             ]);
 
             // Enroll user in each course
-            // dd(PaystackData::extractMetadata());
             foreach (PaystackData::extractMetadata() as $courseId) {
                 Enrollment::create([
                     'user_id' => $user->id,
