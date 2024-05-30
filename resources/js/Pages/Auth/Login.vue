@@ -42,7 +42,7 @@ const submit = () => {
     >
       <v-img
         class="bg-grey-lighten-2"
-        src="/assets/images/loginImg.png"
+        src="../../../../assets/images/loginImg.png"
         cover
       ></v-img>
     </div>

@@ -18,7 +18,7 @@ class LessonController extends Controller
     public function index(Course $course)
     {
         $lessons = $course->lessons;
-        return Inertia::render('Lessons/Lessons', ['course' => $course, 'lesson' => $lessons,]);
+        return Inertia::render('Lessons/Lessons', ['course' => $course, 'lessons' => $lessons,]);
     }
 
     public function create(Request $request)
@@ -35,7 +35,7 @@ class LessonController extends Controller
         $user_courses = Course::where("instructor_id", $user->instructor_id)->select('id', 'title')->get();
         return Inertia::render(
             "Lessons/AddLesson",
-            ['courses_snippet' => $user_courses, 'course_query' => $course_query, 'lesson' => $lesson ? $lesson : null]
+            ['courses_snippet' => $user_courses, 'course_query' => $course_query, 'lessons' => $lesson ? $lesson : null]
         );
     }
 

@@ -1,13 +1,18 @@
 <template>
-  <section class="-tw-mt-10 content__padding tw-bg-secondary-blue tw-text-white lg:!tw-py-20">
+  <section
+    class="-tw-mt-0 content__padding tw-bg-secondary-blue tw-text-white lg:!tw-py-20"
+  >
     <div class="inner">
-
       <div>
         <h1>School</h1>
-        <h3 class="tw-text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, aut!</h3>
-        <p class="tw-text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti quasi eaque saepe omnis
-          recusandae tempora
-          porro minima totam. Voluptatem, quidem.</p>
+        <h3 class="tw-text-sm">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, aut!
+        </h3>
+        <p class="tw-text-sm">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti
+          quasi eaque saepe omnis recusandae tempora porro minima totam.
+          Voluptatem, quidem.
+        </p>
       </div>
 
       <div>

@@ -22,7 +22,7 @@ Route::get('/cart', function () {
 })->name('cart');
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/details/{id}', [InstructorDetailsController::class, 'show'])->middleware('auth')->name('userDetails');
+Route::get('/details/{id}', [InstructorDetailsController::class, 'show'])->name('userDetails');
 
 
 Route::group(['prefix' => 'my-details', 'middleware' => ['auth', 'verified']], function () {
@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group(['prefix' => 'reviews'], function () {
-    Route::get('/{id}', [ReviewController::class, 'show'])->name('review.show');
+    Route::get('/{id}', [ReviewController::class, 'show'])->middleware('auth')->name('review.show');
     Route::post('/{id}', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
     Route::delete('/{id}', [ReviewController::class, 'destroy'])->middleware('auth')->name('review.destroy');
     Route::get('/', [ReviewController::class, 'index'])->name('review.index');

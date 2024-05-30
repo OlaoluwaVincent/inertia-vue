@@ -30,7 +30,7 @@
     <UploadVideo
       :videoError="form.errors.video"
       @get-video-url="getVideoUrl"
-      :preview="lesson?.video_url"
+      :preview="lessons?.video_url"
     />
 
     <v-btn
@@ -79,7 +79,7 @@ const props = defineProps({
   auth: Object,
   errors: Object,
   course_query: String,
-  lesson: Object,
+  lessons: Object,
 });
 
 const course_list = computed(() => {
@@ -89,12 +89,12 @@ const course_list = computed(() => {
   }));
 });
 
-const onEdit = computed(() => (props.lesson ? true : false));
+const onEdit = computed(() => (props.lessons ? true : false));
 
 const form = useForm({
-  title: props.lesson?.title ?? "",
-  course_id: props.lesson?.course_id ?? Number(props.course_query),
-  description: props.lesson?.description ?? "",
+  title: props.lessons?.title ?? "",
+  course_id: props.lessons?.course_id ?? Number(props.course_query),
+  description: props.lessons?.description ?? "",
   video: "",
 });
 
@@ -104,12 +104,11 @@ function getVideoUrl(videoFile) {
 
 function submit() {
   if (onEdit) {
-    console.log(form.data());
     form.submit(
       "post",
       route("lesson.update", {
-        course: props.lesson.course_id,
-        lesson: props.lesson.id,
+        course: props.lessons.course_id,
+        lesson: props.lessons.id,
       }),
       {
         onSuccess: () => {

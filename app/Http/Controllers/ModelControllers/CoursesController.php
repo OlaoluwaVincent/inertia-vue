@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\ModelControllers;
 
+use App\Class\EnrollmentCheckers;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -50,31 +52,19 @@ class CoursesController extends Controller
         ]);
     }
 
-
-    public function form(Request $request)
-    {
-        $user = $request->user();
-        if (!$user->isNotStudent()) {
-            return Redirect::to('/');
-        }
-
-        return Inertia::render('Courses/CreateCourse');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-
     /** the Course view with the course data {category, course, instructor} */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $course = Course::with('category', 'instructor.user', 'lessons', 'reviews',)->find($id);
+        $user_id = $request->user() ? $request->user()->id : null;
+
+        $hasEnrolled = EnrollmentCheckers::hasEnrolled($user_id, $id);
+
+        $course = EnrollmentCheckers::enrolledCourse($user_id, $id);
         $course->reviewsAverage();
+
         return Inertia::render('Courses/SingleCourse', [
             'course' => $course,
+            'hasEnrolled' => $hasEnrolled,
         ]);
     }
 

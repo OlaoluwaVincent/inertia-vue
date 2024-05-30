@@ -68,16 +68,17 @@ class InstructorDetailsController extends Controller
         ]);
     }
 
-    public function show(User $id)
+    public function show($id)
     {
 
-        $user = $id;
-        $courses = Course::where('instructor_id', $user->instructor_id)->get();
 
-        $user->courses = $courses;
+        $instructor = Instructor::where('id', $id)->with(['courses', 'user'])->get();
+        // $courses = Course::where('instructor_id', )->get();
+
+        // $user->courses = $courses;
 
         return Inertia::render('Instructor', [
-            'details' => $user,
+            'details' => $instructor,
         ]);
     }
 }

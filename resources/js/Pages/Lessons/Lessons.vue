@@ -7,10 +7,10 @@
       {{ course.title }}
     </h1>
 
-    <LessonCards :lessons="lesson" />
+    <LessonCards :lessons="lessons" canDelete />
   </section>
 
-  <p v-if="!lesson.length">You have not added any lesson to this course</p>
+  <p v-if="!lessons.length">You have not added any lessons to this course</p>
 </template>
 
 <script setup>
@@ -20,7 +20,7 @@ import LessonCards from "@/Components/LessonCards.vue";
 defineOptions({ layout: UserLayout });
 
 const props = defineProps({
-  lesson: Array,
+  lessons: Array,
   course: Object,
 });
 </script>

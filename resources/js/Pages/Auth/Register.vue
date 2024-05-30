@@ -34,7 +34,7 @@ const submit = () => {
     >
       <v-img
         class="bg-grey-lighten-2 tw-h-full tw-w-full"
-        src="/assets/images/regImg.png"
+        src="../../../../assets/images/regImg.png"
         cover
       ></v-img>
     </div>

@@ -29,6 +29,7 @@
 
       <div class="cart__actions">
         <v-btn
+          :href="route('course.single', { id: course.id })"
           color="success"
           variant="text"
           class="!tw-capitalize !tw-text-xs md:!tw-text-sm"

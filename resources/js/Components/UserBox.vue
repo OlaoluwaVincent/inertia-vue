@@ -4,7 +4,7 @@
     <h5 class="tw-text-sm md:tw-text-base tw-text-blue-600 tw-font-semibold">
       <Link
         v-if="user.instructor_id"
-        :href="`/details/${user.id}`"
+        :href="`/details/${user.instructor_id}`"
         class="tw-underline"
       >
         {{ user.name || user.username }}</Link

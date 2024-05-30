@@ -6,6 +6,7 @@
 const props = defineProps({
   details: Object,
 });
+console.log(props.details);
 </script>
 
 <style scoped>
