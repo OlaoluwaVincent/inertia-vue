@@ -19,4 +19,9 @@ trait RoleTrait
         }
         return false;
     }
+
+    public function hasRole(UserRoleEnum $role): bool
+    {
+        return $this->role === $role;
+    }
 }

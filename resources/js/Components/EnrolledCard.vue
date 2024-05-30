@@ -1,16 +1,7 @@
 <template>
-  <section
-    class="cart__card tw-bg-red"
-    :class="theme.isDark && 'tw-bg-gray-900'"
-  >
+  <section class="cart__card tw-bg-red" :class="theme.isDark && 'tw-bg-gray-900'">
     <div class="tw-flex tw-flex-col">
-      <v-img
-        class="cart__image"
-        aspect-ratio="16/9"
-        cover
-        rounded
-        :src="course.image"
-      ></v-img>
+      <v-img class="cart__image" aspect-ratio="16/9" cover rounded :src="course.image"></v-img>
       <div class="tw-font-bold md:tw-hidden">${{ course.price }}</div>
     </div>
 
@@ -28,13 +19,9 @@
       </div>
 
       <div class="cart__actions">
-        <v-btn
-          :href="route('course.single', { id: course.id })"
-          color="success"
-          variant="text"
-          class="!tw-capitalize !tw-text-xs md:!tw-text-sm"
-          >View</v-btn
-        >
+        <Link :href="route('course.single', { id: course.id })">
+        <v-btn color="success" variant="text" class="!tw-capitalize !tw-text-xs md:!tw-text-sm">View</v-btn>
+        </Link>
       </div>
     </div>
   </section>
@@ -43,6 +30,7 @@
 <script setup>
 import { useCartStore } from "@/store/cart";
 import { useThemeStore } from "@/store/theme";
+import { Link } from "@inertiajs/vue3";
 
 const theme = useThemeStore();
 const cartStore = useCartStore();

@@ -1,33 +1,22 @@
 <template>
   <section>
-    <v-expansion-panels v-for="lesson in lessons" :key="lesson.id" class="mt-4">
-      <v-expansion-panel class="tw-whitespace-pre tw-text-wrap tw-relative">
-        <v-expansion-panel-title
-          class="!tw-flex !tw-justify-between !tw-w-full"
-        >
+    <v-expansion-panels v-for="lesson in sortedLessons" :key="lesson.id" class="mt-4"
+      :class="theme.isDark && '!tw-bg-gray-900 !tw-text-white'">
+      <v-expansion-panel class="tw-whitespace-pre tw-text-wrap tw-relative"
+        :class="theme.isDark && '!tw-bg-gray-900 !tw-text-white'">
+        <v-expansion-panel-title class="!tw-flex !tw-justify-between !tw-w-full">
           {{ lesson.title }}
         </v-expansion-panel-title>
 
         <v-expansion-panel-text>
           <div class="tw-my-4 tw-space-x-4" v-if="canDelete">
-            <v-btn
-              color="warning"
-              @click="updateLesson(lesson.course_id, lesson.id)"
-              ><v-icon>mdi-pencil</v-icon></v-btn
-            >
-            <v-btn
-              color="error"
-              @click="deleteLesson(lesson.course_id, lesson.id)"
-              ><v-icon>mdi-delete</v-icon></v-btn
-            >
+            <v-btn color="warning"
+              @click="updateLesson(lesson.course_id, lesson.id)"><v-icon>mdi-pencil</v-icon></v-btn>
+            <v-btn color="error" @click="deleteLesson(lesson.course_id, lesson.id)"><v-icon>mdi-delete</v-icon></v-btn>
           </div>
           {{ lesson.description }}
-          <video
-            v-if="hasEnrolled || canDelete"
-            :src="lesson.video_url"
-            controls
-            class="tw-aspect-video tw-border tw-my-2 tw-max-h-[400px] tw-w-full"
-          />
+          <video v-if="hasEnrolled || canDelete" :src="lesson.video_url" controls
+            class="tw-aspect-video tw-border tw-my-2 tw-max-h-[400px] tw-w-full" />
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -35,7 +24,11 @@
 </template>
 
 <script setup>
+import { useThemeStore } from "@/store/theme";
 import { router } from "@inertiajs/vue3";
+import { computed } from "vue";
+
+const theme = useThemeStore();
 
 const props = defineProps({
   lessons: {
@@ -45,6 +38,8 @@ const props = defineProps({
   hasEnrolled: Boolean,
   canDelete: Boolean,
 });
+
+const sortedLessons = computed(() => props.lessons.sort((a, b) => a.id - b.id))
 
 const deleteLesson = (course_id, lesson_id) => {
   router.delete(

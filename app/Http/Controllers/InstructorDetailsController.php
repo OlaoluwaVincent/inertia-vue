@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InstructorDetailsValidate;
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\Instructor;
+use App\Models\Review;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -68,17 +70,27 @@ class InstructorDetailsController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show(Instructor $id)
     {
+        $instructor = $id;
+        $instructor->load('user');
+        $instructor->load('courses.reviews');
 
+        $reviews = $instructor->courses->flatMap->reviews;
+        $courses = $instructor->courses;
 
-        $instructor = Instructor::where('id', $id)->with(['courses', 'user'])->get();
-        // $courses = Course::where('instructor_id', )->get();
+        unset($instructor->courses);
 
-        // $user->courses = $courses;
+        $courses->each((function (Course $course) {
+            $course->reviewsAverage();
+            $course->students_count =
+                Enrollment::where('course_id', $course->id)->count();
+        }));
 
         return Inertia::render('Instructor', [
             'details' => $instructor,
+            'courses' => $courses,
+            'reviews' => $reviews,
         ]);
     }
 }

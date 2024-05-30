@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ModelControllers;
 
 use App\Class\EnrollmentCheckers;
+use App\Enums\UserRoleEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Enrollment;
@@ -60,11 +61,15 @@ class CoursesController extends Controller
         $hasEnrolled = EnrollmentCheckers::hasEnrolled($user_id, $id);
 
         $course = EnrollmentCheckers::enrolledCourse($user_id, $id);
+        $students_count = Enrollment::where('course_id', $id)->count();
+
         $course->reviewsAverage();
+        $course->students_count = $students_count;
 
         return Inertia::render('Courses/SingleCourse', [
             'course' => $course,
             'hasEnrolled' => $hasEnrolled,
+
         ]);
     }
 
