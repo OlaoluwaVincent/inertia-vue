@@ -17,6 +17,17 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome');
 });
+Route::get('/email', function (Request $request) {
+    $data = [
+        ['title' => 'name of the course'],
+        ['title' => 'name of another course']
+    ];
+    return view('email.PurchaseEmail', [
+        'user' => $request->user(),
+        'metadata' => $data,
+        'total' => 200
+    ]);
+});
 
 Route::get('/cart', CartController::class)->name('cart');
 

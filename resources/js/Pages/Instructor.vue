@@ -50,10 +50,21 @@
             social.handle }}</v-btn>
       </div>
     </section>
+
+    <div class="tw-my-10">
+      <h3 class="tw-font-semibold tw-text-xl md:tw-text-2xl">Courses by <span class="tw-text-blue-600">{{
+        details.user.fullname }}</span></h3>
+      <ScrollX scrollable>
+        <CourseCard :data="courses" />
+      </ScrollX>
+
+    </div>
   </section>
 </template>
 
 <script setup>
+import CourseCard from '@/Components/CourseCard.vue';
+import ScrollX from '@/Components/ScrollX.vue';
 import { useThemeStore } from '@/store/theme';
 
 const theme = useThemeStore();

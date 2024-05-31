@@ -4,7 +4,7 @@
 
 
         <div>
-            <h4>Pre-requisite</h4>
+            <h4 class="tw-text-lg tw-font-semibold">Pre-requisite</h4>
             <ol>
                 <li v-for="(requirement, index) in course.requirement" :key="index" class="tw-flex tw-gap-3">
                     <span class="tw-font-semibold">{{ index + 1 + ' :' }}</span>
@@ -13,7 +13,7 @@
             </ol>
         </div>
         <div>
-            <h4>Obectives</h4>
+            <h4 class="tw-text-lg tw-font-semibold">Obectives</h4>
             <ol>
                 <li v-for="(objective, index) in course.objective" :key="index" class="tw-flex tw-gap-3">
                     <span class="tw-font-semibold">{{ index + 1 + ' :' }}</span>

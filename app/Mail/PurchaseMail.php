@@ -14,14 +14,18 @@ class PurchaseMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private User $user;
+    public User $user;
+    public array $metadataforEmail;
+    public $total;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $metadata, $total)
     {
         $this->user = $user;
+        $this->metadataforEmail = $metadata;
+        $this->total = $total;
     }
 
     /**
@@ -41,6 +45,10 @@ class PurchaseMail extends Mailable
     {
         return new Content(
             view: 'email.PurchaseEmail',
+            with: [
+                'metadata' => $this->metadataforEmail,
+                'total' => $this->total,
+            ],
         );
     }
 

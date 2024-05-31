@@ -23,6 +23,7 @@ class UserCoursesController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
+        $query = !empty($request->query('redirect_from'));
         $courses = null;
         // Get the courses of the user
         if ($user->role === 'USER') {
@@ -37,7 +38,7 @@ class UserCoursesController extends Controller
         }
 
         // Return the courses to the view
-        return Inertia::render('MyCourses', ['courses' => $courses, 'isStudent' => $user->role === 'USER']);
+        return Inertia::render('MyCourses', ['courses' => $courses, 'isStudent' => $user->role === 'USER', 'status' => $query]);
     }
 
     public function create()

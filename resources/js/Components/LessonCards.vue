@@ -15,8 +15,6 @@
             <v-btn color="error" @click="deleteLesson(lesson.course_id, lesson.id)"><v-icon>mdi-delete</v-icon></v-btn>
           </div>
           {{ lesson.description }}
-          <video v-if="hasEnrolled || canDelete" :src="lesson.video_url" controls
-            class="tw-aspect-video tw-border tw-my-2 tw-max-h-[400px] tw-w-full" />
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -35,7 +33,6 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  hasEnrolled: Boolean,
   canDelete: Boolean,
 });
 

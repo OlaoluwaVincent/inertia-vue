@@ -27,15 +27,21 @@ import Pagination from "@/Components/Pagination.vue";
 
 import UserLayout from "@/Layouts/UserLayout.vue";
 import { computed, ref } from "vue";
+import { useCartStore } from "@/store/cart";
 
 defineOptions({ layout: UserLayout });
 
 const props = defineProps({
   courses: Object,
-  status: String,
+  status: Boolean,
   isStudent: Boolean,
 });
 
+const cartStore = useCartStore()
+
+if (props.status) {
+  cartStore.clearCart()
+}
 const courses_data = ref(props.courses);
 
 const courseData = computed(() =>

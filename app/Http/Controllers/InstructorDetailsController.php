@@ -82,6 +82,7 @@ class InstructorDetailsController extends Controller
         unset($instructor->courses);
 
         $courses->each((function (Course $course) {
+            $course->load('instructor.user');
             $course->reviewsAverage();
             $course->students_count =
                 Enrollment::where('course_id', $course->id)->count();

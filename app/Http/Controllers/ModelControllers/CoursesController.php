@@ -60,7 +60,14 @@ class CoursesController extends Controller
 
         $hasEnrolled = EnrollmentCheckers::hasEnrolled($user_id, $id);
 
-        $course = EnrollmentCheckers::enrolledCourse($user_id, $id);
+        // $course = EnrollmentCheckers::enrolledCourse($user_id, $id);
+        $course = Course::with('category', 'instructor.user', 'lessons', 'reviews',)->find($id);
+        $course->lessons->transform(
+            function ($lesson) {
+                unset($lesson->video_url);
+                return $lesson;
+            }
+        );
         $students_count = Enrollment::where('course_id', $id)->count();
 
         $course->reviewsAverage();

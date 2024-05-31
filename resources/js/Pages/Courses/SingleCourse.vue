@@ -5,16 +5,16 @@
     :class="theme.isDark ? 'tw-bg-gray-800' : 'tw-bg-gray-50'">
     <div class="tw-relative">
       <CourseBanner :course="course" />
-      <CourseBannerCard :isExistInCart="isExistInCart" :course="course" />
+      <CourseBannerCard v-if="!hasEnrolled" :isExistInCart="isExistInCart" :course="course" />
     </div>
-    <MobileCheckoutButton :course="course" v-model="snackbar" />
+    <MobileCheckoutButton v-if="!hasEnrolled" :course="course" v-model="snackbar" />
 
-    <div class="tw-py-10 md:tw-py-32" />
+    <div class="tw-py-10 md:tw-py-32" :class="hasEnrolled && '!tw-py-10'" />
 
     <DescriptionTabs :tabs="tabs" @tab-title="handleTabUpdate">
 
       <template v-slot:lessons>
-        <LessonCards :lessons="course.lessons" :hasEnrolled="hasEnrolled" />
+        <LessonCards :lessons="course.lessons" />
       </template>
       <template v-slot:reviews>
         <ReviewForm :id="course.id" />

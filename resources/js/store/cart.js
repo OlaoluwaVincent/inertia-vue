@@ -6,6 +6,7 @@ export const useCartStore = defineStore(
     () => {
         const cart = ref([]);
         const cartLength = computed(() => cart.value.length);
+
         const price = computed(() => {
             if (cart.value.length) {
                 const totalPrice = cart.value.reduce(
@@ -15,6 +16,7 @@ export const useCartStore = defineStore(
                 return totalPrice.toFixed(2);
             }
         });
+
         const discount = computed(() => {
             if (cart.value.length) {
                 const totalPrice = cart.value.reduce((acc, course) => {
@@ -50,6 +52,10 @@ export const useCartStore = defineStore(
             return false;
         }
 
+        function clearCart() {
+            cart.value = [];
+        }
+
         return {
             cartLength,
             cart,
@@ -59,6 +65,7 @@ export const useCartStore = defineStore(
             addToCart,
             removeFromCart,
             checkExisting,
+            clearCart,
         };
     },
     { persist: true }

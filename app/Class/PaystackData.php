@@ -2,6 +2,7 @@
 
 namespace App\Class;
 
+use App\Enums\CurrencyEnum;
 use Unicodeveloper\Paystack\Facades\Paystack;
 
 class PaystackData extends Paystack
@@ -81,9 +82,9 @@ class PaystackData extends Paystack
         return self::$transaction_ref;
     }
 
-    public static function extractAmount(): int
+    public static function extractAmount(): float
     {
-        return self::$amount / 100;
+        return self::$amount / CurrencyEnum::TO_DOLLAR;
     }
 
     public static function extractChannel(): string

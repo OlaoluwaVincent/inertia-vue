@@ -9,10 +9,13 @@ use App\Enums\CurrencyEnum;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
+use App\Mail\PurchaseMail;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Unicodeveloper\Paystack\Facades\Paystack;
 
 class PaymentController extends Controller
 {
@@ -23,7 +26,7 @@ class PaymentController extends Controller
     public function redirectToGateway(Request $request)
     {
         $transactionData = [
-            "amount" => intval($request->amount) * CurrencyEnum::TO_DOLLAR,
+            "amount" => floatval($request->amount) * CurrencyEnum::TO_DOLLAR,
             "reference" => PaystackData::genTranxRef(),
             "email" => $request->user()->email,
             "metadata" => $request->metadata,
@@ -69,9 +72,9 @@ class PaymentController extends Controller
             }
         });
 
-        // Mail::to($request->user()->email)->send(new PurchaseMail($request->user()));
+        Mail::to($user->email)->send(new PurchaseMail($user, PaystackData::extractMetadata(), PaystackData::extractAmount()));
 
 
-        return Redirect::to('my-courses');
+        return Redirect::to(config('app.url') . '/my-courses?redirect_from=payment');
     }
 }
