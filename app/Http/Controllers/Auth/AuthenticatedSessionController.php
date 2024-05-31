@@ -34,7 +34,6 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        // Mail::to($request->user()->email)->send(new PurchaseMail($request->user()));
 
         return redirect()->intended(route('dashboard', absolute: false));
     }

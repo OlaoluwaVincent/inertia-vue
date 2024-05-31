@@ -69,6 +69,9 @@ class PaymentController extends Controller
             }
         });
 
+        // Mail::to($request->user()->email)->send(new PurchaseMail($request->user()));
+
+
         return Redirect::to('my-courses');
     }
 }
