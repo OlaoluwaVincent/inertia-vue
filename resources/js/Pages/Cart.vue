@@ -29,7 +29,6 @@ import CartCard from "@/Components/cart/CartCard.vue";
 import OrderDetails from "@/Components/cart/OrderDetails.vue";
 
 import { useCartStore } from "@/store/cart";
-import { computed } from "vue";
 
 const props = defineProps({
   enrolled_courses: Array,

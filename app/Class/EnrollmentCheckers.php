@@ -17,7 +17,7 @@ class EnrollmentCheckers
         return true;
     }
 
-    public static function enrolledCourse($user_id, $course_id): Course
+    public static function enrolledCourse($user_id, $course_id)
     {
         $course = null;
         if (is_null($user_id) || !self::hasEnrolled($user_id, $course_id)) {

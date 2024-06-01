@@ -11,13 +11,13 @@
       Discount: <span>{{ cartStore.discount }}</span>
     </p>
     <p>
-      Tax: <span v-if="cartStore.tax !== NaN">{{ cartStore.tax }}</span>
+      Tax: <span v-if="!isNaN(cartStore.tax)">{{ cartStore.tax }}</span>
     </p>
 
     <v-divider class="tw-border-gray-600"></v-divider>
     <p class="tw-text-lg tw-uppercase tw-font-bold">
       Total:
-      <span v-if="total !== NaN">{{ total }}</span>
+      <span v-if="!isNaN(total)">{{ total }}</span>
     </p>
     <v-btn color="black" type="submit" :disabled="!cartStore.price"
       >Proceed to Checkout</v-btn
@@ -27,13 +27,11 @@
 </template>
 
 <script setup>
-import { router, useForm, usePage } from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import { useCartStore } from "@/store/cart";
 import { useThemeStore } from "@/store/theme";
 import { computed } from "vue";
 
-const page = usePage();
-const user = computed(() => page.props.auth.user);
 const theme = useThemeStore();
 const cartStore = useCartStore();
 

@@ -24,7 +24,6 @@ class RandomDBHelper
 
     /**
      * This gets random id from the instructorDB and returns it
-     *
      * @return int<string, mixed>
      */
     public function userId()
