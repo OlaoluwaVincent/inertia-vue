@@ -9,7 +9,7 @@ return [
 
     'connections' => [
 
-     
+
 
         'pgsql' => [
             'driver' => 'pgsql',
@@ -17,7 +17,21 @@ return [
             'sslmode' => 'prefer',
         ],
 
-
+        'mysql' => [ // Add this section for MySQL
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => '127.0.0.1', // Your MySQL host
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
 
     ],
 
