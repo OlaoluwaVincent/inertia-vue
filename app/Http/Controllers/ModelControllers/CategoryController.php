@@ -16,7 +16,6 @@ class CategoryController extends Controller
 
     public static function showPopularCategories()
     {
-
         // Get all categories with the count of associated courses
         return Category::whereHas('courses')->select('id', 'name')->get();
     }
