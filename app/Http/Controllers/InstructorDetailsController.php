@@ -23,7 +23,7 @@ class InstructorDetailsController extends Controller
         $user = $request->user();
         return Inertia::render('Profile/InstructorDetails', [
             'isOnBoard' => $user->hasOnboarded(),
-            'details' => auth()->user()->instructor
+            'details' => $user->instructor
         ]);
     }
     /**

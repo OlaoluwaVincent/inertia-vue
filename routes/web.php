@@ -9,7 +9,6 @@ use App\Http\Controllers\ModelControllers\ReviewController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserCoursesController;
-use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
