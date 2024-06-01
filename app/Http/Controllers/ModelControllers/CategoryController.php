@@ -18,18 +18,13 @@ class CategoryController extends Controller
     {
 
         // Get all categories with the count of associated courses
-        $categories = Category::whereHas('courses')->select('id', 'name')->get();
-
-
-        return $categories;
+        return Category::whereHas('courses')->select('id', 'name')->get();
     }
 
     public static function show()
     {
-        $categories = Category::withCount('courses')
+        return Category::withCount('courses')
             ->orderBy('courses_count', 'desc')
             ->get();
-
-        return $categories;
     }
 }
