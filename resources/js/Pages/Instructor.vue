@@ -13,15 +13,15 @@
       <v-divider class="mt-10"></v-divider>
 
       <div id="counts" class="tw-flex tw-items-center tw-gap-5 tw-justify-center md:tw-max-w-fit">
-        <span class="tw-text-center">
+        <aside class="tw-text-center">
           <h6 class="tw-mb-2">Total Students</h6>
           <p class="tw-font-semibold md:tw-font-black tw-text-xl md:tw-text-2xl">10</p>
-        </span>
+        </aside>
 
-        <span class="tw-text-center">
+        <aside class="tw-text-center">
           <h6 class="tw-mb-2">Reviews</h6>
           <p class="tw-font-semibold md:tw-font-black tw-text-xl md:tw-text-2xl">{{ reviews.length }}</p>
-        </span>
+        </aside>
       </div>
 
       <div id="experience">
@@ -50,16 +50,16 @@
             social.handle }}</v-btn>
       </div>
     </section>
+  </section>
 
-    <div class="tw-my-10">
-      <h3 class="tw-font-semibold tw-text-xl md:tw-text-2xl">Courses by <span class="tw-text-blue-600">{{
-        details.user.fullname }}</span></h3>
-      <ScrollX scrollable>
-        <CourseCard :data="courses" />
-      </ScrollX>
+    <div class="tw-my-5 content__padding">
+        <h3 class="tw-font-semibold tw-text-xl md:tw-text-2xl">Courses by <span class="tw-text-blue-600">{{
+                details.user.fullname }}</span></h3>
+        <ScrollX scrollable>
+            <CourseCard :data="courses" />
+        </ScrollX>
 
     </div>
-  </section>
 </template>
 
 <script setup>
@@ -73,6 +73,7 @@ const props = defineProps({
   courses: Array,
   reviews: Array,
 });
+
 </script>
 
 <style scoped>

@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class InstructorDetailsController extends Controller
 {
@@ -26,10 +27,12 @@ class InstructorDetailsController extends Controller
             'details' => $user->instructor
         ]);
     }
+
     /**
      * Store a newly created resource in storage.
+     * @throws Exception
      */
-    public function store(InstructorDetailsValidate $request)
+    public function store(InstructorDetailsValidate $request): void
     {
         $user = $request->user();
 
@@ -56,6 +59,7 @@ class InstructorDetailsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @throws Exception
      */
     public function edit(InstructorDetailsValidate $request, Instructor $instructor)
     {
@@ -70,13 +74,15 @@ class InstructorDetailsController extends Controller
         ]);
     }
 
-    public function show(Instructor $id)
+    public function show(Instructor $id): Response
     {
         $instructor = $id;
         $instructor->load('user');
         $instructor->load('courses.reviews');
 
-        $reviews = $instructor->courses->flatMap->reviews;
+        $reviews = $instructor->courses->each(function(Course $course){
+            return $course->reviews;
+        });
         $courses = $instructor->courses;
 
         unset($instructor->courses);
@@ -84,7 +90,7 @@ class InstructorDetailsController extends Controller
         $courses->each((function (Course $course) {
             $course->load('instructor.user');
             $course->reviewsAverage();
-            $course->students_count =
+            $course['students_count'] =
                 Enrollment::where('course_id', $course->id)->count();
         }));
 
