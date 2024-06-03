@@ -40,7 +40,7 @@ const sortedLessons = computed(() => props.lessons.sort((a, b) => a.id - b.id))
 
 const deleteLesson = (course_id, lesson_id) => {
   router.delete(
-    route("lesson.destroy", { course: course_id, lesson: lesson_id }),
+    router("lesson.destroy", { course: course_id, lesson: lesson_id }),
     {
       onSuccess: () => {
         console.log("Successful");

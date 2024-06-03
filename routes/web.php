@@ -60,6 +60,7 @@ Route::group(['prefix' => 'my-courses', 'middleware' => ['auth', 'verified']], f
 
 Route::group(['prefix' => 'courses'], function () {
     Route::get('/', [CoursesController::class, 'index'])->name('course.show');
+    Route::get('/search-courses', [CoursesController::class, 'search'])->name('courses.search');
     Route::get('/{id}', [CoursesController::class, 'show'])->name('course.single');
     Route::delete('/{id}', [CoursesController::class, 'delete'])->name('course.delete');
 });

@@ -117,6 +117,17 @@ function proceedToCheckout() {
     width: 280px;
 }
 
+.dark {
+    background: #222;
+    color: white;
+    border: 1px solid #fff;
+}
+
+.light {
+    background: white;
+    color: #222;
+    border: 1px solid #222;
+}
 
 @media (width >= 768px) {
     .courseBannerCard {

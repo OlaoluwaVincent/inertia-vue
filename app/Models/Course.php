@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Traits\CourseTrait;
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $title
@@ -24,12 +26,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property array|null $objective
  * @property array|null $requirement
  * @property-read \App\Models\Category $category
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
+ * @property-read  Collection<int, \App\Models\Comment> $comments
  * @property-read int|null $comments_count
  * @property-read \App\Models\Instructor $instructor
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Lesson> $lessons
+ * @property-read Collection<int, \App\Models\Lesson> $lessons
  * @property-read int|null $lessons_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Review> $reviews
+ * @property-read Collection<int, \App\Models\Review> $reviews
  * @property-read int|null $reviews_count
  * @method static \Database\Factories\CourseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Course newModelQuery()
@@ -47,7 +49,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereRequirement($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class Course extends Model
 {

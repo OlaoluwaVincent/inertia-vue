@@ -18,7 +18,7 @@
     <v-spacer></v-spacer>
     <!-- Show on small screen -->
 
-    <AppSearchHeader />
+<!--    <AppSearchHeader />-->
 
     <v-spacer></v-spacer>
     <!-- Show on small screen -->
@@ -62,7 +62,6 @@
 import AppSidebar from "@/Components/AppSidebar.vue";
 import AppMenuDots from "@/Components/AppMenuDots.vue";
 import AppHeaderAuthBtn from "@/Components/AppHeaderAuthBtn.vue";
-import AppSearchHeader from "@/Components/AppSearchHeader.vue";
 import CoursesFilter from "@/Components/CoursesFilter.vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
@@ -71,7 +70,7 @@ import { useCartStore } from "@/store/cart";
 const cartStore = useCartStore();
 
 const userData = usePage();
-const isAuth = computed(() => (userData.props?.auth?.user?.id ? true : false));
+const isAuth = computed(() => (!!userData.props?.auth?.user?.id));
 const user = computed(() => userData.props.auth.user ?? null);
 
 const drawer = ref(false);

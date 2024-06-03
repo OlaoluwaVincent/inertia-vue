@@ -7,15 +7,16 @@ use App\Enums\UserRoleEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Enrollment;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CoursesController extends Controller
 {
-
     /**  all the Courses view with the courses data */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         // Retrieve query parameters
         $category = $request->query('category');
@@ -54,7 +55,7 @@ class CoursesController extends Controller
     }
 
     /** the Course view with the course data {category, course, instructor} */
-    public function show(Request $request, $id)
+    public function show(Request $request, $id):Response
     {
         $user_id = $request->user() ? $request->user()->id : null;
 
@@ -62,7 +63,7 @@ class CoursesController extends Controller
 
         // $course = EnrollmentCheckers::enrolledCourse($user_id, $id);
         $course = Course::with('category', 'instructor.user', 'lessons', 'reviews',)->find($id);
-        $course->lessons->transform(
+        $course['lessons']->transform(
             function ($lesson) {
                 unset($lesson->video_url);
                 return $lesson;
@@ -71,7 +72,7 @@ class CoursesController extends Controller
         $students_count = Enrollment::where('course_id', $id)->count();
 
         $course->reviewsAverage();
-        $course->students_count = $students_count;
+        $course['students_count'] = $students_count;
 
         return Inertia::render('Courses/SingleCourse', [
             'course' => $course,
@@ -80,10 +81,21 @@ class CoursesController extends Controller
         ]);
     }
 
+    ##Get Course by Search
+    public function search(Request $request):JsonResponse
+    {
+        $query = $request->input('query');
+
+        // Perform a search on the Course model
+        $courses = Course::whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($query) . '%'])->with('instructor.user')->paginate(10);
+
+        return response()->json($courses);
+    }
+
     /**
-     * This returns all the courses and their related Instructors
+     * This returns all the courses and their related Instructorse
      */
-    public function popularCourse()
+    public function popularCourse():array
     {
         $courses = Course::with('instructor.user')->take(5)->get();
 
@@ -106,7 +118,7 @@ class CoursesController extends Controller
         return $result;
     }
 
-    public static function coursesCount()
+    public static function coursesCount(): array
     {
         return [
             "coursesNum" => Course::count(),
