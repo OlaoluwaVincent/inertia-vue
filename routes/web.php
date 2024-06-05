@@ -9,6 +9,7 @@ use App\Http\Controllers\ModelControllers\ReviewController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserCoursesController;
+use App\Http\Controllers\WatchController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -77,6 +78,10 @@ Route::group(['prefix' => 'reviews'], function () {
     Route::post('/{id}', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
     Route::delete('/{id}', [ReviewController::class, 'destroy'])->middleware('auth')->name('review.destroy');
     Route::get('/', [ReviewController::class, 'index'])->middleware('auth')->name('review.index');
+});
+
+Route::group(['prefix'=>'watch'],function (){
+    Route::get('/', [WatchController::class, 'index'])->middleware('subscribed')->name('watch');
 });
 
 Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
