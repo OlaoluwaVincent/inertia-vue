@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, ref, watch} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {fetchVideoLengths} from '@/utils/useVideoMetadata.js';
 import {useWatchStore} from "@/store/watch.js";
 

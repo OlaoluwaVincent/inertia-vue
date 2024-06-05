@@ -1,6 +1,5 @@
 <script setup>
 
-import LessonCards from "@/Components/LessonCards.vue";
 import WatchVideoBox from "@/Components/WatchVideoBox.vue";
 import WatchVideoLesson from "@/Components/WatchVideoLesson.vue";
 import useVideoMetadata from "@/utils/useVideoMetadata.js";

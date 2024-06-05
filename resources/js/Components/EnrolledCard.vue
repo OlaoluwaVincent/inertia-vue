@@ -43,7 +43,7 @@ const props = defineProps({
 .cart__card {
   display: flex;
   width: 100%;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
   padding: 12px;
 }
 
@@ -81,21 +81,11 @@ const props = defineProps({
   margin-left: -8px;
 }
 
-.cart__price {
-  font-weight: bold;
-  justify-self: flex-end;
-  padding-right: 20px;
-  display: none;
-}
-
 @media (width>=768px) {
   .cart__image {
     width: 100px;
     max-width: 150px;
   }
 
-  .cart__price {
-    display: block;
-  }
 }
 </style>
