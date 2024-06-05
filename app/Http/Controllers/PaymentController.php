@@ -21,7 +21,7 @@ class PaymentController extends Controller
 {
     /**
      * Redirect the User to Paystack Payment Page
-     * 
+     *
      */
     public function redirectToGateway(Request $request)
     {
@@ -37,7 +37,6 @@ class PaymentController extends Controller
 
             return Inertia::location(PaystackData::authorizationUrl());
         } catch (\Exception $e) {
-            dd('Error', $e);
             return Redirect::back()->withMessage(['msg' => 'The paystack token has expired. Please refresh the page and try again.', 'type' => 'error']);
         }
     }
@@ -62,7 +61,6 @@ class PaymentController extends Controller
                 'transaction_id' => PaystackData::extractTransactionId(),
                 'channel' => PaystackData::extractChannel(),
             ]);
-
             // Enroll user in each course
             foreach (PaystackData::extractMetadata() as $courseId) {
                 Enrollment::create([

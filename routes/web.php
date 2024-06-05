@@ -81,7 +81,7 @@ Route::group(['prefix' => 'reviews'], function () {
 });
 
 Route::group(['prefix'=>'watch'],function (){
-    Route::get('/', [WatchController::class, 'index'])->middleware('subscribed')->name('watch');
+    Route::get('/{course}', [WatchController::class, 'index'])->middleware('auth')->name('watch');
 });
 
 Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);

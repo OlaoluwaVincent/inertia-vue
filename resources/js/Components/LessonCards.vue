@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-if="lessons.length">
     <v-expansion-panels v-for="lesson in sortedLessons" :key="lesson.id" class="mt-4"
       :class="theme.isDark && '!tw-bg-gray-900 !tw-text-white'">
       <v-expansion-panel class="tw-whitespace-pre tw-text-wrap tw-relative"
@@ -15,6 +15,12 @@
             <v-btn color="error" @click="deleteLesson(lesson.course_id, lesson.id)"><v-icon>mdi-delete</v-icon></v-btn>
           </div>
           {{ lesson.description }}
+            <video
+                v-if="canDelete"
+                :src="lesson.video_url"
+                controls
+                class="tw-aspect-video tw-border tw-my-2 tw-max-h-[400px] tw-w-full"
+            />
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>

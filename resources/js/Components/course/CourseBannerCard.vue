@@ -94,10 +94,10 @@ function removeFromCart() {
 
 const form = useForm({
     amount: parseFloat(props.course.price),
-    metadata: {
+    metadata:[{
         id: props.course.id,
         title: props.course.title,
-    },
+    }],
 });
 
 function proceedToCheckout() {

@@ -19,7 +19,7 @@
       </div>
 
       <div class="cart__actions">
-        <Link :href="route('course.single', { id: course.id })">
+        <Link :href="route('watch', { course: course.id })">
         <v-btn color="success" variant="text" class="!tw-capitalize !tw-text-xs md:!tw-text-sm">View</v-btn>
         </Link>
       </div>

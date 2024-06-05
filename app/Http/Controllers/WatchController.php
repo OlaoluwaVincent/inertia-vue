@@ -12,9 +12,12 @@ class WatchController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index():Response
+    public function index(Course $course):Response
     {
-        return Inertia::render('Courses/Watch');
+//        $course = Course::with('category', 'instructor.user', 'lessons', 'reviews',)->find($id);
+        $course->load(['category', 'instructor.user','lessons']);
+
+        return Inertia::render('Courses/Watch',['course'=>$course]);
     }
 
     /**
