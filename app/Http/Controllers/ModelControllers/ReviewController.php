@@ -7,17 +7,19 @@ use App\Http\Requests\Auth\AuthCheckers;
 use App\Models\Course;
 use App\Models\Review;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ReviewController extends Controller
 {
-    /** 
+    /**
      * Returns all the Users Reviews
      */
-    public function index(AuthCheckers $request)
+    public function index(AuthCheckers $request): Response
     {
         if ($request->isInstructor()) {
             if (!$request->user()->hasOnboarded()) {
@@ -47,9 +49,9 @@ class ReviewController extends Controller
      *     'totalRaters' => The total number of raters,
      *     'averageRaters' => The average rating,
      *     'reviews' => An array containing all the reviews,
-     * ]
+     * ];
      */
-    public function show($id)
+    public function show($id): array
     {
         $allReviews = Review::where('course_id', $id)->with('user')->orderBy('created_at')->get();
         if (!$allReviews) {
@@ -72,7 +74,11 @@ class ReviewController extends Controller
             "average_rating" => $average,
         ];
     }
-    public function store(AuthCheckers $request, $id)
+
+    /**
+     * @throws Exception
+     */
+    public function store(AuthCheckers $request, $id): array|Collection|\Illuminate\Support\Collection
     {
         if ($request->isInstructor()) {
             throw new Exception("Only Students can do this", 401);
@@ -89,7 +95,7 @@ class ReviewController extends Controller
 
         try {
             $course = Course::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException) {
             return ['message', abort(404)];
         }
 
@@ -105,7 +111,7 @@ class ReviewController extends Controller
 
         return Review::where('course_id', $id)->with('user')->orderBy('created_at')->get();
     }
-    public function destroy(Review $id)
+    public function destroy(Review $id): RedirectResponse
     {
         $isDeleted = $id->delete();
 

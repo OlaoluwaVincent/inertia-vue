@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group(['prefix' => 'reviews'], function () {
-    Route::get('/{id}', [ReviewController::class, 'show'])->middleware('auth')->name('review.show');
+    Route::get('/{id}', [ReviewController::class, 'show'])->name('review.show');
     Route::post('/{id}', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
     Route::delete('/{id}', [ReviewController::class, 'destroy'])->middleware('auth')->name('review.destroy');
     Route::get('/', [ReviewController::class, 'index'])->middleware('auth')->name('review.index');
@@ -88,4 +88,3 @@ Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallbac
 Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->middleware('auth')->name('pay');
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/api.php';
