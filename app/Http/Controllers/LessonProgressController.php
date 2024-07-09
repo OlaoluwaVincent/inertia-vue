@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\LessonProgressEnum;
 use App\Models\LessonProgress;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,16 @@ class LessonProgressController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $lesson):LessonProgress
     {
-        //
+        $duration = $request['duration'] ?? 0;
+            return LessonProgress::updateOrCreate([
+                'user_id' => $request->user()->id,
+                'course_id' => $request['course_id'],
+                'lesson_id' => $request['id'],
+                'duration' => $duration,
+                'status' => LessonProgressEnum::from($request['status']),
+            ]);
     }
 
     /**

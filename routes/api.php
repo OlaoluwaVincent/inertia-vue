@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LessonProgressController;
 use App\Http\Controllers\ModelControllers\ComplimentsController;
 use App\Http\Controllers\ModelControllers\CategoryController;
 use App\Http\Controllers\ModelControllers\CoursesController;
@@ -27,4 +28,10 @@ Route::group(['prefix' => 'reviews'], function () {
     Route::get('/{id}', [ReviewController::class, 'show'])->name('review.show-api');
     Route::post('/{id}', [ReviewController::class, 'store'])->middleware('auth')->name('review.store-api');
     Route::delete('/{id}', [ReviewController::class, 'destroy'])->middleware('auth')->name('review.destroy-api');
+});
+
+
+Route::group(['prefix'=>'progress'], function(){
+    Route::get('/{lesson}', [LessonProgressController::class, 'show'])->middleware('auth')->name('progress_lesson');
+    Route::post('/{lesson}', [LessonProgressController::class, 'store'])->middleware('auth')->name('progress_lesson-post');
 });

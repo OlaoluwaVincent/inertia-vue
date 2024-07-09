@@ -12,22 +12,31 @@ import {useWatchStore} from "@/store/watch.js";
 // The video URL
 const watchStore = useWatchStore();
 const playing_url = ref(watchStore.playing_url);
+const dataToUpdate = ref(null)
 
 // Setup refs
 const videoPlayer = ref(null);
 const videoMetadata = ref(null);
-
+const hasUpdated10Percent = ref(false);
+const hasUpdated90Percent = ref(false);
 // Function to check progress
-function checkProgress() {
+async function checkProgress() {
     if (videoMetadata.value && videoPlayer.value) {
         const currentTime = videoPlayer.value.currentTime;
-        const duration = videoMetadata.value.duration;
+        const duration = videoMetadata.value;
+        const tenPercent = duration * 0.1;
         const ninetyPercent = duration * 0.9;
+        // console.log(duration);
+        if (currentTime >= tenPercent && !hasUpdated10Percent.value) {
+            const response = await watchStore.updateLessonProgress(currentTime, 'watching')
+            console.log(response)
+            hasUpdated10Percent.value = true;  // Set the flag to true
+        }
 
-        if (currentTime >= ninetyPercent) {
-            // TODO
-            //Update the db with is completed
-
+        if (currentTime >= ninetyPercent && !hasUpdated90Percent.value) {
+            console.log(dataToUpdate)
+            await watchStore.updateLessonProgress(currentTime, dataToUpdate.value);
+            hasUpdated90Percent.value = true;
         }
     }
 }

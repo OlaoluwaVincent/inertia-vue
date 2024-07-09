@@ -41,16 +41,5 @@ class AuthCheckers extends FormRequest
         }
         return Auth::user()->role === UserRoleEnum::INSTRUCTOR;
     }
-
-    /**
-     * Get the authenticated user.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    public function authenticatedUser()
-    {
-        return $this->user();
-    }
-
     // Other methods can be added here
 }

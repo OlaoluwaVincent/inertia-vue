@@ -1,29 +1,24 @@
-import videojs from 'video.js';
-
 async function useVideoMetadata(videoUrl) {
     if (!videoUrl) {
         return;
     }
 
     return new Promise((resolve, reject) => {
-        const videoElement = document.createElement('video');
-        const player = videojs(videoElement);
+        const video = document.createElement('video');
+        video.src = videoUrl;
 
-        player.src(videoUrl);
-
-        player.on('loadedmetadata', () => {
-            resolve(player.duration());
-            player.dispose(); // Clean up the player instance
+        video.addEventListener('loadedmetadata', () => {
+            resolve(video.duration);
         });
 
-        player.on('error', () => {
+        video.addEventListener('error', () => {
             reject('Error loading video metadata');
-            player.dispose(); // Clean up the player instance
         });
 
-        player.load();
+        video.load();
     });
 }
+
 
 const fetchVideoLengths = async (lessons) => {
     const promises = lessons.map(async (lesson) => {

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $title
@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property array|null $objective
  * @property array|null $requirement
  * @property-read \App\Models\Category $category
- * @property-read  Collection<int, \App\Models\Comment> $comments
+ * @property-read Collection<int, \App\Models\Comment> $comments
  * @property-read int|null $comments_count
  * @property-read \App\Models\Instructor $instructor
  * @property-read Collection<int, \App\Models\Lesson> $lessons

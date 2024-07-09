@@ -5,7 +5,7 @@
                 v-for="lesson in lessons"
                 :key="lesson.id"
                 :class="isPlaying(lesson.video_url) && '!tw-bg-gray-900 !tw-text-slate-100'"
-                @click="playThis(lesson.video_url)">
+                @click="playThis(lesson)">
                 <template #prepend>
                     <VIcon :color="isCompleted ? 'teal' : 'red'" size="30"
                            :icon="isCompleted ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'"/>

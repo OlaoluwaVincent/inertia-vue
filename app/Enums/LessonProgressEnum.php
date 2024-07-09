@@ -2,8 +2,7 @@
 
 namespace App\Enums;
 
-enum LessonProgressEnum
-{
-    public const COMPLETED = 'completed';
-    public const WATCHING = 'watching';
+enum LessonProgressEnum: string {
+    case WATCHING = 'watching';
+    case COMPLETED = 'completed';
 }
